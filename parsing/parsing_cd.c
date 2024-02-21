@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:24 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 17:37:54 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:51:19 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,10 @@ size_t	ft_stringtab_len(char **tab)
 
 void	parsing_cd(char **params)
 {
-	
+	if (ft_stringtab_len(params) != 1)
+		strerror(0); // a revoir
+	if (!access(params, F_OK))
+		strerror(0); // a revoir
+	if (!access(params, R_OK))
+		strerror(0); // a revoir
 }
