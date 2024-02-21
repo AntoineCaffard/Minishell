@@ -24,3 +24,15 @@ $(NAME): $(OBJS)
 
 $(LIBFT) :
 	@make --directory $(LIBFT_DIR)
+
+clean :
+	$(RM) $(OBJS)
+	@make clean --directory $(LIBFT_DIR)
+
+fclean : clean
+	$(RM) $(NAME)
+	$(RM) $(LIBFT)
+
+re : fclean all
+
+.PHONY : all, re, clean, fclean
