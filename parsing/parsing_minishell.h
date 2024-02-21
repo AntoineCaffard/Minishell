@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   parsing_minishell.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 16:54:12 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:17:42 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
+#ifndef PARSING_H	
 # define PARSING_H
 
-
+# include "../minishell.h"
 
 #endif
