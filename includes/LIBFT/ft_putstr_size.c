@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_minishell.h                                :+:      :+:    :+:   */
+/*   ft_putstr_size.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 17:16:36 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/29 08:25:29 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/13 13:08:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include "../includes/LIBFT/libft.h"
+int	ft_putstr_size(char *s)
+{
+	int	res;
 
-
-
-#endif
+	if (!s)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	res = 0;
+	while (*s)
+	{
+		res += ft_putchar_size(*s);
+		s++;
+	}
+	return (res);
+}

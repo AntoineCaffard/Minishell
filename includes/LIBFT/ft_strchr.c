@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_minishell.h                                :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 17:16:36 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/01 20:59:59 by antoine           #+#    #+#             */
+/*   Updated: 2023/11/09 10:07:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include "../includes/LIBFT/libft.h"
+char	*ft_strchr(const char *s, int c)
+{
+	char	*str;
 
-
-
-#endif
+	str = (char *) s;
+	while (*str)
+	{
+		if (*str == c % 256)
+			return (str);
+		str++;
+	}
+	if (*str == c % 256)
+		return (str);
+	return (NULL);
+}

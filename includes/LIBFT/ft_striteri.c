@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_minishell.h                                :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 17:16:36 by acaffard         ###   ########.fr       */
+/*   Created: 2023/11/08 10:27:59 by acaffard          #+#    #+#             */
+/*   Updated: 2023/11/08 10:37:17 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include "../includes/LIBFT/libft.h"
+void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 
+{
+	size_t	i;
 
-
-#endif
+	i = 0;
+	if (!f || !s)
+		return ;
+	while (s[i])
+	{
+		f(i, s + i);
+		i++;
+	}
+}

@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_minishell.h                                :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/21 17:16:36 by acaffard         ###   ########.fr       */
+/*   Created: 2023/10/30 13:48:45 by acaffard          #+#    #+#             */
+/*   Updated: 2023/11/09 10:08:24 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "libft.h"
 
-# include "../includes/LIBFT/libft.h"
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			count;
+	unsigned char	*p;
 
-
-
-#endif
+	count = 0;
+	p = s;
+	while (count < n)
+	{
+		*p = (unsigned char) c;
+		p++;
+		count++;
+	}
+	return (s);
+}
