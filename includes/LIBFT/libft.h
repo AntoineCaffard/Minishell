@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:11:54 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:33:45 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,6 @@ void	ft_free_stringtab(char **to_free);
 size_t	ft_stringtab_len(char **tab);
 void	ft_print_stringtab(char **tab);
 char	**ft_split_str(char const *s, char *separator);
+int     count_occurences_in_string(const char *src, const char c);
 
 #endif
