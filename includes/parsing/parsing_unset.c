@@ -6,11 +6,14 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:31 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:47:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:08:55 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	parse_unset(char **params)
-{
+#include "parsing_minishell.h"
 
+void	parsing_unset(char **params)
+{
+	if (ft_stringtab_len(params) < 1)
+		return ;
 }
