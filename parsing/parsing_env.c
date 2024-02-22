@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:08 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:15:25 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:39:09 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parsing_env(char **params)
 		if (count_occurences_in_string(param[i], '=') > 1)
 		{
 			strerror(0); // a revoir
-			break;
+			break ;
 		}
 		i++;
 	}
