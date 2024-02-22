@@ -6,22 +6,22 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:10:50 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_stringtab(char **tab)
+void	ft_print_stringtab(char **stringtab)
 {
 	size_t	i;
 
-	if (!tab)
+	if (!stringtab)
 		return ;
 	i = 0;
-	while (tab[i])
+	while (stringtab[i])
 	{
-		ft_printf("%s\n", tab[i]);
+		ft_printf("%s\n", stringtab[i]);
 		i++;
 	}
 }

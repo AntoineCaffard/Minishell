@@ -6,7 +6,25 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:01:25 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:01:28 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:33:18 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
+
+void	my_pwd(void)
+{
+	char	*buffer;
+
+	buffer = NULL;
+	buffer = getcwd(buffer, 0);
+	if (!buffer)
+		return ; // a revoir
+	printf("%s\n", buffer);
+	free(buffer);
+}
+
+int main (void)
+{
+	my_pwd();
+}
