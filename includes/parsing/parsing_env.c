@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:39:08 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:46:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:50:09 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parsing_env(char **params)
 	i = 0;
 	while (params[i])
 	{
-		if (count_occurences_in_string(param[i], '=') > 1)
+		if (count_occurences_in_string(params[i], '=') > 1)
 		{
 			strerror(0); // a revoir
 			break ;
