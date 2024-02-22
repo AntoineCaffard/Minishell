@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/13 13:02:40 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/22 10:11:54 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,4 +157,10 @@ int		ft_putnbr_ubase_size(unsigned long long n, char	*base, unsigned int s);
 int		ft_check_flags(va_list a, const char c);
 int		ft_print_hexa(unsigned long long n, char c);
 int		ft_printf(const char *s, ...);
+
+void	ft_free_stringtab(char **to_free);
+size_t	ft_stringtab_len(char **tab);
+void	ft_print_stringtab(char **tab);
+char	**ft_split_str(char const *s, char *separator);
+
 #endif

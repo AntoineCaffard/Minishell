@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 12:04:03 by antoine           #+#    #+#              #
-#    Updated: 2024/02/13 13:17:33 by acaffard         ###   ########.fr        #
+#    Updated: 2024/02/22 10:11:25 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,11 @@ SRCS = ft_memset.c \
 		ft_putnbr_base_size.c \
 		ft_check_flags.c \
 		ft_putstr_size.c \
-		ft_print_hexa.c
+		ft_print_hexa.c \
+		ft_free_stringtab.c \
+		ft_stringtab_len.c \
+		ft_print_stringtab.c \
+		ft_split_str.c
 CC = cc
 NAME = libft.a
 OBJS = $(SRCS:.c=.o)
