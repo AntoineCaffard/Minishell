@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 16:03:19 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:32:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,8 @@ int		ft_print_hexa(unsigned long long n, char c);
 int		ft_printf(const char *s, ...);
 
 void	ft_free_stringtab(char **to_free);
-size_t	ft_stringtab_len(char **tab);
-void	ft_print_stringtab(char **tab);
+size_t	ft_stringtab_len(char **stringtab);
+void	ft_print_stringtab(char **stringtab);
 char	**ft_split_str(char const *s, char *separator);
 int     count_occurences_in_string(const char *src, const char c);
 
