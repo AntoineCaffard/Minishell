@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtins_minishell.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 09:40:06 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/26 14:34:41 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 14:20:47 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/26 14:35:36 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#ifndef BUILTINS_MINISHELL_H
+# define BUILTINS_MINISHELL_H
 
-void	env(t_list *envp)
-{
-	if (!envp)
-		return ;
-	while (envp)
-		printf("%s\n", (char *) envp->content);
-}
+# include "../minishell.h"
+
+void	cd(char *path);
+void	my_echo(char **params);
+void	env(t_list *envp);
+void	exit(void);
+void	my_pwd(void);
+
+#endif
