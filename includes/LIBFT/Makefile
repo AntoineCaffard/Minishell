@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 12:04:03 by antoine           #+#    #+#              #
-#    Updated: 2024/02/22 10:11:25 by acaffard         ###   ########.fr        #
+#    Updated: 2024/02/26 13:37:57 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ SRCS = ft_memset.c \
 		ft_free_stringtab.c \
 		ft_stringtab_len.c \
 		ft_print_stringtab.c \
-		ft_split_str.c
+		ft_split_str.c \
+		ft_lst_remove_index.c
 CC = cc
 NAME = libft.a
 OBJS = $(SRCS:.c=.o)
