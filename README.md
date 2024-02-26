@@ -3,4 +3,4 @@
 ```Faire le parsing de la sortie de Readline``` \
 ```Finir les fonctions de builtins nottment la gestion du ENV``` \
 ```Gestion des PIPES``` \
-```Gestion des SIGNAUX``` \
+```Gestion des SIGNAUX```
