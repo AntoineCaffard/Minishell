@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/26 14:14:10 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:41:53 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	cd(char *path)
+void	minishell_cd(char *path)
 {
 	int	status;
 

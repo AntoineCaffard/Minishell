@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:54:53 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 13:25:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:43:11 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	*get_node_by_value(t_list *list, char *param)
+static t_list	*get_node_by_value(t_list *list, char *param)
 {
 	while (list)
 	{
@@ -26,7 +26,7 @@ t_list	*get_node_by_value(t_list *list, char *param)
 	return (NULL);
 }
 
-void	unset(t_list **envp, char ** params)
+void	minishell_unset(t_list **envp, char ** params)
 {
 	int 	i;
 	int 	index;

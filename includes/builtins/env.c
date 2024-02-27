@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:40:06 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/26 14:34:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:42:12 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	env(t_list *envp)
+void	minishell_env(t_list *envp)
 {
 	if (!envp)
 		return ;

@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:55:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:26:13 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:43:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	*get_node_by_value(t_list *list, char *param)
+static t_list	*get_node_by_value(t_list *list, char *param)
 {
 	while (list)
 	{
@@ -26,7 +26,7 @@ t_list	*get_node_by_value(t_list *list, char *param)
 	return (NULL);
 }
 
-void	actualize_node_value(t_list *node, char *param)
+static void	actualize_node_value(t_list *node, char *param)
 {
 		char	*tmp;
 
@@ -38,7 +38,7 @@ void	actualize_node_value(t_list *node, char *param)
 		}
 }
 
-void	add_new_env_var(t_list **envp, char *param)
+static void	add_new_env_var(t_list **envp, char *param)
 {
 	char	*tmp;
 	t_list	*node;
@@ -55,7 +55,7 @@ void	add_new_env_var(t_list **envp, char *param)
 	ft_lstadd_back(envp, node);
 }
 
-void	export(t_list **envp, char ** params)
+void	minishell_export(t_list **envp, char ** params)
 {
 	int 	i;
 	int 	index;

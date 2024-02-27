@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 13:52:49 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 10:57:59 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:42:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	my_echo(char **params)
+void	minishell_echo(char **params)
 {
 	int	i;
 
