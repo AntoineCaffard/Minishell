@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 16:32:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/24 02:27:51 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,15 @@ int		ft_toupper(int c);
  *****************************************************************************/
 
 size_t	ft_strlen(const char *str);
+/******************************************************************************
+ * FT_STRNCMP :
+ * This function compares two character strings and return the difference
+ * 			in asci number of the first two diferent characters.
+ * @params : s1 -> the first character strings,
+ * 				s2 -> the second character strings
+ * @returns : int
+ *****************************************************************************/
+
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *nptr);
 char	*ft_strdup(const char *s);
