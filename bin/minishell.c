@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/27 15:34:41 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:44:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	ft_start_minishell(char **line, t_list **envp)
 	else if (ft_strncmp(line[0], "env", ft_strlen(line[0])))
 		minishell_env(*envp);
 	else if (ft_strncmp(line[0], "export", ft_strlen(line[0])))
-		minishell_export(*envp, &line[1]);
+		minishell_export(envp, &line[1]);
 	else if (ft_strncmp(line[0], "pwd", ft_strlen(line[0])))
 		minishell_pwd();
 	else if (ft_strncmp(line[0], "unset", ft_strlen(line[0])))
-		minishell_unset(*envp, &line[1]);
+		minishell_unset(envp, &line[1]);
 	else
-		execute_command(line, &envp[0]);
+		execute_command(line, *envp);
 }
 
 void	minishell(t_list *envp)
@@ -61,13 +61,14 @@ void	minishell(t_list *envp)
 		prompt = ft_prompt();
 		line = readline(prompt);
 		free(prompt);
-		if (ft_strncmp(line[0], "exit ", 5))
+		if (ft_strncmp(line, "exit ", 5))
 		{
-			if (minishell_exit(line))
-				break ;
+			exit(1);
+			//if (minishell_exit()) /*line*/
+			//	break ;
 		}
 		add_history(line);
-		parsing_readline(line);			
+		parsing_readline(line, &envp);			
 	}
 }
 

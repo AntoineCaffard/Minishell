@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:55:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:43:19 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:55:32 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	add_new_env_var(t_list **envp, char *param)
 void	minishell_export(t_list **envp, char ** params)
 {
 	int 	i;
-	int 	index;
 	t_list	*node;
 
 

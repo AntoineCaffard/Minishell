@@ -2,7 +2,7 @@ NAME = minishell
 CC = cc
 CFLAGS= -Wall -Wextra -Werror -g
 
-SRCS = test.c split_modif.c
+SRCS = bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c bin/minishell.c bin/parsing_readline.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT
@@ -10,6 +10,9 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 PARSING_DIR = includes/parsing
 PARSING = $(PARSING_DIR)/parsing_minishell.a
+
+BUILTINS_DIR = includes/builtins
+BUILTINS = $(BUILTINS_DIR)/builtins_minishell.a
 
 RM=rm -rf
 
@@ -20,8 +23,8 @@ WHITE='\033[0;m'
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT) $(PARSING) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARSING) -lreadline
+$(NAME) : $(LIBFT) $(PARSING) $(BUILTINS) $(OBJS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARSING) $(BUILTINS) -lreadline
 	@clear
 	@if [ $$? -eq 0 ]; then \
 		echo ${GREEN}">-Compilation successful-<"${WHITE}; \
@@ -36,9 +39,13 @@ $(LIBFT) :
 $(PARSING) :
 	@make --directory $(PARSING_DIR)
 
+$(BUILTINS) :
+	@make --directory $(BUILTINS_DIR)
+
 clean :
 	@make clean --directory $(LIBFT_DIR)
 	@make clean --directory $(PARSING_DIR)
+	@make clean --directory $(BUILTINS_DIR)
 	@clear
 	$(RM) $(OBJS)
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
@@ -47,6 +54,7 @@ fclean : clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
 	$(RM) $(PARSING)
+	$(RM) $(BUILTINS)
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
