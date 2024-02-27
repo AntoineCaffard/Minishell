@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:20:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/26 14:35:36 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:41:45 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include "../minishell.h"
 
-void	cd(char *path);
-void	my_echo(char **params);
-void	env(t_list *envp);
-void	exit(void);
-void	my_pwd(void);
+void	minishell_cd(char *path);
+void	minishell_echo(char **params);
+void	minishell_env(t_list *envp);
+void	minishell_exit(void);
+void	minishell_pwd(void);
+void	minishell_unset(t_list **envp, char ** params);
+void	minishell_export(t_list **envp, char ** params);
 
 #endif

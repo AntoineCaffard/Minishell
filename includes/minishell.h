@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/23 15:00:47 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:42:34 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "parsing/parsing_minishell.h"
+# include "builtins/builtins_minishell.h"
 
-char	**ft_split_modif(char *src, char c);
 t_list	*init_stringtab_in_t_list(char **envp);
 void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);

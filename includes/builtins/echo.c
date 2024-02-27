@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 13:52:49 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/26 14:33:31 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:42:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	my_echo(char **params)
+void	minishell_echo(char **params)
 {
 	int	i;
 
@@ -27,12 +27,11 @@ void	my_echo(char **params)
 		i++;
 	while (params[i])
 	{
+		ft_putstr_fd(params[i], STDOUT_FILENO);
 		if (params[i + 1])
-			printf("%s ", params[i]);
-		else
-			printf("%s", params[i]);
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
 	if (check_option(params) != 42)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }
