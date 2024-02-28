@@ -165,5 +165,6 @@ size_t	ft_stringtab_len(char **stringtab);
 void	ft_print_stringtab(char **stringtab);
 char	**ft_split_str(char const *s, char *separator);
 int		count_occurences_in_string(const char *src, const char c);
+int		ft_string_isdigit(char *src);
 
 #endif

@@ -23,8 +23,8 @@ int	check_option(char **params)
 void	parsing_echo(char **params)
 {
 	if (!params || !ft_stringtab_len(params))
-		return ;
-	if (params && ft_stringtab_len(params) > 1 && check_option(params))
+		display_error(1, NULL, NULL);
+	else if (params && ft_stringtab_len(params) > 1 && check_option(params))
 		minishell_echo(params);
 	else if (params && ft_stringtab_len(params) && check_option(params) == 0)
 		minishell_echo(params);

@@ -17,7 +17,7 @@
 
 void	parsing_cd(char **params);
 void	parsing_pwd(char **params);
-void	parsing_exit(char **params);
+int 	parsing_exit(char *params);
 int		check_option(char **params);
 void	parsing_echo(char **params);
 void	parsing_unset(t_list **envp, char **params);

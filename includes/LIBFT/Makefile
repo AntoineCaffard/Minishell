@@ -67,7 +67,8 @@ SRCS = ft_memset.c \
 		ft_split_str.c \
 		ft_lst_remove_index.c \
 		ft_lst_get_index.c\
-		count_occurences_in_string.c
+		count_occurences_in_string.c\
+		ft_string_isdigit.c
 CC = cc
 NAME = libft.a
 OBJS = $(SRCS:.c=.o)

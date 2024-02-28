@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_env.c                                      :+:      :+:    :+:   */
+/*   ft_string_isdigit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:39:08 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/28 11:25:32 by trebours         ###   ########.fr       */
+/*   Created: 2024/02/28 15:09:41 by trebours          #+#    #+#             */
+/*   Updated: 2024/02/28 15:09:41 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_minishell.h"
+#include "libft.h"
 
-void	parsing_env(char **params, t_list *envp)
+int ft_string_isdigit(char *src)
 {
-	if (ft_stringtab_len(params) > 0)
-		display_error(2, "too many argument", NULL); // a revoir
-	else
-		minishell_env(envp);
+    int i;
+
+    i = 0;
+    while (src[i])
+    {
+        if (ft_isdigit(src[i]))
+            i++;
+        else
+            return (0);
+    }
+    return (1);
 }

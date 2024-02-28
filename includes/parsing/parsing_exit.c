@@ -12,8 +12,22 @@
 
 #include "parsing_minishell.h"
 
-void	parsing_exit(char **params)
+int	parsing_exit(char *line)
 {
-	if (ft_stringtab_len(params) > 1)
-		strerror(0); // a revoir
+	char	**params;
+
+	params = ft_split_str(line, " ");
+	if (params && ft_stringtab_len(params) > 1 && ft_string_isdigit(params[1]) == 0)
+	{
+		display_error(4, "not a digit", params[1]);
+		return (0);
+	}
+	else if (params && ft_stringtab_len(params) > 2)
+	{
+		display_error(4, "too many argument", NULL); // a revoir
+		return (0);
+	}
+	if (params)
+		ft_free_stringtab(params);
+	return (1);
 }
