@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:40:06 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:42:12 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:28:25 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,8 @@ void	minishell_env(t_list *envp)
 	if (!envp)
 		return ;
 	while (envp)
+	{
 		printf("%s\n", (char *) envp->content);
+		envp = envp->next;
+	}
 }

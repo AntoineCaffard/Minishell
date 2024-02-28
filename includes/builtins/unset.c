@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:54:53 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:43:11 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:50:50 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	minishell_unset(t_list **envp, char ** params)
 		node = get_node_by_value(*envp, params[i]);
 		if (node != NULL)
 		{
-			index =ft_lst_get_index(node, *envp);
+			index = ft_lst_get_index(*envp, node);
 			ft_lst_remove_index(envp, index);
 		}
 		i++;
