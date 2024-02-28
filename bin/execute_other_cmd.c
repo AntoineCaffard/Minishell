@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:53:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 09:56:53 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:33:45 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@ static char	*init_link(char *src, char **path)
 
 char	**init_path(t_list *envp)
 {
-	int		i;
 	char	*path;
 	char	**res;
 
-	i = 0;
 	if (!envp)
 		return (NULL);
 	while (envp)
