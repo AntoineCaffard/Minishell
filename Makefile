@@ -24,7 +24,7 @@ WHITE='\033[0;m'
 all : $(NAME)
 
 $(NAME) : $(LIBFT) $(PARSING) $(BUILTINS) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(PARSING) $(BUILTINS) -lreadline
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(BUILTINS) $(LIBFT) $(PARSING) -lreadline
 	@clear
 	@if [ $$? -eq 0 ]; then \
 		echo ${GREEN}">-Compilation successful-<"${WHITE}; \
