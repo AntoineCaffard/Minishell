@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:55:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 15:55:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:02:37 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ void	minishell_export(t_list **envp, char ** params)
 	while (params[i])
 	{
 		node = get_node_by_value(*envp, params[i]);
+		printf("%s\n", (char *) node->content);
 		if (node != NULL)
 			actualize_node_value(node, params[i]);
 		else
 			add_new_env_var(envp, params[i]);
+		//printf("%s\n", (char *) node->content);
 		i++;
 	}
 }
