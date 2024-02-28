@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
+#    By: trebours <trebours@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 12:04:03 by antoine           #+#    #+#              #
-#    Updated: 2024/02/26 14:50:50 by acaffard         ###   ########.fr        #
+#    Updated: 2024/02/28 11:26:56 by trebours         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,8 @@ SRCS = ft_memset.c \
 		ft_print_stringtab.c \
 		ft_split_str.c \
 		ft_lst_remove_index.c \
-		ft_lst_get_index.c
+		ft_lst_get_index.c\
+		count_occurences_in_string.c
 CC = cc
 NAME = libft.a
 OBJS = $(SRCS:.c=.o)

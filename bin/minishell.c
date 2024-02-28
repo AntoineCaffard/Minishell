@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 11:07:36 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:35:37 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	ft_start_minishell(char **line, t_list **envp)
 	else if (ft_strncmp(line[0], "cd", 3) == 0 || ft_strncmp(line[0], "cd ", 3) == 0)
 		parsing_cd(&line[1]);
 	else if (ft_strncmp(line[0], "env", 4) == 0 || ft_strncmp(line[0], "env ", 4) == 0)
-		minishell_env(*envp);
+		parsing_env(&line[1], *envp);
 	else if (ft_strncmp(line[0], "export", 7) == 0 || ft_strncmp(line[0], "export ", 7) == 0)
-		minishell_export(envp, &line[1]);
+		parsing_export(envp, &line[1]);
 	else if (ft_strncmp(line[0], "pwd", 4) == 0 || ft_strncmp(line[0], "pwd ", 4) == 0)
 		minishell_pwd();
-	else if (ft_strncmp(line[0], "unset ", 6) == 0 || ft_strncmp(line[0], "unset ", 6) == 0)
-		minishell_unset(envp, &line[1]);
+	else if (ft_strncmp(line[0], "unset", 6) == 0 || ft_strncmp(line[0], "unset ", 6) == 0)
+		parsing_unset(envp, &line[1]);
 	else
 		execute_command(line, *envp);
 }
