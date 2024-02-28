@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 08:35:51 by trebours         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:04:38 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
-size_t 	ft_lst_get_index(t_list *list, t_list *node);
+size_t	ft_lst_get_index(t_list *list, t_list *node);
 void	ft_lst_remove_index(t_list **list, int index);
 
 char	*get_next_line(int fd);
@@ -164,6 +164,6 @@ void	ft_free_stringtab(char **to_free);
 size_t	ft_stringtab_len(char **stringtab);
 void	ft_print_stringtab(char **stringtab);
 char	**ft_split_str(char const *s, char *separator);
-int     count_occurences_in_string(const char *src, const char c);
+int		count_occurences_in_string(const char *src, const char c);
 
 #endif
