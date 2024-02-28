@@ -2,7 +2,8 @@ NAME = minishell
 CC = cc
 CFLAGS= -Wall -Wextra -Werror -g
 
-SRCS = bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c bin/minishell.c bin/parsing_readline.c
+SRCS = bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c bin/minishell.c bin/parsing_readline.c\
+		bin/split_modif.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT
@@ -47,14 +48,14 @@ clean :
 	@make clean --directory $(PARSING_DIR)
 	@make clean --directory $(BUILTINS_DIR)
 	@clear
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 
 fclean : clean
-	$(RM) $(NAME)
-	$(RM) $(LIBFT)
-	$(RM) $(PARSING)
-	$(RM) $(BUILTINS)
+	@$(RM) $(NAME)
+	@$(RM) $(LIBFT)
+	@$(RM) $(PARSING)
+	@$(RM) $(BUILTINS)
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}
