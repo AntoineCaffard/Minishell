@@ -40,5 +40,6 @@ void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
 void	parsing_readline(char *line, t_list **envp);
 void	ft_start_minishell(char **line, t_list **envp);
+void    display_error(int cmd, char *prompt, char *file);
 
 #endif

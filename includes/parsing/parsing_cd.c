@@ -15,11 +15,14 @@
 void	parsing_cd(char **params)
 {
 	if (ft_stringtab_len(params) != 1)
-		strerror(0); // a revoir
+		// strerror(0); // a revoir
+		display_error(0, "too many or less argument", NULL);
 	else if (access(params[0], F_OK))
-		strerror(0); // a revoir
+		// strerror(0); // a revoir
+		display_error(0, "no such file in directory", params[0]);
 	else if (access(params[0], R_OK))
-		strerror(0); // a revoir
+		display_error(0, "no such file in directory", params[0]);
+		// strerror(0); // a revoir
 	else
 		minishell_cd(params[0]);
 }
