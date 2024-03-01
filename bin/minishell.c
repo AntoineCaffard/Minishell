@@ -46,7 +46,7 @@ void	ft_start_minishell(char **line, t_list **envp)
 	else if (ft_strncmp(line[0], "pwd", 4) == 0 || ft_strncmp(line[0], "pwd ", 4) == 0)
 		minishell_pwd();
 	else if (ft_strncmp(line[0], "unset", 6) == 0 || ft_strncmp(line[0], "unset ", 6) == 0)
-		parsing_unset(envp, &line[1]);
+		minishell_unset(envp, &line[1]);
 	else
 		execute_command(line, *envp);
 }

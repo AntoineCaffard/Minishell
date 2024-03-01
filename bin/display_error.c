@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:04:09 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 14:08:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/01 09:20:58 by utilisateur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void    display_error(int cmd, char *prompt, char *file)
     else if (cmd == 4)
         printf("exit\nMinishell: exit: ");
     else if (cmd == 5)
-        printf("Minishell: pwd: ");
-    else if (cmd == 6)
         printf("Minishell: unset: ");
     if (file)
         printf("%s: ", file);
