@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static char	*init_link(char *src, char **path)
+char	*init_link(char *src, char **path)
 {
 	char	*verif_link;
 	char	*save;

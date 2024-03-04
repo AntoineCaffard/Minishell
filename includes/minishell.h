@@ -42,6 +42,8 @@ typedef struct s_pipe
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
 
+char	**init_path(t_list *envp);
+char	*init_link(char *src, char **path);
 void    main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
 t_list	*init_stringtab_in_t_list(char **envp);

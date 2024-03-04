@@ -62,6 +62,7 @@ void	minishell(t_list *envp)
 		prompt = ft_prompt();
 		line = readline(prompt);
 		free(prompt);
+		add_history(line);
 		if (ft_strncmp(line, "exit", 5) == 0 || ft_strncmp(line, "exit ", 5) == 0)
 		{
 			if (parsing_exit(line))
@@ -72,7 +73,6 @@ void	minishell(t_list *envp)
 		}
 		else
 			parsing_readline(line, &envp);			
-		add_history(line);
 	}
 	clear_history();	
 }

@@ -15,11 +15,18 @@
 void    management_fd(t_pipe *save_fd, int i)
 {
     if (i == 0)
-        dup2(save_fd->pipe[1], STDOUT_FILENO);
+    {
+        if (dup2(save_fd->save_first_fd[0], STDIN_FILENO) < 0)
+            perror("1, dup2");
+        if (dup2(save_fd->pipe[1], STDOUT_FILENO) < 0)
+            perror("2, dup2");
+    }
     else if (i == save_fd->nmb_max_cmd - 1)
     {
-        dup2(save_fd->save_fd, STDIN_FILENO);
-        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
+        if (dup2(save_fd->save_fd, STDIN_FILENO) < 0)
+            perror("3, dup2");
+        if (dup2(save_fd->save_first_fd[1], STDOUT_FILENO) < 0)
+            perror("4, dup2");
     }
     else if (i > 0)
     {
@@ -28,20 +35,26 @@ void    management_fd(t_pipe *save_fd, int i)
     }
     else if (i == -1)
     {
-        dup2(save_fd->save_first_fd[0], STDIN_FILENO);
-        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
+        dup2(0, STDIN_FILENO);
+        dup2(1, STDOUT_FILENO);
     }
 }
 
 void    child_process(char **cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
 {
+    char        **envp2;
+    char  **path;
+
+    path = init_path(envp);
+    envp2 = init_t_list_in_stringtab(envp);
+    cmd[0] = init_link(cmd[0], path);
     management_fd(save_fd, nmb_cmd);
     close(save_fd->pipe[0]);
     close(save_fd->pipe[1]);
     close(save_fd->save_first_fd[0]);
     close(save_fd->save_first_fd[1]);
-    execute_command(cmd, envp);
-    exit(0);
+    execve(cmd[0], cmd, envp2);
+    perror("execve");
 }
 
 void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
@@ -63,9 +76,11 @@ void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
         {
             if (save_fd->save_fd != -1)
                 close(save_fd->save_fd);
-            save_fd->save_fd = save_fd->pipe[0];
+            save_fd->save_fd = dup(save_fd->pipe[0]);
             close(save_fd->pipe[0]);
             close(save_fd->pipe[1]);
+            while (waitpid(-1, NULL, 0) != -1)
+			    continue ;
         }
         i++;
     }
@@ -91,5 +106,7 @@ void    main_pipe(char *line, t_list *envp)
     struct_fd.save_first_fd[0] = dup(STDIN_FILENO);
     struct_fd.save_first_fd[1] = dup(STDOUT_FILENO);
     struct_fd.nmb_max_cmd = nmb_of_ocurence;
+    struct_fd.save_fd = -1;
     management_pipe(cmd, envp, &struct_fd, nmb_of_ocurence);
+    management_fd(&struct_fd, -1);
 }
