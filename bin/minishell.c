@@ -66,13 +66,17 @@ void	minishell(t_list *envp)
 		if (ft_strncmp(line, "exit", 5) == 0 || ft_strncmp(line, "exit ", 5) == 0)
 		{
 			if (parsing_exit(line))
+			{
+				free(line);
 				break;
+			}
 			// exit(1);
 			//if (minishell_exit()) /*line*/
 			//	break ;
 		}
 		else
-			parsing_readline(line, &envp);			
+			parsing_readline(line, &envp);
+		free(line);
 	}
 	clear_history();	
 }

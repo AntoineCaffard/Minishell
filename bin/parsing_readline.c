@@ -42,7 +42,6 @@ void	parsing_readline(char *line, t_list **envp)
 		return ;
 	}
 	line_split = ft_split_modif(line, ' ');
-	free(line);
 	ft_start_minishell(line_split, envp);
 	ft_free_stringtab(line_split);
 }
