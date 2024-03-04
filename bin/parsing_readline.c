@@ -12,14 +12,35 @@
 
 #include "../includes/minishell.h"
 
+int compare_string_to_character(char *line, char chr)
+{
+    int i;
+	int	j;
+
+    if (!line || !chr)
+        return (0);
+    i = 0;
+	j = 0;
+    while (line[i])
+    {
+        if (line[i] == chr)
+            j++;
+    }
+    return (j);
+}
+
 void	parsing_readline(char *line, t_list **envp)
 {
 	char	**line_split;
 
 	if (!line)
 		return ;
+	if (compare_string_to_character(line, '|'))
+	{
+		main_pipe(line, envp);
+		return (0);
+	}
 	line_split = ft_split_modif(line, ' ');
-
 	free(line);
 	ft_start_minishell(line_split, envp);
 	ft_free_stringtab(line_split);

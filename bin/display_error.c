@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: utilisateur <utilisateur@student.42.fr>    +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:04:09 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/01 09:20:58 by utilisateur      ###   ########.fr       */
+/*   Updated: 2024/03/01 09:20:58 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -13,6 +13,14 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+typedef struct s_pipe
+{
+    int     pipe[2];
+    pid_t   tfork;
+    int     save_fd;
+    int     save_first_fd[2];
+}t_pipe;
+
 # include <term.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -34,11 +42,13 @@
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
 
+void    main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
 t_list	*init_stringtab_in_t_list(char **envp);
 void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
 void	parsing_readline(char *line, t_list **envp);
+int compare_string_to_character(char *line, char chr);
 void	ft_start_minishell(char **line, t_list **envp);
 void    display_error(int cmd, char *prompt, char *file);
 
