@@ -25,7 +25,8 @@ int compare_string_to_character(char *line, char chr)
     {
         if (line[i] == chr)
             j++;
-    }
+		i++;
+	}
     return (j);
 }
 
@@ -37,8 +38,8 @@ void	parsing_readline(char *line, t_list **envp)
 		return ;
 	if (compare_string_to_character(line, '|'))
 	{
-		main_pipe(line, envp);
-		return (0);
+		main_pipe(line, envp[0]);
+		return ;
 	}
 	line_split = ft_split_modif(line, ' ');
 	free(line);

@@ -15,9 +15,9 @@
 
 typedef struct s_pipe
 {
-    int     pipe[2];
-    pid_t   tfork;
     int     save_fd;
+    int     pipe[2];
+    int     nmb_max_cmd;
     int     save_first_fd[2];
 }t_pipe;
 

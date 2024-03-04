@@ -12,19 +12,62 @@
 
 #include "../includes/minishell.h"
 
+void    management_fd(t_pipe *save_fd, int i)
+{
+    if (i == 0)
+        dup2(save_fd->pipe[1], STDOUT_FILENO);
+    else if (i == save_fd->nmb_max_cmd - 1)
+    {
+        dup2(save_fd->save_fd, STDIN_FILENO);
+        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
+    }
+    else if (i > 0)
+    {
+        dup2(save_fd->save_fd, STDIN_FILENO);
+        dup2(save_fd->pipe[1], STDOUT_FILENO);
+    }
+    else if (i == -1)
+    {
+        dup2(save_fd->save_first_fd[0], STDIN_FILENO);
+        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
+    }
+}
+
+void    child_process(char **cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
+{
+    management_fd(save_fd, nmb_cmd);
+    close(save_fd->pipe[0]);
+    close(save_fd->pipe[1]);
+    close(save_fd->save_first_fd[0]);
+    close(save_fd->save_first_fd[1]);
+    execute_command(cmd, envp);
+    exit(0);
+}
+
 void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
 {
-    int i;
+    int     i;
+    pid_t   tfork;
 
     i = 0;
     while (i != nmb_cmd)
     {
         if (pipe(save_fd->pipe))
             return ;
-        save_fd->tfork = fork();
-        if (!save_fd->tfork)
-            return (0);
-        
+        tfork = fork();
+        if (tfork < 0)
+            return ;
+        if (tfork == 0)
+            child_process(cmd[i], envp, save_fd, i);
+        else
+        {
+            if (save_fd->save_fd != -1)
+                close(save_fd->save_fd);
+            save_fd->save_fd = save_fd->pipe[0];
+            close(save_fd->pipe[0]);
+            close(save_fd->pipe[1]);
+        }
+        i++;
     }
 }
 
@@ -47,5 +90,6 @@ void    main_pipe(char *line, t_list *envp)
     }
     struct_fd.save_first_fd[0] = dup(STDIN_FILENO);
     struct_fd.save_first_fd[1] = dup(STDOUT_FILENO);
+    struct_fd.nmb_max_cmd = nmb_of_ocurence;
     management_pipe(cmd, envp, &struct_fd, nmb_of_ocurence);
 }
