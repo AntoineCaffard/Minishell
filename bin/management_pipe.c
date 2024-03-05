@@ -16,17 +16,13 @@ void    management_fd(t_pipe *save_fd, int i)
 {
     if (i == 0)
     {
-        if (dup2(save_fd->save_first_fd[0], STDIN_FILENO) < 0)
-            perror("1, dup2");
-        if (dup2(save_fd->pipe[1], STDOUT_FILENO) < 0)
-            perror("2, dup2");
+        dup2(save_fd->save_first_fd[0], STDIN_FILENO);
+        dup2(save_fd->pipe[1], STDOUT_FILENO);
     }
     else if (i == save_fd->nmb_max_cmd - 1)
     {
-        if (dup2(save_fd->save_fd, STDIN_FILENO) < 0)
-            perror("3, dup2");
-        if (dup2(save_fd->save_first_fd[1], STDOUT_FILENO) < 0)
-            perror("4, dup2");
+        dup2(save_fd->save_fd, STDIN_FILENO);
+        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
     }
     else if (i > 0)
     {
@@ -35,8 +31,8 @@ void    management_fd(t_pipe *save_fd, int i)
     }
     else if (i == -1)
     {
-        dup2(save_fd->save_first_fd[0], STDIN_FILENO);
-        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
+        dup2(0, STDIN_FILENO);
+        dup2(1, STDOUT_FILENO);
     }
 }
 
@@ -51,11 +47,13 @@ void    child_process(char **cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
     management_fd(save_fd, nmb_cmd);
     close(save_fd->pipe[0]);
     close(save_fd->pipe[1]);
-    close(save_fd->save_first_fd[0]);
     close(save_fd->save_first_fd[1]);
-    execve(cmd[0], cmd, envp2);
+    close(save_fd->save_first_fd[0]);
+    if (cmd[0])
+        execve(cmd[0], cmd, envp2);
     ft_free_stringtab(cmd);
     perror("execve");
+    exit(1);
 }
 
 void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
@@ -81,6 +79,7 @@ void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
             close(save_fd->pipe[0]);
             close(save_fd->pipe[1]);
             ft_free_stringtab(cmd[i]);
+            management_fd(save_fd, -1);
             while (waitpid(-1, NULL, 0) != -1)
 			    continue ;
         }
@@ -111,7 +110,6 @@ void    main_pipe(char *line, t_list *envp)
     struct_fd.nmb_max_cmd = nmb_of_ocurence;
     struct_fd.save_fd = -1;
     management_pipe(cmd, envp, &struct_fd, nmb_of_ocurence);
-    management_fd(&struct_fd, -1);
     close(struct_fd.save_first_fd[1]);
     close(struct_fd.save_first_fd[0]);
     free(cmd);

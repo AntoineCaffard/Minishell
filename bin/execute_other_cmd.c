@@ -35,7 +35,7 @@ char	*init_link(char *src, char **path)
 		free(verif_link);
 	}
 	free(save);
-	dup2(2, 1);			// fonction message erreur ?
+	dup2(2, STDOUT_FILENO);			// fonction message erreur ?
 	ft_printf("minishell: %s: command not found\n", src);
 	return (NULL);
 }
