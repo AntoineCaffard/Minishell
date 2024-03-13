@@ -76,8 +76,6 @@ void	command_n(char **cmd, t_list *lst_envp)
 			ft_free_stringtab(envp);
 			perror("execve");
 		}
-		printf("test\n\n\n\n");
-		// exit(1);
 	}
 	else
 	{
