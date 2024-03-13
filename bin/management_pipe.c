@@ -31,60 +31,32 @@ void    management_fd(t_pipe *save_fd, int i)
     }
     else if (i == -1)
     {
-        dup2(0, STDIN_FILENO);
-        dup2(1, STDOUT_FILENO);
+        dup2(save_fd->save_first_fd[0], STDIN_FILENO);
+        dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
     }
-}
-
-void    child_process(char **cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
-{
-    char        **envp2;
-    char  **path;
-
-    path = init_path(envp);
-    envp2 = init_t_list_in_stringtab(envp);
-    cmd[0] = init_link(cmd[0], path);
-    management_fd(save_fd, nmb_cmd);
-    close(save_fd->pipe[0]);
-    close(save_fd->pipe[1]);
-    close(save_fd->save_first_fd[1]);
-    close(save_fd->save_first_fd[0]);
-    if (cmd[0])
-        execve(cmd[0], cmd, envp2);
-    ft_free_stringtab(cmd);
-    perror("execve");
-    exit(1);
 }
 
 void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
 {
-    int     i;
-    pid_t   tfork;
+	int		i;
+	// pid_t	tfork;
 
-    i = 0;
-    while (i != nmb_cmd)
-    {
-        if (pipe(save_fd->pipe))
-            return ;
-        tfork = fork();
-        if (tfork < 0)
-            return ;
-        if (tfork == 0)
-            child_process(cmd[i], envp, save_fd, i);
-        else
-        {
-            if (save_fd->save_fd != -1)
-                close(save_fd->save_fd);
-            save_fd->save_fd = dup(save_fd->pipe[0]);
-            close(save_fd->pipe[0]);
-            close(save_fd->pipe[1]);
-            ft_free_stringtab(cmd[i]);
-            management_fd(save_fd, -1);
-            while (waitpid(-1, NULL, 0) != -1)
-			    continue ;
-        }
-        i++;
-    }
+	i = 0;
+	while (i != nmb_cmd)
+	{
+		if (pipe(save_fd->pipe))
+		    return ;
+		management_fd(save_fd, i);
+		execute_command(cmd[i], envp);
+		management_fd(save_fd, -1);
+		if (save_fd->save_fd != -1)
+			close(save_fd->save_fd);
+		save_fd->save_fd = dup(save_fd->pipe[0]);
+		close(save_fd->pipe[0]);
+		close(save_fd->pipe[1]);
+		ft_free_stringtab(cmd[i]);
+		i++;
+	}
 }
 
 void    main_pipe(char *line, t_list *envp)

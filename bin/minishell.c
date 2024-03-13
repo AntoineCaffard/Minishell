@@ -53,29 +53,28 @@ void	ft_start_minishell(char **line, t_list **envp)
 
 void	minishell(t_list *envp)
 {
-	char *line;
-	char *prompt = NULL;
-	(void)envp;
+	char	*line;
+	char	*prompt = NULL;
 
 	while (1)
 	{
 		prompt = ft_prompt();
 		line = readline(prompt);
 		free(prompt);
-		add_history(line);
-		if (ft_strncmp(line, "exit", 5) == 0 || ft_strncmp(line, "exit ", 5) == 0)
+		if (ft_strncmp(line, "", ft_strlen(line)))
 		{
-			if (parsing_exit(line))
+			add_history(line);
+			if ((ft_strncmp(line, "exit", 5) == 0 || ft_strncmp(line, "exit ", 5) == 0))
 			{
-				free(line);
-				break;
+				if (parsing_exit(line))
+				{
+					free(line);
+					break;
+				}
 			}
-			// exit(1);
-			//if (minishell_exit()) /*line*/
-			//	break ;
+			else
+				parsing_readline(line, &envp);
 		}
-		else
-			parsing_readline(line, &envp);
 		free(line);
 	}
 	clear_history();	
