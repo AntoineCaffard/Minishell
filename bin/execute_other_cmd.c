@@ -37,6 +37,7 @@ char	*init_link(char *src, char **path)
 	free(save);
 	dup2(2, STDOUT_FILENO);			// fonction message erreur ?
 	ft_printf("minishell: %s: command not found\n", src);
+	free(src);
 	return (NULL);
 }
 
@@ -45,6 +46,7 @@ char	**init_path(t_list *envp)
 	char	*path;
 	char	**res;
 
+	path = NULL;
 	if (!envp)
 		return (NULL);
 	while (envp)
@@ -85,46 +87,24 @@ void	command_n(char **cmd, t_list *lst_envp)
 	}
 }
 
-int	check_command(char **line, char **path, t_list *envp)
-{
-	int	fd;
-	int	save_fd;
-
-	if (!ft_strncmp(line[0], "<", ft_strlen(line[0])))
-	{
-		save_fd = dup(STDIN_FILENO);
-		fd = open(line[1], O_RDONLY);
-		if (fd == -1)
-		{
-			printf("%s: file no found\n", line[1]);
-			return (1);
-		}
-		dup2(fd, STDIN_FILENO);
-		if (access(line[2], X_OK))
-			line[2] = init_link(line[2], path);
-		command_n(&line[2], envp);
-		ft_free_stringtab(path);
-		dup2(save_fd, STDIN_FILENO);
-		close(fd);
-		close(save_fd);
-		return (1);
-	}
-	return (0);
-}
-
 void	execute_command(char **line, t_list *envp)
 {
 	char	**path;
+	int		fd;
 
+	fd = dup(STDOUT_FILENO);
 	path = init_path(envp);
-	if (!path)
-		return ;
-	if (check_command(line, path, envp))
-		return ;
 	if (access(line[0], X_OK))
 		line[0] = init_link(line[0], path);
 	if (!line[0])
+	{
+		if (path)
+			ft_free_stringtab(path);
+		close(fd);
 		return ;
+	}
 	command_n(line, envp);
 	ft_free_stringtab(path);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
 }
