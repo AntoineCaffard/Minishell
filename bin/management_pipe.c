@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void    management_fd(t_pipe *save_fd, int i)
+static void    management_fd(t_pipe *save_fd, int i)
 {
     if (i == 0)
     {
@@ -36,18 +36,17 @@ void    management_fd(t_pipe *save_fd, int i)
     }
 }
 
-void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
+static void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd)
 {
 	int		i;
-	// pid_t	tfork;
 
 	i = 0;
-	while (i != nmb_cmd)
+	while (i != save_fd->nmb_max_cmd)
 	{
 		if (pipe(save_fd->pipe))
 		    return ;
 		management_fd(save_fd, i);
-		execute_command(cmd[i], envp);
+		ft_start_minishell(cmd[i], &envp);
 		management_fd(save_fd, -1);
 		if (save_fd->save_fd != -1)
 			close(save_fd->save_fd);
@@ -59,29 +58,72 @@ void    management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd, int nmb_cmd)
 	}
 }
 
-void    main_pipe(char *line, t_list *envp)
+static int	split_stringtab(char **str, char ***cmd, int nmb_of_ocurence)
 {
-    char    **str;
-    char    ***cmd;
-    int     nmb_of_ocurence;
-    int     i;
-    t_pipe  struct_fd;
+	int	i;
+	int	y;
 
-    str = ft_split_str(line, "|");
-    nmb_of_ocurence = ft_stringtab_len(str);
-    cmd = ft_calloc(nmb_of_ocurence + 1, sizeof(char **));
-    i = 0;
-    while (i != nmb_of_ocurence)
+	i = 0;
+	y = 0;
+    while (i != nmb_of_ocurence && y == 0)
     {
         cmd[i] = ft_split_modif(str[i], ' ');
-        i++;
+		if (!cmd[i])
+			y = 1;
+		i++;
     }
-    ft_free_stringtab(str);
+	if (y == 1)
+	{
+		i--;
+		while (i >= 0)
+		{
+			ft_free_stringtab(cmd[i]);
+			i--;
+		}
+		free(cmd);
+		return (1);
+	}
+	return (0);
+}
+
+static char	***ft_split_command(char *line, t_pipe *save_fd)
+{
+	char	**str;
+    char	***cmd;
+    int		nmb_of_ocurence;
+
+	str = ft_split_str(line, "|");
+	if (!str)
+		return (NULL);
+    nmb_of_ocurence = ft_stringtab_len(str);
+    cmd = ft_calloc(nmb_of_ocurence + 1, sizeof(char **));
+	if (!cmd)
+	{
+		ft_free_stringtab(str);
+		return (NULL);
+	}
+	if (split_stringtab(str, cmd, nmb_of_ocurence))
+	{
+		ft_free_stringtab(str);
+		return (NULL);
+	}
+	ft_free_stringtab(str);
+    save_fd->nmb_max_cmd = nmb_of_ocurence;
+	return (cmd);
+}
+
+void    main_pipe(char *line, t_list *envp)
+{
+    t_pipe  struct_fd;
+	char	***cmd;
+
+    cmd = ft_split_command(line, &struct_fd);
+	if (!cmd)
+		return /* (1) */;
     struct_fd.save_first_fd[0] = dup(STDIN_FILENO);
     struct_fd.save_first_fd[1] = dup(STDOUT_FILENO);
-    struct_fd.nmb_max_cmd = nmb_of_ocurence;
     struct_fd.save_fd = -1;
-    management_pipe(cmd, envp, &struct_fd, nmb_of_ocurence);
+    management_pipe(cmd, envp, &struct_fd);
     close(struct_fd.save_first_fd[1]);
     close(struct_fd.save_first_fd[0]);
     free(cmd);
