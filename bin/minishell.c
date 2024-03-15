@@ -33,6 +33,9 @@ char *ft_prompt(void)
 
 void	ft_start_minishell(char **line, t_list **envp)
 {
+	int	len;
+
+	len = ft_stringtab_len(line);
 	if (!line)
 		return ;
 	if (ft_strncmp(line[0], "echo", 5) == 0 || ft_strncmp(line[0], "echo ", 5) == 0)
@@ -47,6 +50,9 @@ void	ft_start_minishell(char **line, t_list **envp)
 		minishell_pwd();
 	else if (ft_strncmp(line[0], "unset", 6) == 0 || ft_strncmp(line[0], "unset ", 6) == 0)
 		minishell_unset(envp, &line[1]);
+	else if (len > 2 && (!strncmp(line[0], "<", ft_strlen(line[0]))
+			|| !strncmp(line[len - 2], ">", ft_strlen(line[len - 2]))))
+		main_redirection(line, *envp);
 	else
 		execute_command(line, *envp);
 }
