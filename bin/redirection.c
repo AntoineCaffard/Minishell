@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:11:47 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/15 11:11:47 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:59:04 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	redirect_input(char **line, int save_fd[2])
 	fd = open(line[1], O_RDONLY);
 	if (fd == -1)
 	{
-		printf("%s: file no found\n", line[1]); // fonction message d'erreur ?
+		display_error("No such file or directory", line[1]);
 		redirect_save_fd(save_fd, 2);
 		return (1);
 	}
@@ -53,7 +53,7 @@ static int	redirect_output(char **line, int save_fd[2])
 	fd = open(line[len - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd == -1)
 	{
-		printf("%s: file no found\n", line[len - 1]); // fonction message d'erreur ?
+		display_error("file can not be creat", line[len - 1]);
 		redirect_save_fd(save_fd, 2);
 		return (1);
 	}

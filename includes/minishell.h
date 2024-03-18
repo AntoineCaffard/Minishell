@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 09:59:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:39:58 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ char	**ft_split_modif(char *src, char c);
 t_list	*init_stringtab_in_t_list(char **envp);
 void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
+int		main_redirection(char **line, t_list *envp);
 void	parsing_readline(char *line, t_list **envp);
-int compare_string_to_character(char *line, char chr);
+void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
-void    display_error(int cmd, char *prompt, char *file);
+int		compare_string_to_character(char *line, char chr);
+void    display_error_cmd(int cmd, char *prompt, char *file);
 
 #endif

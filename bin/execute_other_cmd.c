@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:53:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 11:24:58 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:59:44 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ char	*init_link(char *src, char **path)
 		free(verif_link);
 	}
 	free(save);
-	dup2(2, STDOUT_FILENO);			// fonction message erreur ?
-	ft_printf("minishell: %s: command not found\n", src);
+	display_error("command not found", src);
 	free(src);
 	return (NULL);
 }
