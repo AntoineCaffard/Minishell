@@ -3,27 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/18 09:12:08 by acaffard         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/18 08:39:58 by trebours         ###   ########.fr       */
->>>>>>> d37a0cced84f9903af5f89ad3cbd61073221051f
+/*   Updated: 2024/03/18 10:55:17 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-typedef struct s_pipe
-{
-    int     save_fd;
-    int     pipe[2];
-    int     nmb_max_cmd;
-    int     save_first_fd[2];
-}t_pipe;
 
 # include <term.h>
 # include <fcntl.h>
@@ -46,9 +34,17 @@ typedef struct s_pipe
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
 
+typedef struct s_pipe
+{
+	int	save_fd;
+	int	pipe[2];
+	int	nmb_max_cmd;
+	int	save_first_fd[2];
+}t_pipe;
+
 char	**init_path(t_list *envp);
 char	*init_link(char *src, char **path);
-void    main_pipe(char *line, t_list *envp);
+void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
 t_list	*init_stringtab_in_t_list(char **envp);
 void	execute_command(char **line, t_list *envp);
@@ -63,6 +59,5 @@ int		main_redirection(char **line, t_list *envp);
 =======
 int		compare_string_to_character(char *line, char chr);
 void    display_error_cmd(int cmd, char *prompt, char *file);
->>>>>>> d37a0cced84f9903af5f89ad3cbd61073221051f
 
 #endif

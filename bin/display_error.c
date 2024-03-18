@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:04:09 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:04:13 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 09:38:53 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	display_error_cmd(int cmd, char *prompt, char *file)
 	else if (cmd == 3)
 		printf("Minishell: export: ");
 	else if (cmd == 4)
-		printf("exit\nMinishell: exit: ");
+		printf("Minishell: exit: ");
 	else if (cmd == 5)
 		printf("Minishell: unset: ");
 	if (file)
@@ -50,6 +50,7 @@ void	display_error(char *prompt, char *file_or_cmd)
 	fd_error = dup(STDERR_FILENO);
 	dup2(fd_error, STDOUT_FILENO);
 	close(fd_error);
+	printf("Minishell: ");
 	if (file_or_cmd)
 		printf("%s: %s\n", file_or_cmd, prompt);
 	else
