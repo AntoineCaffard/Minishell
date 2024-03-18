@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:55:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 09:32:26 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:15:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ static t_list	*get_node_by_value(t_list *list, char *param)
 {
 	while (list)
 	{
-		if (ft_strncmp(((char *) (list->content)), param, ft_strlen_until_equal(param)) == 0)
+		if (ft_strncmp(((char *)(list->content)), param,
+			ft_strlen_until_equal(param)) == 0)
 		{
-			if (((char *) (list->content))[ft_strlen_until_equal(param)] == '=')
+			if (((char *)(list->content))[ft_strlen_until_equal(param)] == '=')
 				return (list);
 		}
 		list = list->next;
@@ -38,14 +39,14 @@ static t_list	*get_node_by_value(t_list *list, char *param)
 
 static void	actualize_node_value(t_list *node, char *param)
 {
-		char	*tmp;
+	char	*tmp;
 
-		tmp = ft_strdup(param);
-		if (tmp)
-		{
-			free(node->content);
-			node->content = tmp;
-		}
+	tmp = ft_strdup(param);
+	if (tmp)
+	{
+		free(node->content);
+		node->content = tmp;
+	}
 }
 
 static void	add_new_env_var(t_list **envp, char *param)
@@ -65,11 +66,10 @@ static void	add_new_env_var(t_list **envp, char *param)
 	ft_lstadd_back(envp, node);
 }
 
-void	minishell_export(t_list **envp, char ** params)
+void	minishell_export(t_list **envp, char **params)
 {
-	int 	i;
+	int		i;
 	t_list	*node;
-
 
 	i = 0;
 	while (params[i])

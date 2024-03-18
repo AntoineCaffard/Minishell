@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:39:20 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 08:26:32 by trebours         ###   ########.fr       */
+/*   Created: 2024/03/18 11:22:17 by trebours          #+#    #+#             */
+/*   Updated: 2024/03/18 11:27:23 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_option(char **params)
 {
-	if (ft_strnstr(params[0], "-n", 3))
+	if (ft_strnstr(params[0], "-n", ft_strlen(params[0])))
 		return (42);
 	else
 		return (0);

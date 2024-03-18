@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:53:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/28 11:34:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 09:46:24 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	parsing_cd(char **params);
 void	parsing_pwd(char **params);
-int 	parsing_exit(char *params);
+int		parsing_exit(char *params);
 int		check_option(char **params);
 void	parsing_echo(char **params);
 void	parsing_unset(t_list **envp, char **params);

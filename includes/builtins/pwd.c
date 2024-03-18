@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:01:25 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:43:00 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:01:51 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	minishell_pwd(void)
 	buffer = NULL;
 	buffer = getcwd(buffer, 0);
 	if (!buffer)
-		return ; // a revoir
+		return ;
 	printf("%s\n", buffer);
 	free(buffer);
 }

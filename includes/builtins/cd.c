@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/27 14:41:53 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:17:36 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ void	minishell_cd(char *path)
 
 	status = chdir(path);
 	if (status != 0)
-		return ; //error
+		display_error("No such file or directory", path);
 }
