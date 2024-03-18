@@ -6,11 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/18 09:12:08 by acaffard         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/18 08:39:58 by trebours         ###   ########.fr       */
->>>>>>> d37a0cced84f9903af5f89ad3cbd61073221051f
+/*   Updated: 2024/03/18 11:49:24 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +53,8 @@ int		main_redirection(char **line, t_list *envp);
 void	parsing_readline(char *line, t_list **envp);
 void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
-<<<<<<< HEAD
-void	display_error(int cmd, char *prompt, char *file);
-int		main_redirection(char **line, t_list *envp);
-=======
 int		compare_string_to_character(char *line, char chr);
-void    display_error_cmd(int cmd, char *prompt, char *file);
->>>>>>> d37a0cced84f9903af5f89ad3cbd61073221051f
+void	display_error_cmd(int cmd, char *prompt, char *file);
+void	heredoc(char **params,t_list **envp);
 
 #endif
