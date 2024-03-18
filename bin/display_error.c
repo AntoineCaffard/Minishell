@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:04:09 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 08:41:39 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 09:04:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	display_error_cmd(int cmd, char *prompt, char *file)
 {
-		int	fd;
+	int	fd;
 	int	fd_error;
 
 	fd = dup(STDOUT_FILENO);
