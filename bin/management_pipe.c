@@ -47,7 +47,7 @@ static void	management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd)
 			return ;
 		management_fd(save_fd, i);
 		if (!ft_strncmp(cmd[i][0], "<<", 2))
-			heredoc_pipe(cmd[i], envp, save_fd);
+			heredoc_pipe(cmd[i], &envp, save_fd);
 		else
 			ft_start_minishell(cmd[i], &envp);
 		management_fd(save_fd, -1);
