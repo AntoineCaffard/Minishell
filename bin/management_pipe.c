@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 09:41:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 14:04:02 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:30:34 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	management_pipe(char ***cmd, t_list *envp, t_pipe *save_fd)
 			return ;
 		management_fd(save_fd, i);
 		if (!ft_strncmp(cmd[i][0], "<<", 2))
-			heredoc_pipe(cmd[i], envp, save_fd);
+			heredoc_pipe(cmd[i], &envp, save_fd);
 		else
 			ft_start_minishell(cmd[i], &envp);
 		management_fd(save_fd, -1);
@@ -129,5 +129,6 @@ void	main_pipe(char *line, t_list *envp)
 	management_pipe(cmd, envp, &struct_fd);
 	close(struct_fd.save_first_fd[1]);
 	close(struct_fd.save_first_fd[0]);
+	close(struct_fd.save_fd);
 	free(cmd);
 }

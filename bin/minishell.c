@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:19:26 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:38:51 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	ft_start_minishell(char **line, t_list **envp)
 	len = ft_stringtab_len(line);
 	if (!line)
 		return ;
-	if (!ft_strncmp(line[0], "echo", 5) || !ft_strncmp(line[0], "echo ", 5))
+	else if (strncmp(line[0], "<<", 2) == 0)
+		heredoc(line, envp);
+	else if (!ft_strncmp(line[0], "echo", 5) || !ft_strncmp(line[0], "echo ", 5))
 		parsing_echo(&line[1]);
 	else if (!ft_strncmp(line[0], "cd", 3) || !ft_strncmp(line[0], "cd ", 3))
 		parsing_cd(&line[1]);
