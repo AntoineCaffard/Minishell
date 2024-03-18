@@ -1,7 +1,7 @@
 NAME = parsing_minishell.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRCS = parsing_cd.c parsing_echo.c parsing_env.c parsing_exit.c parsing_export.c
+SRCS = parsing_cd.c parsing_env.c parsing_exit.c parsing_export.c parsing_echo.c
 OBJS = $(SRCS:.c=.o)
 
 

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   parsing_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 11:17:36 by trebours         ###   ########.fr       */
+/*   Created: 2024/03/18 11:22:17 by trebours          #+#    #+#             */
+/*   Updated: 2024/03/18 11:23:02 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "parsing_minishell.h"
 
-void	minishell_cd(char *path)
+void	parsing_echo(char **params)
 {
-	int	status;
-
-	status = chdir(path);
-	if (status != 0)
-		display_error("No such file or directory", path);
+	if (!params || !ft_stringtab_len(params))
+		display_error_cmd(1, NULL, NULL);
+	else if (params && ft_stringtab_len(params) > 1 && check_option(params))
+		minishell_echo(params);
+	else if (params && ft_stringtab_len(params) && check_option(params) == 0)
+		minishell_echo(params);
+	else
+		return ;
 }

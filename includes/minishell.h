@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 10:57:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:01:14 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
 int		main_redirection(char **line, t_list *envp);
 int		compare_string_to_character(char *line, char chr);
-void    display_error_cmd(int cmd, char *prompt, char *file);
+void	display_error_cmd(int cmd, char *prompt, char *file);
 
 #endif
