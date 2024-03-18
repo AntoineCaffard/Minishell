@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/02/28 09:59:57 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 09:12:08 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	**init_t_list_in_stringtab(t_list	*envp);
 void	parsing_readline(char *line, t_list **envp);
 int compare_string_to_character(char *line, char chr);
 void	ft_start_minishell(char **line, t_list **envp);
-void    display_error(int cmd, char *prompt, char *file);
+void	display_error(int cmd, char *prompt, char *file);
+int		main_redirection(char **line, t_list *envp);
 
 #endif
