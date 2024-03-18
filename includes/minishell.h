@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/03/18 11:49:24 by acaffard         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/18 11:01:14 by trebours         ###   ########.fr       */
->>>>>>> bdc04ab4e985ebcb246d66668473489d3a93eb9b
+/*   Updated: 2024/03/18 13:56:04 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +53,9 @@ int		main_redirection(char **line, t_list *envp);
 void	parsing_readline(char *line, t_list **envp);
 void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
-<<<<<<< HEAD
 int		compare_string_to_character(char *line, char chr);
 void	display_error_cmd(int cmd, char *prompt, char *file);
 void	heredoc(char **params,t_list **envp);
-=======
-int		main_redirection(char **line, t_list *envp);
-int		compare_string_to_character(char *line, char chr);
-void	display_error_cmd(int cmd, char *prompt, char *file);
->>>>>>> bdc04ab4e985ebcb246d66668473489d3a93eb9b
+void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe);
 
 #endif
