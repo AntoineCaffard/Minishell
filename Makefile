@@ -3,7 +3,7 @@ CC = cc
 CFLAGS= -Wall -Wextra -Werror -g
 
 SRCS = bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c bin/minishell.c bin/parsing_readline.c\
-		bin/split_modif.c bin/display_error.c bin/management_pipe.c bin/redirection.c
+		bin/split_modif.c bin/display_error.c bin/management_pipe.c bin/redirection.c bin/heredoc.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT
