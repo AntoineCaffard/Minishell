@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:43:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 13:18:41 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:34:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	heredoc(char **params, t_list **envp)
 		return ;
 	dup2(pipe_fds[0], STDIN_FILENO);
 	ft_start_minishell(&(params[fst_command]), envp);
-	printf("passer ici");
 	close(pipe_fds[0]);
 	dup2(fds[0], STDIN_FILENO);
 	close(fds[0]);
