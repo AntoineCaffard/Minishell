@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 10:43:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 14:05:05 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:30:54 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe)
 {
 	char	*line;
 	char	*limiter;
+	int		fds[2];
+	int		pipe_fds[2];
 	int		fst_command;
 
 	if (ft_strlen(params[0]) > 2)
@@ -91,24 +93,30 @@ void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe)
 		limiter = params[1];
 		fst_command = 2;
 	}
+	fds[0] = dup(STDIN_FILENO);
+	fds[1] = dup(STDOUT_FILENO);
 	line = ft_calloc(1, sizeof(char));
+	pipe(pipe_fds);
+	dup2(my_pipe->save_first_fd[1], STDOUT_FILENO);
+	dup2(my_pipe->save_first_fd[0], STDIN_FILENO);
 	while (ft_strcmp(line, limiter) != 0)
 	{
 		free(line);
 		line = readline("\033[1;33mheredoc: \033[0;m");
-		dup2(my_pipe->pipe[1], STDOUT_FILENO);
+		dup2(pipe_fds[1], STDOUT_FILENO);
 		if (ft_strcmp(line, limiter) != 0)
 			printf("%s\n", line);
 		dup2(my_pipe->save_first_fd[1], STDOUT_FILENO);
 	}
-	dup2(my_pipe->pipe[1], STDOUT_FILENO);
-	dup2(my_pipe->save_first_fd[1], STDOUT_FILENO);
 	if (!params[fst_command])
 		return ;
-	dup2((my_pipe->pipe)[0], STDIN_FILENO);
-	close(my_pipe->pipe[1]);
+	dup2(pipe_fds[0], STDIN_FILENO);
+	close(pipe_fds[1]);
+	dup2(fds[1], STDOUT_FILENO);
+	dup2(pipe_fds[0], STDIN_FILENO);
+	close(pipe_fds[0]);
+	close(fds[1]);
 	ft_start_minishell(&(params[fst_command]), envp);
-	close(my_pipe->pipe[0]);
-	dup2(my_pipe->save_first_fd[0], STDIN_FILENO);
-	close(my_pipe->save_first_fd[0]);
+	dup2(fds[0], STDIN_FILENO);
+	close(fds[0]);
 }
