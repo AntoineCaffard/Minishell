@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   management_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 09:41:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:10:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:01:03 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char	***ft_split_command(char *line, t_pipe *save_fd)
 {
 	char	**str;
 	char	***cmd;
-	int		nmb_of_ocurence;	
+	int		nmb_of_ocurence;
 
 	str = ft_split_str(line, "|");
 	if (!str)
