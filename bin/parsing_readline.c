@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_readline.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 16:27:20 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:20:33 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:47:42 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	parsing_readline(char *line, t_list **envp)
 		return ;
 	}
 	line_split = ft_split_modif(line, ' ');
+	if (strncmp(line_split[0], "<<", 2) == 0)
+	{
+		heredoc(line_split, envp);
+		return ;
+	}
 	ft_start_minishell(line_split, envp);
 	ft_free_stringtab(line_split);
 }
