@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 14:05:53 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/19 09:12:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ typedef struct s_pipe
 }t_pipe;
 
 char	**init_path(t_list *envp);
+int	main_append(char **line, t_list *envp);
 char	*init_link(char *src, char **path);
 void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
+void	heredoc(char **params,t_list **envp);
 t_list	*init_stringtab_in_t_list(char **envp);
 void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
@@ -55,7 +57,6 @@ void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
 int		compare_string_to_character(char *line, char chr);
 void	display_error_cmd(int cmd, char *prompt, char *file);
-void	heredoc(char **params,t_list **envp);
 void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe);
 
 #endif
