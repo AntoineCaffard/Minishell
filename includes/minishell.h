@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/19 09:12:13 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/19 09:22:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ typedef struct s_pipe
 }t_pipe;
 
 char	**init_path(t_list *envp);
-int	main_append(char **line, t_list *envp);
 char	*init_link(char *src, char **path);
 void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
 void	heredoc(char **params,t_list **envp);
 t_list	*init_stringtab_in_t_list(char **envp);
+int		main_append(char **line, t_list *envp);
 void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
 int		main_redirection(char **line, t_list *envp);

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/19 09:10:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:51:40 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,18 @@ int		ft_toupper(int c);
  * @returns int (The size of the string)
  *****************************************************************************/
 size_t	ft_strlen(const char *str);
+
 /******************************************************************************
  * LOCATE_STRING_IN_STRINGTAB :
  * This function locates a string in a stringtab and returns its position.
  * @param stringtab > the given stringtab 
  * @param string > the given string
+ * @param len_check > the number of charactere to check (if 0 then the whole
+ * 					charactere string is checked)
  * @returns int (positive if the fonction locate string)
  *****************************************************************************/
-int		locate_string_in_stringtab(char **stringtab, char *string);
+int		locate_string_in_stringtab(char **stringtab, char *string,
+			int len_check);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *nptr);
 char	*ft_strdup(const char *s);
