@@ -44,6 +44,7 @@ typedef struct s_pipe
 
 char	**init_path(t_list *envp);
 int		redirect_input(char **line);
+int		redirect_output(char **line);
 char	*init_link(char *src, char **path);
 void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
