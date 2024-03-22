@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 13:48:58 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:31:52 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	*ft_prompt(void)
 
 	prompt = NULL;
 	prompt = getcwd(prompt, 0);
-	link = ft_split_str(prompt, "/");
+	if (!ft_strncmp(prompt, "/", 2))
+		link = ft_split_str(prompt, " ");
+	else
+		link = ft_split_str(prompt, "/");
 	free(prompt);
 	prompt = NULL;
 	prompt = ft_strjoin("\033[1;32m > minishell\033[0;m", ": (");

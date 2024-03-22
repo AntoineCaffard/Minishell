@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 14:53:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 08:59:44 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:38:28 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	command_n(char **cmd, t_list *lst_envp)
 			ft_free_stringtab(cmd);
 			ft_free_stringtab(envp);
 			perror("execve");
+			exit(1);
 		}
 	}
 	else
@@ -89,9 +90,7 @@ void	command_n(char **cmd, t_list *lst_envp)
 void	execute_command(char **line, t_list *envp)
 {
 	char	**path;
-	int		fd;
 
-	fd = dup(STDOUT_FILENO);
 	path = init_path(envp);
 	if (access(line[0], X_OK))
 		line[0] = init_link(line[0], path);
@@ -99,11 +98,8 @@ void	execute_command(char **line, t_list *envp)
 	{
 		if (path)
 			ft_free_stringtab(path);
-		close(fd);
 		return ;
 	}
 	command_n(line, envp);
 	ft_free_stringtab(path);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
 }

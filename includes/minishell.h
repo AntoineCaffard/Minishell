@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/20 13:33:07 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:24:50 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,12 @@ void	execute_command(char **line, t_list *envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
 int		main_redirection(char **line, t_list *envp);
 void	parsing_readline(char *line, t_list **envp);
+void	redirect_save_fd(int save_fd[2], int action);
+void	loop_isolate_cmd(char **line, int pos, int i);
 void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
 int		compare_string_to_character(char *line, char chr);
+int		ft_parsing_output(char **line, char *chr, int len);
 void	display_error_cmd(int cmd, char *prompt, char *file);
 void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe);
 
