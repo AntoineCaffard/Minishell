@@ -6,11 +6,12 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:11:47 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 09:21:29 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:34:26 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
 
 static void	redirect_save_fd(int save_fd[2], int action)
 {
@@ -28,66 +29,43 @@ static void	redirect_save_fd(int save_fd[2], int action)
 	}
 }
 
-static int	redirect_input(char **line, int save_fd[2])
+static int	isolate_cmd(char **line)
 {
-	int	fd;
+	int	i;
+	int	pos;
 
-	fd = open(line[1], O_RDONLY);
-	if (fd == -1)
+	i = 0;
+	pos = 0;
+	while (!pos)
 	{
-		display_error("No such file or directory", line[1]);
-		redirect_save_fd(save_fd, 2);
-		return (1);
+		pos = locate_string_in_stringtab(&line[i], "<", 1);
+		if (pos)
+			break;
+		if (line[pos][1] != '\0')
+			i++;
+		else
+			i += 2;
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	return (0);
-}
-
-static int	redirect_output(char **line, int save_fd[2])
-{
-	int	fd;
-	int	len;
-
-	len = ft_stringtab_len(line);
-	fd = open(line[len - 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (fd == -1)
+	while (pos != -1 && line[pos + i])
 	{
-		display_error("file can not be creat", line[len - 1]);
-		redirect_save_fd(save_fd, 2);
-		return (1);
+		free(line[pos + i]);
+		line[pos + i] = NULL;
+		pos++;
 	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	free(line[len - 1]);
-	line[len - 1] = NULL;
-	free(line[len - 2]);
-	line[len - 2] = NULL;
-	return (0);
+	return (i);
 }
 
 int	main_redirection(char **line, t_list *envp)
 {
 	int	i;
-	int	len;
 	int	save_fd[2];
 
-	i = 0;
-	len = ft_stringtab_len(line);
 	redirect_save_fd(save_fd, 1);
-	if (len >= 3 && !ft_strncmp(line[0], "<", ft_strlen(line[0])))
-	{
-		if (redirect_input(line, save_fd))
-			return (1);
-		else
-			i = 2;
-	}
-	if (len >= 3 && !ft_strncmp(line[len - 2], ">", ft_strlen(line[len - 2])))
-	{
-		if (redirect_output(line, save_fd))
-			return (0);
-	}
-	ft_start_minishell(&line[i], &envp);
+	if (redirect_input(line))
+		return (1);
+	i = isolate_cmd(line);
+	if (line[i])
+		ft_start_minishell(&line[i], &envp);
 	redirect_save_fd(save_fd, 2);
 	return (0);
 }

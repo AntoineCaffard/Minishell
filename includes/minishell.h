@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/19 09:22:16 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:33:07 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_pipe
 }t_pipe;
 
 char	**init_path(t_list *envp);
+int		redirect_input(char **line);
 char	*init_link(char *src, char **path);
 void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
