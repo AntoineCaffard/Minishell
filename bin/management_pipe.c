@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   management_pipe.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 09:41:28 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/18 15:30:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:49:42 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	main_pipe(char *line, t_list *envp)
 
 	cmd = ft_split_command(line, &struct_fd);
 	if (!cmd)
-		return /* (1) */;
+		return ;
 	struct_fd.save_first_fd[0] = dup(STDIN_FILENO);
 	struct_fd.save_first_fd[1] = dup(STDOUT_FILENO);
 	struct_fd.save_fd = -1;

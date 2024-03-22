@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/19 11:10:58 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:48:58 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_start_minishell(char **line, t_list **envp)
 		return ;
 	else if (locate_string_in_stringtab(line, ">>", 2) != -1)
 		main_append(line, *envp);
-	else if (strncmp(line[0], "<<", 2) == 0)
+	else if (ft_strncmp(line[0], "<<", 2) == 0)
 		heredoc(line, envp);
 	else if (!ft_strncmp(line[0], "echo", 5) || !ft_strncmp(line[0], "echo ", 5))
 		parsing_echo(&line[1]);

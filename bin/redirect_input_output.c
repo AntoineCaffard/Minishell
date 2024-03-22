@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:31:39 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 11:17:23 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/22 13:31:19 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 static int	ft_parsing(char **line)
 {
 	int	position_input;
-	int	position_output;
 	int	len;
 	
 	len = ft_stringtab_len(line);
 	position_input = locate_string_in_stringtab(line, "<", 1);
-	position_output = locate_string_in_stringtab(line, ">", 1);
-	if (position_input == -1 && position_output == -1)
+	if (position_input == -1)
 		return (0);
-	if ((position_input != -1 && line[position_input][1] == '\0' && len < 2)
-		|| (position_output != -1 && !line[position_output][1] && len < 2))
+	if (position_input != -1 && line[position_input][1] == '\0' && len < 2)
 	{
 		display_error("syntax error near unexpected token `newline\'", NULL);
 		return (1);
@@ -105,16 +102,16 @@ static int	output_utils(char **line, char *chr, int fd, int len)
 			break ;
 		if (fd > 2)
 			close (fd);
-		if (ft_parsing(&line[save]))
-			return (-5);
 		if (line[save   + pos][len] == '\0')
 			fd = open(line[save + pos + 1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		else
 			fd = open(&line[save + pos][1], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		if (line[pos][len] != '\0')
 			save += 1;
-		else
+		else if (pos > 0)
 			save += pos + 1;
+		else
+			save += 2;
 	}
 	return (fd);
 }
