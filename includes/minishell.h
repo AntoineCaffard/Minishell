@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 14:24:50 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:03:00 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_pipe
 char	**init_path(t_list *envp);
 int		redirect_input(char **line);
 int		redirect_output(char **line);
+void	error_redirection(char *prompt);
 char	*init_link(char *src, char **path);
 void	main_pipe(char *line, t_list *envp);
 char	**ft_split_modif(char *src, char c);
@@ -60,7 +61,6 @@ void	loop_isolate_cmd(char **line, int pos, int i);
 void	display_error(char *prompt, char *file_or_cmd);
 void	ft_start_minishell(char **line, t_list **envp);
 int		compare_string_to_character(char *line, char chr);
-int		ft_parsing_output(char **line, char *chr, int len);
 void	display_error_cmd(int cmd, char *prompt, char *file);
 void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe);
 

@@ -6,36 +6,11 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:31:39 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 13:31:19 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:02:01 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int	ft_parsing(char **line)
-{
-	int	position_input;
-	int	len;
-	
-	len = ft_stringtab_len(line);
-	position_input = locate_string_in_stringtab(line, "<", 1);
-	if (position_input == -1)
-		return (0);
-	if (position_input != -1 && line[position_input][1] == '\0' && len < 2)
-	{
-		display_error("syntax error near unexpected token `newline\'", NULL);
-		return (1);
-	}
-	if ((position_input != -1 && line[position_input][1] != '\0'
-		&& access(&line[position_input][1], R_OK) == -1)|| (position_input != -1 
-		&& line[position_input][1] == '\0'
-		&& access(line[position_input + 1], R_OK) == -1))
-	{
-		display_error("No such file or directory", line[position_input + 1]);
-		return (1);
-	}
-	return (0);
-}
 
 static int	input_utils(char **line, char *chr)
 {
@@ -73,7 +48,7 @@ int	redirect_input(char **line)
 	position = input_utils(line, "<");
 	fd = -1;
 	if (position == -1)
-		return (1);
+		return (-1);
 	if (line[position][1] == '\0')
 		fd = open(line[position + 1], O_RDONLY);
 	else if (position != -1)

@@ -6,39 +6,11 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 08:23:05 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 13:46:00 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:01:30 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	ft_parsing_output(char **line, char *chr, int len)
-{
-	int	save;
-	int	position;
-
-	save = 0;
-	position = 0;
-	while (position != -1)
-	{
-		position = locate_string_in_stringtab(&line[save], chr, len);
-		if (position == -1)
-			return (-1);
-		if (line[save + position][len] == '\0'
-			&& line[save + position + 1] == NULL)
-		{
-			display_error("syntax error unexpected token `newline\'", NULL);
-			return (1);
-		}
-		if (line[position][len] != '\0')
-			save += 1;
-		if (position > 0)
-			save += position + 1;
-		else
-			save += 2;
-	}
-	return (0);
-}
 
 static int	output_utils(char **line, char *chr, int fd, int len)
 {
@@ -55,11 +27,9 @@ static int	output_utils(char **line, char *chr, int fd, int len)
 		if (fd > 2)
 			close (fd);
 		if (line[save + pos][len] == '\0')
-			fd = open(line[save + pos + 1],
-					O_CREAT | O_APPEND | O_WRONLY, 0644);
+			fd = open(line[save + pos + 1], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		else
-			fd = open(&line[save + pos][2],
-					O_CREAT | O_APPEND | O_WRONLY, 0644);
+			fd = open(&line[save + pos][2], O_CREAT | O_APPEND | O_WRONLY, 0644);
 		if (line[save + pos][len] != '\0')
 			save += 1;
 		else
@@ -97,7 +67,7 @@ static int	isolate_cmd(char **line)
 	{
 		pos_out = locate_string_in_stringtab(&line[i], ">>", 2);
 		if (pos_out)
-			break ;
+			break;
 		if (pos_out != -1 && line[pos_out][2] != '\0')
 			i++;
 		else

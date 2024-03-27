@@ -6,11 +6,25 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:11:47 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 13:41:29 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:18:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	error_redirection(char *prompt)
+{
+	int	fd;
+	int	fd_error;
+
+	fd = dup(STDOUT_FILENO);
+	fd_error = dup(STDERR_FILENO);
+	dup2(fd_error, STDOUT_FILENO);
+	close(fd_error);
+	printf("Minishell: syntax error near unexpected token `%s'\n", prompt);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+}
 
 void	redirect_save_fd(int save_fd[2], int action)
 {
@@ -52,7 +66,7 @@ static int	isolate_cmd(char **line)
 		pos_in = locate_string_in_stringtab(&line[i], "<", 1);
 		pos_out = locate_string_in_stringtab(&line[i], ">", 1);
 		if (pos_in && pos_out)
-			break ;
+			break;
 		if ((pos_in != -1 && line[pos_in][1] != '\0')
 			|| (pos_out != -1 && line[pos_out][1] != '\0'))
 			i++;
@@ -73,10 +87,14 @@ int	main_redirection(char **line, t_list *envp)
 	int	rsl_input;
 	int	rsl_output;
 
-	if (ft_parsing_output(line, ">", 1) > 0)
-		return (1);
 	redirect_save_fd(save_fd, 1);
 	rsl_input = redirect_input(line);
+	rsl_output = ft_parsing_output(line, ">", 1);
+	if (rsl_input == -1 && rsl_output > 0)
+	{
+		redirect_save_fd(save_fd, 2);
+		return (1);
+	}
 	rsl_output = redirect_output(line);
 	if (rsl_input && rsl_output)
 	{
