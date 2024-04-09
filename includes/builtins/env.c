@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 09:40:06 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/28 10:28:25 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	minishell_env(t_list *envp)
 {
-	size_t	i;
-
-	if (!stringtab)
+	if (!envp)
 		return ;
-	i = 0;
-	while (stringtab[i])
+	while (envp)
 	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
+		printf("%s\n", (char *) envp->content);
+		envp = envp->next;
 	}
 }

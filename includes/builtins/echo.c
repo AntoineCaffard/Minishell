@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/22 13:52:49 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/27 14:42:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	minishell_echo(char **params)
 {
-	size_t	i;
+	int	i;
 
-	if (!stringtab)
-		return ;
-	i = 0;
-	while (stringtab[i])
+	if (check_option(params) == 1)
 	{
-		ft_printf("%s\n", stringtab[i]);
+		if (!*params && params != NULL)
+			free(params);
+		return ;
+	}
+	i = 0;
+	if (check_option(params) == 42)
+		i++;
+	while (params[i])
+	{
+		ft_putstr_fd(params[i], STDOUT_FILENO);
+		if (params[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
+	if (check_option(params) != 42)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }

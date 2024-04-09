@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_pwd.c                                      :+:      :+:    :+:   */
+/*   locate_string_in_stringtab.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:38:17 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 13:13:33 by trebours         ###   ########.fr       */
+/*   Created: 2024/03/19 08:52:01 by trebours          #+#    #+#             */
+/*   Updated: 2024/03/19 10:46:26 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_minishell.h"
+#include "libft.h"
 
-void	parsing_pwd(char **params)
+int	locate_string_in_stringtab(char **stringtab, char *string, int len_check)
 {
-	if (ft_stringtab_len(params))
-		strerror(0); // a revoir
+	int	i;
+
+	if (!stringtab || !string)
+		return (-1);
+	i = 0;
+	while (stringtab[i])
+	{
+		if (len_check && !ft_strncmp(stringtab[i], string, len_check))
+			return (i);
+		else if (!ft_strncmp(stringtab[i], string, ft_strlen(stringtab[i])))
+			return (i);
+		i++;
+	}
+	return (-1);
 }

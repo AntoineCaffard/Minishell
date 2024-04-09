@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 09:44:49 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/27 14:40:27 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	minishell_exit(void)
 {
-	size_t	i;
-
-	if (!stringtab)
-		return ;
-	i = 0;
-	while (stringtab[i])
-	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
-	}
+	exit(0);
 }

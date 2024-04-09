@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_unset.c                                    :+:      :+:    :+:   */
+/*   ft_string_isdigit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:38:31 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 13:08:55 by trebours         ###   ########.fr       */
+/*   Created: 2024/02/28 15:09:41 by trebours          #+#    #+#             */
+/*   Updated: 2024/03/18 09:28:29 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_minishell.h"
+#include "libft.h"
 
-void	parsing_unset(char **params)
+int	ft_string_isdigit(char *src)
 {
-	if (ft_stringtab_len(params) < 1)
-		return ;
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		if (ft_isdigit(src[i]))
+			i++;
+		else
+			return (0);
+	}
+	return (1);
 }

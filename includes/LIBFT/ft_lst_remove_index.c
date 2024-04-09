@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   ft_lst_remove_index.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 13:13:09 by acaffard          #+#    #+#             */
+/*   Updated: 2024/02/27 10:11:03 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	ft_lst_remove_index(t_list **list, int index)
 {
-	size_t	i;
+	t_list	*tmp;
 
-	if (!stringtab)
+	if (!list || !*list)
 		return ;
-	i = 0;
-	while (stringtab[i])
+	if (index >= ft_lstsize(*list))
+		return ;
+	if (index == 0)
 	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
+		tmp = *list;
+		*list = tmp->next;
+		ft_lstdelone(tmp, free);
+		return ;
 	}
+	ft_lst_remove_index(&((*list)->next), index - 1);
 }

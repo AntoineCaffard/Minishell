@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   ft_lst_get_index.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 14:37:22 by acaffard          #+#    #+#             */
+/*   Updated: 2024/03/18 09:29:27 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_print_stringtab(char **stringtab)
+size_t	ft_lst_get_index(t_list *list, t_list *node)
 {
-	size_t	i;
+	size_t	res;
 
-	if (!stringtab)
-		return ;
-	i = 0;
-	while (stringtab[i])
+	if (!list | !node)
+		return (-1);
+	res = 0;
+	while (list)
 	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
+		if (list == node)
+			return (res);
+		res++;
+		list = list->next;
 	}
+	return (-1);
 }

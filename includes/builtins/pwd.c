@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/22 14:01:25 by acaffard          #+#    #+#             */
+/*   Updated: 2024/03/18 11:01:51 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	minishell_pwd(void)
 {
-	size_t	i;
+	char	*buffer;
 
-	if (!stringtab)
+	buffer = NULL;
+	buffer = getcwd(buffer, 0);
+	if (!buffer)
 		return ;
-	i = 0;
-	while (stringtab[i])
-	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
-	}
+	printf("%s\n", buffer);
+	free(buffer);
 }

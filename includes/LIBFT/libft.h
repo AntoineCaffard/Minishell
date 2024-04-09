@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 10:33:45 by trebours         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:51:40 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,65 +35,58 @@ typedef struct s_list
 /******************************************************************************
  * FT_ISALPHA :
  * This function checks if the character given is a letter.
- * @params : c -> the character to check
- * @returns : int (1 if True ; 0 if False)
+ * @param c > the character to check
+ * @returns int (1 if True ; 0 if False)
 	if (size == 0)
  *****************************************************************************/
-
 int		ft_isalpha(int c);
 
 /******************************************************************************
  * FT_ISDIGIT :
  * This function checks if the character given is a number.
- * @params : c -> the character to check
- * @returns : int (1 if True ; 0 if False)
+ * @param c > the character to check
+ * @returns int (1 if True ; 0 if False)
  *****************************************************************************/
-
 int		ft_isdigit(int c);
 
 /******************************************************************************
  * FT_ISALNUM :
  * This function checks if the character given is a letter or a number.
- * @params : c -> the character to check
- * @returns : int (1 if True ; 0 if False)
+ * @param c > the character to check
+ * @returns int (1 if True ; 0 if False)
  *****************************************************************************/
-
 int		ft_isalnum(int c);
 
 /******************************************************************************
  * FT_ISPRINT :
  * This function checks if the character given is a printable character.
- * @params : c -> the character to check
- * @returns : int (1 if True ; 0 if False)
+ * @param c > the character to check
+ * @returns int (1 if True ; 0 if False)
  *****************************************************************************/
-
 int		ft_isprint(int c);
 
 /******************************************************************************
  * FT_ISASCII :
  * This function checks if the character given is part of the ASCII table.
- * @params : c -> the character to check
- * @returns : int (1 if True ; 0 if False)
+ * @param c > the character to check
+ * @returns int (1 if True ; 0 if False)
  *****************************************************************************/
-
 int		ft_isascii(int c);
 
 /******************************************************************************
  * FT_TOLOWER :
  * This function converts an uppercase character to lowercase.
- * @params : c -> the character to convert
- * @returns : char (The converted character)
+ * @param c > the character to convert
+ * @returns char (The converted character)
  *****************************************************************************/
-
 int		ft_tolower(int c);
 
 /******************************************************************************
  * FT_TOUPPER :
  * This function converts a lowercase character to uppercase.
- * @params : c -> the character to convert
- * @returns : char (The converted character)
+ * @param c > the character to convert
+ * @returns char (The converted character)
  *****************************************************************************/
-
 int		ft_toupper(int c);
 
 /*****************************************************************************/
@@ -103,11 +96,22 @@ int		ft_toupper(int c);
 /******************************************************************************
  * FT_STRLEN :
  * This function detemines the size of the given string.
- * @params : str -> the given string
- * @returns : int (The size of the string)
+ * @param str > the given string
+ * @returns int (The size of the string)
  *****************************************************************************/
-
 size_t	ft_strlen(const char *str);
+
+/******************************************************************************
+ * LOCATE_STRING_IN_STRINGTAB :
+ * This function locates a string in a stringtab and returns its position.
+ * @param stringtab > the given stringtab 
+ * @param string > the given string
+ * @param len_check > the number of charactere to check (if 0 then the whole
+ * 					charactere string is checked)
+ * @returns int (positive if the fonction locate string)
+ *****************************************************************************/
+int		locate_string_in_stringtab(char **stringtab, char *string,
+			int len_check);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *nptr);
 char	*ft_strdup(const char *s);
@@ -147,6 +151,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+size_t	ft_lst_get_index(t_list *list, t_list *node);
+void	ft_lst_remove_index(t_list **list, int index);
 
 char	*get_next_line(int fd);
 
@@ -159,9 +165,10 @@ int		ft_print_hexa(unsigned long long n, char c);
 int		ft_printf(const char *s, ...);
 
 void	ft_free_stringtab(char **to_free);
-size_t	ft_stringtab_len(char **tab);
-void	ft_print_stringtab(char **tab);
+size_t	ft_stringtab_len(char **stringtab);
+void	ft_print_stringtab(char **stringtab);
 char	**ft_split_str(char const *s, char *separator);
-int     count_occurences_in_string(const char *src, const char c);
+int		count_occurences_in_string(const char *src, const char c);
+int		ft_string_isdigit(char *src);
 
 #endif

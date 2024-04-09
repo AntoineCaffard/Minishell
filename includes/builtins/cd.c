@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_stringtab.c                               :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 10:08:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/02/22 14:28:19 by acaffard         ###   ########.fr       */
+/*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
+/*   Updated: 2024/03/18 11:17:36 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-void	ft_print_stringtab(char **stringtab)
+void	minishell_cd(char *path)
 {
-	size_t	i;
+	int	status;
 
-	if (!stringtab)
-		return ;
-	i = 0;
-	while (stringtab[i])
-	{
-		ft_printf("%s\n", stringtab[i]);
-		i++;
-	}
+	status = chdir(path);
+	if (status != 0)
+		display_error("No such file or directory", path);
 }
