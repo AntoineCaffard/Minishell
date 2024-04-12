@@ -29,6 +29,8 @@
 # include <sys/types.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "LIBFT/libft.h"
+# include "parsing/parsing_minishell.h"
 
 typedef enum e_error
 {
@@ -69,5 +71,13 @@ typedef struct s_command_line
 	int	error_code;
 	t_command	*commands;
 }	t_command_line;
+
+# include "builtins/builtins_minishell.h"
+
+char	**main_parseur(char *line);
+t_list	*init_stringtab_in_t_list(char **envp);
+char	**init_t_list_in_stringtab(t_list	*envp);
+void	display_error(char *prompt, char *file_or_cmd);
+void	display_error_cmd(int cmd, char *prompt, char *file);
 
 #endif
