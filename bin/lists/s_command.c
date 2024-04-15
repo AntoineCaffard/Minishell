@@ -6,13 +6,13 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:23:20 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/15 11:02:40 by antoine          ###   ########.fr       */
+/*   Updated: 2024/04/15 11:30:27 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_command	*create_command(void *content)
+t_command	*create_command(void)
 {
 	t_command	*res;
 

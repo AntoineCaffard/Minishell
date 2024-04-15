@@ -6,13 +6,13 @@
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:04:21 by antoine           #+#    #+#             */
-/*   Updated: 2024/04/15 11:10:59 by antoine          ###   ########.fr       */
+/*   Updated: 2024/04/15 11:21:02 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redirection	*create_redirection(e_redirection_type type, char *link)
+t_redir	*create_redir(e_redirection_type type, char *link)
 {
 	t_redirection	*res;
 
@@ -25,16 +25,16 @@ t_redirection	*create_redirection(e_redirection_type type, char *link)
 	return (res);
 }
 
-t_redirection	*t_redirection_get_last(t_redirection *lst)
+t_redir	*t_redir_get_last(t_redir *lst)
 {
 	if (!lst)
 		return (NULL);
 	if (!(lst->next))
 		return (lst);
-	return (t_redirection_get_last(lst->next));
+	return (t_redir_get_last(lst->next));
 }
 
-void	t_redirection_add_back(t_redirection **lst, t_redirection *new_tail)
+void	t_redir_add_back(t_redir **lst, t_redir *new_tail)
 {
 	if (!lst || !new_tail)
 		return ;
@@ -43,5 +43,5 @@ void	t_redirection_add_back(t_redirection **lst, t_redirection *new_tail)
 		*lst = new_tail;
 		return ;
 	}
-	t_redirection_get_last(*lst)->next = new_tail;
+	t_redir_get_last(*lst)->next = new_tail;
 }
