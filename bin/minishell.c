@@ -25,7 +25,9 @@ void	main_execution(t_command_line *command, t_list *envp)
 	char **cmd;
 
 	cmd = ft_split(command->commands->args->value, ' ');
-	if ((!ft_strncmp(cmd[0], "exit", 5)))
+	if (!cmd)
+		return ;
+	if (!ft_strncmp(cmd[0], "exit", 5))
 	{
 		if (parsing_exit(cmd))
 			minishell_exit(command, cmd, envp);
@@ -39,9 +41,11 @@ void	main_execution(t_command_line *command, t_list *envp)
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		minishell_pwd();
 	else if (!ft_strncmp(cmd[0], "export", 7))
-		parsing_export(&envp, &cmd[1]); // penser a bien couper la cmd ("")
+		parsing_export(&envp, &cmd[1]);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		minishell_unset(&envp, &cmd[1]);
+	else
+		execute_command(cmd, envp);
 	ft_free_stringtab(cmd);
 }
 
@@ -61,10 +65,15 @@ int	main(int ac, char **av, char **envp)
 	{
 		line = readline("Minishell V-2.0 : ");
 		add_history(line);
-		init_command(line, command);
-		free (line);
-		main_execution(command, env);
-		free(command->commands->args->value);
+		if (line[0] != '\0')
+		{
+			init_command(line, command);
+			free (line);
+			main_execution(command, env);
+			free(command->commands->args->value);
+		}
+		else
+			free(line);
 	}
 	ft_lstclear(&env, free);
 }

@@ -75,6 +75,7 @@ typedef struct s_command_line
 # include "builtins/builtins_minishell.h"
 
 char	**main_parseur(char *line);
+void	execute_command(char **line, t_list *envp);
 t_list	*init_stringtab_in_t_list(char **envp);
 char	**init_t_list_in_stringtab(t_list	*envp);
 void	display_error(char *prompt, char *file_or_cmd);
