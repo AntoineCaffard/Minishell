@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/15 11:30:38 by antoine          ###   ########.fr       */
+/*   Updated: 2024/04/15 13:52:25 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_redirection
 typedef struct s_command
 {
 	t_argument			*args;
-	t_redirection		*redirs;
+	t_redir				*redirs;
 	struct s_command	*next;
 }	t_command;
 
@@ -73,23 +73,35 @@ typedef struct s_command_line
 	t_command	*commands;
 }	t_command_line;
 
-char			**main_parseur(char *line);
-void			execute_command(char **line, t_list *envp);
-t_list			*init_stringtab_in_t_list(char **envp);
-char			**init_t_list_in_stringtab(t_list	*envp);
-void			display_error(char *prompt, char *file_or_cmd);
-void			display_error_cmd(int cmd, char *prompt, char *file);
+typedef struct s_pipe
+{
+	int	save_fd;
+	int	pipe[2];
+	int	nmb_max_cmd;
+	int	save_first_fd[2];
+}	t_pipe;
 
-t_command		*create_command(void);
-t_command		*t_command_get_last(t_command *lst);
-void			t_command_add_back(t_command **lst, t_command *new_tail);
+char		**main_parseur(char *line);
+void		execute_command(char **line, t_list *envp);
+t_list		*init_stringtab_in_t_list(char **envp);
+char		**init_t_list_in_stringtab(t_list	*envp);
+void		display_error(char *prompt, char *file_or_cmd);
+void		display_error_cmd(int cmd, char *prompt, char *file);
+void		management_fd(t_pipe *save_fd, int i);
+void		ft_change_outfile(char *link, int i);
+void		ft_change_infile(char *link);
+int			ft_lst_command_size(t_command *lst);
 
-t_argument		*create_argument(char *content);
-t_argument		*t_argument_get_last(t_argument *lst);
-void			t_argument_add_back(t_argument **lst, t_argument *new_tail);
+t_command	*create_command(void);
+t_command	*t_command_get_last(t_command *lst);
+void		t_command_add_back(t_command **lst, t_command *new_tail);
 
-t_redir			*create_redir(e_redirection_type type, char *link);
-t_redir			*t_redir_get_last(t_redir *lst);
-void			t_redir_add_back(t_redir **lst, t_redir *tail);
+t_argument	*create_argument(char *content);
+t_argument	*t_argument_get_last(t_argument *lst);
+void		t_argument_add_back(t_argument **lst, t_argument *new_tail);
+
+t_redir		*create_redir(t_redirection_type type, char *link);
+t_redir		*t_redir_get_last(t_redir *lst);
+void		t_redir_add_back(t_redir **lst, t_redir *tail);
 
 #endif
