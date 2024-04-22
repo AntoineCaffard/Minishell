@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/15 13:52:25 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:39:18 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void		management_fd(t_pipe *save_fd, int i);
 void		ft_change_outfile(char *link, int i);
 void		ft_change_infile(char *link);
 int			ft_lst_command_size(t_command *lst);
+
+int			fill_command(t_command *cmd, char *line);
 
 t_command	*create_command(void);
 t_command	*t_command_get_last(t_command *lst);
