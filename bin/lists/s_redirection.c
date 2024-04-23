@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_command.c                                        :+:      :+:    :+:   */
+/*   s_redirection.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 14:23:20 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/15 11:30:27 by antoine          ###   ########.fr       */
+/*   Created: 2024/04/15 11:04:21 by antoine           #+#    #+#             */
+/*   Updated: 2024/04/15 11:21:02 by antoine          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_command	*create_command(void)
+t_redir	*create_redir(e_redirection_type type, char *link)
 {
-	t_command	*res;
+	t_redirection	*res;
 
-	res = ft_calloc(1, sizeof(t_command));
+	res = ft_calloc(1, sizeof(t_redirection));
 	if (!res)
 		return (NULL);
-	res->args = NULL;
-	res->redirs = NULL;
+	res->type = type;
+	res->link = link;
 	res->next = NULL;
 	return (res);
 }
 
-t_command	*t_command_get_last(t_command *lst)
+t_redir	*t_redir_get_last(t_redir *lst)
 {
 	if (!lst)
 		return (NULL);
 	if (!(lst->next))
 		return (lst);
-	return (t_command_get_last(lst->next));
+	return (t_redir_get_last(lst->next));
 }
 
-void	t_command_add_back(t_command **lst, t_command *new_tail)
+void	t_redir_add_back(t_redir **lst, t_redir *new_tail)
 {
 	if (!lst || !new_tail)
 		return ;
@@ -43,5 +43,5 @@ void	t_command_add_back(t_command **lst, t_command *new_tail)
 		*lst = new_tail;
 		return ;
 	}
-	t_command_get_last(*lst)->next = new_tail;
+	t_redir_get_last(*lst)->next = new_tail;
 }
