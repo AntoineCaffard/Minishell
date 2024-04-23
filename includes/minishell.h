@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/22 14:39:18 by antoine          ###   ########.fr       */
+/*   Updated: 2024/04/23 13:04:51 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,9 @@ void		t_argument_add_back(t_argument **lst, t_argument *new_tail);
 t_redir		*create_redir(t_redirection_type type, char *link);
 t_redir		*t_redir_get_last(t_redir *lst);
 void		t_redir_add_back(t_redir **lst, t_redir *tail);
+
+bool	is_separator(char c);
+bool	is_space(char c);
+char	*ft_strndup(const char *s, size_t n);
 
 #endif
