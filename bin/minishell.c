@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/09 15:07:27 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:22:56 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	//t_command_line *pouet;
+	t_command_line pouet;
 	char	*line;
 	(void) ac;
 	(void) av;
