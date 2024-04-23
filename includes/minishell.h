@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
+# include "struct.h"
 # include <dirent.h>
 # include <curses.h>
 # include <string.h>
@@ -32,54 +33,6 @@
 # include "LIBFT/libft.h"
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
-
-typedef enum e_error
-{
-	NONE,
-	MALLOC_ERROR
-}	t_error;
-
-typedef enum e_redirection_type
-{
-	REDIRECTION_OUTFILE,
-	REDIRECTION_INFILE,
-	REDIRECTION_APPEND,
-	REDIRECTION_HEREDOC
-}	t_redirection_type;
-
-typedef struct s_argument
-{
-	char				*value;
-	struct s_argument	*next;
-}	t_argument;
-
-typedef struct s_redirection
-{
-	t_redirection_type		type;
-	char					*link;
-	struct s_redirection	*next;
-}	t_redir;
-
-typedef struct s_command
-{
-	t_argument			*args;
-	t_redir				*redirs;
-	struct s_command	*next;
-}	t_command;
-
-typedef struct s_command_line
-{
-	int			error_code;
-	t_command	*commands;
-}	t_command_line;
-
-typedef struct s_pipe
-{
-	int	save_fd;
-	int	pipe[2];
-	int	nmb_max_cmd;
-	int	save_first_fd[2];
-}	t_pipe;
 
 char		**main_parseur(char *line);
 void		execute_command(char **line, t_list *envp);
@@ -105,5 +58,7 @@ void		t_argument_add_back(t_argument **lst, t_argument *new_tail);
 t_redir		*create_redir(t_redirection_type type, char *link);
 t_redir		*t_redir_get_last(t_redir *lst);
 void		t_redir_add_back(t_redir **lst, t_redir *tail);
+
+void		fill_struct(t_command_line *res, char *line);
 
 #endif
