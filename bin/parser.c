@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/04/23 13:34:13 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:57:07 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	fill_struct(t_command_line *res, char *line)
 {
 	int				i;
 	bool			test_pipe;
-	t_command		*command;
+	t_command		*command; // a free, sinon erreur malloc
 
 	i = 0;
 	test_pipe = FALSE;
@@ -33,7 +33,7 @@ void	fill_struct(t_command_line *res, char *line)
 	if (!command)
 		return ;
 	t_command_add_back(&(res->commands), command);
-	fill_command(command, ft_strdup(line));
+	fill_command(command, /* ft_strdup( */line); // line deja malloc
 	if (test_pipe)
 		fill_struct(res, &(line[i + 1]));
 }
@@ -65,7 +65,7 @@ int	fill_command(t_command *cmd, char *line)
 	j = 0;
 	if (line[i] == '$')
 		j++;
-	while (line[i + j] && !is_separator(line[i + j]))
+	while (line[i + j] && !_is_separator(line[i + j]))
 		j++;
 	arg = create_argument(ft_strndup(&line[i], j));
 	if (!arg)
@@ -75,7 +75,7 @@ int	fill_command(t_command *cmd, char *line)
 	return (0);
 }
 
-int	main(void)
+/* int	main(void)
 {
 	t_command_line	test;
 	char			*line;
@@ -94,4 +94,4 @@ int	main(void)
 		test.commands = test.commands->next;
 	}
 	return (0);
-}
+} */

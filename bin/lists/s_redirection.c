@@ -12,11 +12,11 @@
 
 #include "../../includes/minishell.h"
 
-t_redir	*create_redir(e_redirection_type type, char *link)
+t_redir	*create_redir(t_redirection_type type, char *link)
 {
-	t_redirection	*res;
+	t_redir	*res;
 
-	res = ft_calloc(1, sizeof(t_redirection));
+	res = ft_calloc(1, sizeof(t_redir));
 	if (!res)
 		return (NULL);
 	res->type = type;

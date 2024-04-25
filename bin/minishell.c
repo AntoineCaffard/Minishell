@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/23 11:26:03 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:51:49 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,19 @@ t_command_line	*init_command(char *line, t_command_line *rsl)
 	return (rsl);
 }
 
+void	_sigint()
+{
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
+}
+
 void	main_execution(t_command_line *command, t_list *envp)
 {
 	char **cmd;
 
-	cmd = ft_split(command->commands->args->value, ' ');
+	cmd = init_t_args_in_stringtab(command->commands->args);
 	if (!cmd)
 		return ;
 	if (!ft_strncmp(cmd[0], "exit", 5))
@@ -73,6 +81,7 @@ void	main_pipe(t_command_line *command, t_list **envp)
 	save_fd.save_first_fd[0] = dup(STDIN_FILENO);
 	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
 	save_fd.nmb_max_cmd = ft_lst_command_size(command->commands);
+	save_fd.save_fd = -1;
 	i = 0;
 	while (command->commands)
 	{
@@ -97,25 +106,28 @@ void	main_pipe(t_command_line *command, t_list **envp)
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
-	t_command_line	*command;
+	t_command_line	command_line;
 	t_list *env;
 
 	(void) ac;
 	(void) av;
+	signal(SIGINT, _sigint);
 	env = init_stringtab_in_t_list(envp);
-	command = malloc(1 * sizeof(t_command_line));
-	command->commands = malloc(1 * sizeof(t_command));
-	command->commands->args = malloc(1 * sizeof(t_argument));
+	command_line.commands = NULL;
+	// command = malloc(1 * sizeof(t_command_line));
+	// command->commands = malloc(1 * sizeof(t_command));
+	// command->commands->args = malloc(1 * sizeof(t_argument));
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
-		add_history(line);
 		if (line[0] != '\0')
 		{
-			init_command(line, command);
+			add_history(line);
+			fill_struct(&command_line, line);
+			// init_command(line, command_line);
 			free (line);
-			main_execution(command, env);
-			free(command->commands->args->value);
+			main_pipe(&command_line, &env);
+			// free_struct(&command_line);
 		}
 		else
 			free(line);

@@ -6,7 +6,7 @@
 /*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/04/15 13:54:29 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:19:08 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	management_fd(t_pipe *save_fd, int i)
 		dup2(save_fd->save_first_fd[0], STDIN_FILENO);
 		dup2(save_fd->pipe[1], STDOUT_FILENO);
 	}
-	else if (i == save_fd->nmb_max_cmd - 1)
+	if (i == save_fd->nmb_max_cmd - 1)
 	{
 		dup2(save_fd->save_fd, STDIN_FILENO);
 		dup2(save_fd->save_first_fd[1], STDOUT_FILENO);
