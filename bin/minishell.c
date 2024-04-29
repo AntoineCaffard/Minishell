@@ -6,7 +6,7 @@
 /*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/24 15:51:49 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:31:58 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	t_command_line	command_line;
+	t_command_line	cmd;
 	t_list *env;
 
 	(void) ac;
@@ -114,9 +115,6 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, _sigint);
 	env = init_stringtab_in_t_list(envp);
 	command_line.commands = NULL;
-	// command = malloc(1 * sizeof(t_command_line));
-	// command->commands = malloc(1 * sizeof(t_command));
-	// command->commands->args = malloc(1 * sizeof(t_argument));
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
@@ -124,10 +122,10 @@ int	main(int ac, char **av, char **envp)
 		{
 			add_history(line);
 			fill_struct(&command_line, line);
-			// init_command(line, command_line);
 			free (line);
-			main_pipe(&command_line, &env);
-			// free_struct(&command_line);
+			cmd = command_line;
+			main_pipe(&cmd, &env);
+			free_struct(&command_line);
 		}
 		else
 			free(line);
