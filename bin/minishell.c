@@ -76,31 +76,15 @@ void	main_redirection(t_command_line *command)
 void	main_pipe(t_command_line *command, t_list **envp)
 {
 	t_pipe	save_fd;
-	int		i;
 
 	save_fd.save_first_fd[0] = dup(STDIN_FILENO);
 	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
 	save_fd.nmb_max_cmd = ft_lst_command_size(command->commands);
 	save_fd.save_fd = -1;
-	i = 0;
-	while (command->commands)
-	{
-		if (pipe(save_fd.pipe))
-			return ;
-		management_fd(&save_fd, i);
-		main_redirection(command);
-		main_execution(command, *envp);
-		command->commands = command->commands->next;
-		if (save_fd.save_fd > -1)
-			close(save_fd.save_fd);
-		save_fd.save_fd = dup(save_fd.pipe[0]);
-		close(save_fd.pipe[0]);
-		close(save_fd.pipe[1]);
-		i++;
-	}
-	if (save_fd.save_fd > -1)
-		close(save_fd.save_fd);
+	_pipe(command, envp, &save_fd);
 	management_fd(&save_fd, -1);
+	close (save_fd.save_first_fd[0]);
+	close (save_fd.save_first_fd[0]);
 }
 
 int	main(int ac, char **av, char **envp)

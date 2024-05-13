@@ -12,19 +12,26 @@
 
 #include "../includes/minishell.h"
 
-static void	free_value(t_argument *args)
+void	ft_delone_args(t_argument *args, void (*del)(void*))
 {
-	while (args)
-	{
-		free(args->value);
-		args = args->next;
-	}
+	if (!args || !del)
+		return ;
+	del(args->value);
+	free(args);
+}
+
+void	ft_clear_arg(t_argument *args, void (*del)(void*))
+{
+	if (!args || !del)
+		return ;
+	if ((args->next) != NULL)
+		ft_clear_arg(args->next, del);
+	ft_delone_args(args, del);
 }
 
 void	free_struct(t_command_line	*command)
 {
-	free_value(command->commands->args);
-	free(command->commands->args);
+	ft_clear_arg(command->commands->args, free);	
 	free(command->commands);
 	command->commands = NULL;
 }
