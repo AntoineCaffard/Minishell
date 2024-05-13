@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/23 13:43:53 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/04/29 13:24:50 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <sys/types.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "struct.h"
 # include "LIBFT/libft.h"
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
@@ -39,6 +38,7 @@ char		**main_parseur(char *line);
 void		execute_command(char **line, t_list *envp);
 t_list		*init_stringtab_in_t_list(char **envp);
 char		**init_t_list_in_stringtab(t_list	*envp);
+char		**init_t_args_in_stringtab(t_argument *args);
 void		display_error(char *prompt, char *file_or_cmd);
 void		display_error_cmd(int cmd, char *prompt, char *file);
 void		management_fd(t_pipe *save_fd, int i);
@@ -60,8 +60,11 @@ t_redir		*create_redir(t_redirection_type type, char *link);
 t_redir		*t_redir_get_last(t_redir *lst);
 void		t_redir_add_back(t_redir **lst, t_redir *tail);
 
-bool	is_separator(char c);
-bool	is_space(char c);
-char	*ft_strndup(const char *s, size_t n);
+void		fill_struct(t_command_line *res, char *line);
+
+bool		is_space(char c);
+bool		_is_separator(char c);
+char		*ft_strndup(const char *s, size_t n);
+void		free_struct(t_command_line	*command);
 
 #endif

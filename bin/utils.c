@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:47:37 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/23 13:33:13 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/04/24 14:01:21 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	is_space(char c)
 	return (FALSE);
 }
 
-bool	is_separator(char c)
+bool	_is_separator(char c)
 {
 	if (is_space(c))
 		return (TRUE);

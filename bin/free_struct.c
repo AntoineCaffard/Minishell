@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection.c                                      :+:      :+:    :+:   */
+/*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 13:10:35 by Trebours          #+#    #+#             */
-/*   Updated: 2024/04/15 13:21:10 by Trebours         ###   ########.fr       */
+/*   Created: 2024/04/24 15:52:58 by Trebours          #+#    #+#             */
+/*   Updated: 2024/04/29 13:34:03 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_change_outfile(char *link, int i)
+static void	free_value(t_argument *args)
 {
-	int	fd;
-
-	fd = -1;
-	if (i == 1)
-		fd = open(link, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	else if (i == 2)
-		fd = open(link, O_CREAT | O_APPEND | O_WRONLY, 0644);
-	if (fd < 0)
-		return ;
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	while (args)
+	{
+		free(args->value);
+		args = args->next;
+	}
 }
 
-void	ft_change_infile(char *link)
+void	free_struct(t_command_line	*command)
 {
-	int	fd;
-
-	fd = open(link, O_RDONLY);
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	free_value(command->commands->args);
+	free(command->commands->args);
+	free(command->commands);
+	command->commands = NULL;
 }
