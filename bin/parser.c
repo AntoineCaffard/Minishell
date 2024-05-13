@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/04/24 15:57:07 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:55:27 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	fill_struct(t_command_line *res, char *line)
 {
 	int				i;
 	bool			test_pipe;
-	t_command		*command; // a free, sinon erreur malloc
+	t_command		*command;
 
 	i = 0;
 	test_pipe = FALSE;
@@ -33,7 +33,9 @@ void	fill_struct(t_command_line *res, char *line)
 	if (!command)
 		return ;
 	t_command_add_back(&(res->commands), command);
-	fill_command(command, /* ft_strdup( */line); // line deja malloc
+	res->error_code += fill_command(command, ft_strdup(line));
+		if (res->error_code != 0)
+			return ;
 	if (test_pipe)
 		fill_struct(res, &(line[i + 1]));
 }
@@ -75,23 +77,26 @@ int	fill_command(t_command *cmd, char *line)
 	return (0);
 }
 
-/* int	main(void)
+int	fill_redirection(t_argument *res, t_redir *redir)
 {
-	t_command_line	test;
-	char			*line;
+	t_redir		*new_redir;
 
-	line = readline("TEST : ");
-	test.commands = NULL;
-	fill_struct(&test, line);
-	while(test.commands)
+	if (!res)
+		return (0);
+	if (is_redir(res))
 	{
-		while(test.commands->args)
-		{
-			printf("%s ", test.commands->args->value);
-			test.commands->args = test.commands->args->next;
-		}
-		printf("\n");
-		test.commands = test.commands->next;
+			if (!res->next || is_redir(res->next))
+				return (1);
+			else
+			{
+				new_redir = malloc(sizeof(t_redir));
+				if (!new_redir)
+					return (1);
+				//new_redir->type = get_type()
+				//suppr 2 element list chainee
+				ft_lstadd_back(&redir , new_redir);
+			}
 	}
-	return (0);
-} */
+	//fill_redirection(next)
+}
+
