@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   s_redirection.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:04:21 by antoine           #+#    #+#             */
-/*   Updated: 2024/04/15 11:21:02 by antoine          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:41:34 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redir	*create_redir(e_redirection_type type, char *link)
+t_redir	*create_redir(t_redirection_type type, char *link)
 {
-	t_redirection	*res;
+	t_redir	*res;
 
-	res = ft_calloc(1, sizeof(t_redirection));
+	res = ft_calloc(1, sizeof(t_redir));
 	if (!res)
 		return (NULL);
 	res->type = type;
