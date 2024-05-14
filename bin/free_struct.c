@@ -29,6 +29,23 @@ void	ft_clear_arg(t_argument **args, void (*del)(void*))
 	ft_delone_args(args, del);
 }
 
+void	ft_delone_redir(t_redir **redir, void (*del)(void*))
+{
+	if (!redir || !del || !*redir)
+		return ;
+	del((*redir)->link);
+	free(*redir);
+}
+
+void	ft_clear_redir(t_redir **redir, void (*del)(void*))
+{
+	if (!redir || !del || !*redir)
+		return ;
+	if (((*redir)->next) != NULL)
+		ft_clear_redir(redir, del);
+	ft_delone_redir(redir, del);
+}
+
 void	free_struct(t_command_line	*command)
 {
 	t_command	*buffer;
@@ -38,6 +55,7 @@ void	free_struct(t_command_line	*command)
 	{
 		command->commands = command->commands->next;
 		ft_clear_arg(&buffer->args, free);
+		ft_clear_redir(&buffer->redirs, free);
 		free(buffer);
 		buffer = command->commands;
 	}
