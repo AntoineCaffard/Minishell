@@ -12,8 +12,9 @@
 
 #include "../includes/minishell.h"
 
-void	_sigint()
+void	_sigint(int signaux)
 {
+	(void)signaux;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);

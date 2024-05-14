@@ -47,7 +47,7 @@ int	ft_lst_command_size(t_command *lst)
 	return (1 + ft_lst_command_size(lst->next));
 }
 
-void _pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
+void	_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
 {
 	int	i;
 

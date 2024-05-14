@@ -14,7 +14,7 @@
 
 void	main_execution(t_command_line *command, t_list *envp)
 {
-	char **cmd;
+	char	**cmd;
 
 	cmd = init_t_args_in_stringtab(command->commands->args);
 	if (!cmd)
@@ -59,10 +59,10 @@ void	ft_verif_exit(t_command_line *command_line, t_list **envp)
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*line;
+	char			*line;
 	t_command_line	command_line;
 	t_command_line	cmd_buffer;
-	t_list *env;
+	t_list			*env;
 
 	(void) ac;
 	(void) av;
