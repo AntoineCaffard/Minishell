@@ -69,5 +69,6 @@ void		free_struct(t_command_line	*command);
 void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
 void		main_redirection(t_command_line *command);
 void		main_execution(t_command_line *command, t_list *envp);
+void		_sigint();
 
 #endif

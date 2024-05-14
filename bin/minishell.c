@@ -12,19 +12,6 @@
 
 #include "../includes/minishell.h"
 
-void	_sigint()
-{
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-}
-
-void	_sigquit()
-{
-	printf("\nbonjour\n");
-}
-
 void	main_execution(t_command_line *command, t_list *envp)
 {
 	char **cmd;
