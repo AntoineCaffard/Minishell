@@ -82,5 +82,5 @@ void	main_pipe(t_command_line *command, t_list **envp)
 	_pipe(command, envp, &save_fd);
 	management_fd(&save_fd, -1);
 	close (save_fd.save_first_fd[0]);
-	close (save_fd.save_first_fd[0]);
+	close (save_fd.save_first_fd[1]);
 }
