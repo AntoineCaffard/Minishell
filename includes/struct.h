@@ -13,7 +13,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 typedef enum e_error
 {

@@ -47,7 +47,7 @@ int	ft_lst_command_size(t_command *lst)
 	return (1 + ft_lst_command_size(lst->next));
 }
 
-void _pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
+void	_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
 {
 	int	i;
 
@@ -69,4 +69,18 @@ void _pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
 	}
 	if (save_fd->save_fd > -1)
 		close(save_fd->save_fd);
+}
+
+void	main_pipe(t_command_line *command, t_list **envp)
+{
+	t_pipe	save_fd;
+
+	save_fd.save_first_fd[0] = dup(STDIN_FILENO);
+	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
+	save_fd.nmb_max_cmd = ft_lst_command_size(command->commands);
+	save_fd.save_fd = -1;
+	_pipe(command, envp, &save_fd);
+	management_fd(&save_fd, -1);
+	close (save_fd.save_first_fd[0]);
+	close (save_fd.save_first_fd[0]);
 }
