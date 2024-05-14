@@ -72,6 +72,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	env = init_stringtab_in_t_list(envp);
 	command_line.commands = NULL;
+	command_line.error_code = 0;
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
