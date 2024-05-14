@@ -110,6 +110,7 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	signal(SIGINT, _sigint);
+	signal(SIGQUIT, /* SIG_IGN */_sigquit);
 	env = init_stringtab_in_t_list(envp);
 	command_line.commands = NULL;
 	while (1)
