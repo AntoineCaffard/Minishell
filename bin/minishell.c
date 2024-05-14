@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/29 13:31:58 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:21:41 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			add_history(line);
 			fill_struct(&command_line, line);
+			fill_redirection(&command_line);
 			free (line);
 			cmd_buffer = command_line;
 			ft_verif_exit(&cmd_buffer, &env);

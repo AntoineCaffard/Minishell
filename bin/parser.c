@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/13 11:55:27 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 11:25:12 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	fill_command(t_command *cmd, char *line)
 	j = 0;
 	if (line[i] == '$')
 		j++;
-	while (line[i + j] && !_is_separator(line[i + j]))
+	while (line[i + j] && !_is_separator(line[i + j]));
 		j++;
 	arg = create_argument(ft_strndup(&line[i], j));
 	if (!arg)
@@ -77,26 +77,28 @@ int	fill_command(t_command *cmd, char *line)
 	return (0);
 }
 
-int	fill_redirection(t_argument *res, t_redir *redir)
+void	fill_redirection(t_command_line *line)
 {
 	t_redir		*new_redir;
+	t_argument	*buffer;
 
-	if (!res)
-		return (0);
-	if (is_redir(res))
+	if (!line->commands->args)
+		line->error_code = 1;
+	buffer = line->commands->args;
+	while (buffer && line->error_code == 0)
 	{
-			if (!res->next || is_redir(res->next))
-				return (1);
-			else
-			{
-				new_redir = malloc(sizeof(t_redir));
-				if (!new_redir)
-					return (1);
-				//new_redir->type = get_type()
-				//suppr 2 element list chainee
-				ft_lstadd_back(&redir , new_redir);
-			}
+		if (is_redir(buffer))
+		{
+			if(!buffer->next || is_redir(buffer->next))
+				line->error_code = 1;
+			new_redir = create_redir(get_type(buffer), buffer->next->value);
+			if (!new_redir)
+				line->error_code = 1;
+			remove_n_elements_from_list(&(line->commands->args), buffer, 2);
+			t_redir_add_back(&(line->commands->redirs), new_redir);
+		}
+		else
+			buffer = buffer->next;
 	}
-	//fill_redirection(next)
 }
 
