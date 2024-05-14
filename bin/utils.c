@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:47:37 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/24 14:01:21 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:37:47 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,18 @@ bool	is_space(char c)
 	return (FALSE);
 }
 
-bool	_is_separator(char c)
+bool	minishell_is_separator(char c)
 {
 	if (is_space(c))
 		return (TRUE);
 	if (c == '<' || c == '>' || c == '$')
+		return (TRUE);
+	return (FALSE);
+}
+
+bool	is_redir(t_argument *arg)
+{
+	if (arg->value[0] == '<' || arg->value[0] == '>')
 		return (TRUE);
 	return (FALSE);
 }
@@ -52,4 +59,20 @@ char	*ft_strndup(const char *s, size_t n)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+t_redirection_type	get_type(t_argument *arg)
+{
+	char	*str;
+
+	str = arg->value;
+	if (str[0] == '<')
+	{
+		if (!str[1])
+			return (REDIRECTION_INFILE);
+		return (REDIRECTION_HEREDOC);
+	}
+	if (!str[1])
+		return (REDIRECTION_OUTFILE);
+	return (REDIRECTION_APPEND);
 }
