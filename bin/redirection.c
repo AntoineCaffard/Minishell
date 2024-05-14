@@ -35,3 +35,19 @@ void	ft_change_infile(char *link)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
+
+void	main_redirection(t_command_line *command)
+{
+	while (command->commands->redirs)
+	{
+		if (command->commands->redirs->type == REDIRECTION_OUTFILE)
+			ft_change_outfile(command->commands->redirs->link, 1);
+		else if (command->commands->redirs->type == REDIRECTION_APPEND)
+			ft_change_outfile(command->commands->redirs->link, 2);
+		else if (command->commands->redirs->type == REDIRECTION_INFILE)
+			ft_change_infile(command->commands->redirs->link);
+		else if (command->commands->redirs->type == REDIRECTION_HEREDOC)
+			ft_change_infile(command->commands->redirs->link);
+		command->commands->redirs = command->commands->redirs->next;
+	}
+}

@@ -71,5 +71,7 @@ void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
 void		main_redirection(t_command_line *command);
 void		main_execution(t_command_line *command, t_list *envp);
 void		_sigint();
+void		main_redirection(t_command_line *command);
+void		main_pipe(t_command_line *command, t_list **envp);
 
 #endif

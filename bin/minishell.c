@@ -36,36 +36,6 @@ void	main_execution(t_command_line *command, t_list *envp)
 	ft_free_stringtab(cmd);
 }
 
-void	main_redirection(t_command_line *command)
-{
-	while (command->commands->redirs)
-	{
-		if (command->commands->redirs->type == REDIRECTION_OUTFILE)
-			ft_change_outfile(command->commands->redirs->link, 1);
-		else if (command->commands->redirs->type == REDIRECTION_APPEND)
-			ft_change_outfile(command->commands->redirs->link, 2);
-		else if (command->commands->redirs->type == REDIRECTION_INFILE)
-			ft_change_infile(command->commands->redirs->link);
-		else if (command->commands->redirs->type == REDIRECTION_HEREDOC)
-			ft_change_infile(command->commands->redirs->link);
-		command->commands->redirs = command->commands->redirs->next;
-	}
-}
-
-void	main_pipe(t_command_line *command, t_list **envp)
-{
-	t_pipe	save_fd;
-
-	save_fd.save_first_fd[0] = dup(STDIN_FILENO);
-	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
-	save_fd.nmb_max_cmd = ft_lst_command_size(command->commands);
-	save_fd.save_fd = -1;
-	_pipe(command, envp, &save_fd);
-	management_fd(&save_fd, -1);
-	close (save_fd.save_first_fd[0]);
-	close (save_fd.save_first_fd[0]);
-}
-
 void	ft_verif_exit(t_command_line *command_line, t_list **envp)
 {
 	char	**cmd;
