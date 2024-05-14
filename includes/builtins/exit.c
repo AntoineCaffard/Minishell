@@ -19,12 +19,13 @@ void	minishell_exit(t_command_line *command, char ***cmd, t_list *envp)
 	ft_lstclear(&envp, free);
 	free_struct(command);
 	clear_history();
-	if (cmd[0][1] != NULL && ft_string_isdigit(cmd[0][1]))
+	if (cmd && cmd[0][1] != NULL && ft_string_isdigit(cmd[0][1]))
 	{
 		save = ft_atoi(cmd[0][1]);
 		ft_free_stringtab(cmd[0]);
 		exit(save);
 	}
-	ft_free_stringtab(cmd[0]);
+	if (cmd)
+		ft_free_stringtab(cmd[0]);
 	exit(0);
 }
