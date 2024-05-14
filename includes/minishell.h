@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 13:37:21 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:43:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		fill_redirection(t_command_line *line);
 bool		is_space(char c);
 bool		minishell_is_separator(char c);
 bool		is_redir(t_argument *arg);
-t_redirection_type	get_type(t_argument *arg);
+
 char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
 void		ft_delone_args(t_argument **args, void (*del)(void*));

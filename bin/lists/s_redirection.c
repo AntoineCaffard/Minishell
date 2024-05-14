@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:04:21 by antoine           #+#    #+#             */
-/*   Updated: 2024/04/23 12:41:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:16:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_redir	*create_redir(t_redirection_type type, char *link)
 	if (!res)
 		return (NULL);
 	res->type = type;
-	res->link = link;
+	res->link = ft_strdup(link);
 	res->next = NULL;
 	return (res);
 }
