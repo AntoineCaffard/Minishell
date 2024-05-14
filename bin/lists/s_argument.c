@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 10:59:01 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/14 13:36:03 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:06:43 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ t_argument	*remove_args_from_list(t_argument **args, t_argument *node)
 	{
 		buffer = *args;
 		*args = (*args)->next->next;
-		ft_delone_args(&buffer, free);
 		ft_delone_args(&(buffer->next), free);
+		ft_delone_args(&buffer, free);
+
 		return (*args);
 	}
 	else
@@ -69,8 +70,8 @@ t_argument	*remove_args_from_list(t_argument **args, t_argument *node)
 			return NULL;
 		tmp = buffer->next;
 		buffer->next = tmp->next->next;
-		ft_delone_args(&tmp, free);
 		ft_delone_args(&(tmp->next), free);
+		ft_delone_args(&tmp, free);
 		return (buffer);
 	}
 

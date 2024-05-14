@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 13:55:44 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:15:54 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ int	main(int ac, char **av, char **envp)
 {
 	char			*line;
 	t_command_line	command_line;
-	//t_command_line	cmd_buffer;
+	t_command_line	cmd_buffer;
 	t_list			*env;
-	t_argument		*args;
-	t_redir			*redirs;
 
 	(void) ac;
 	(void) av;
@@ -84,23 +82,10 @@ int	main(int ac, char **av, char **envp)
 			fill_struct(&command_line, line);
 			fill_redirection(&command_line);
 			free (line);
-			args = command_line.commands->args;
-			while (args)
-			{
-				printf("%s / ", args->value);
-				args = args->next;
-			}
-			redirs = command_line.commands->redirs;
-			printf("\nREDIRECTIONS : \n");
-			while (redirs)
-			{
-				printf("%s %d / ", redirs->link, redirs->type);
-				redirs = redirs->next;
-			}
-			/*cmd_buffer = command_line;
+			cmd_buffer = command_line;
 			ft_verif_exit(&cmd_buffer, &env);
 			main_pipe(&cmd_buffer, &env);
-			free_struct(&command_line);*/
+			free_struct(&command_line);
 		}
 		else
 			free(line);

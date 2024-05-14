@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/14 13:37:29 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:02:42 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ void	fill_redirection(t_command_line *line)
 		else
 			buffer = buffer->next;
 	}
+
 }
 
