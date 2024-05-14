@@ -33,7 +33,7 @@ void	ft_delone_redir(t_redir **redir, void (*del)(void*))
 {
 	if (!redir || !del || !*redir)
 		return ;
-	del((*redir)->link);
+	free((*redir)->link);
 	free(*redir);
 }
 
@@ -42,23 +42,23 @@ void	ft_clear_redir(t_redir **redir, void (*del)(void*))
 	if (!redir || !del || !*redir)
 		return ;
 	if (((*redir)->next) != NULL)
-		ft_clear_redir(redir, del);
+		ft_clear_redir(&(*redir)->next, del);
 	ft_delone_redir(redir, del);
 }
 
-void	free_struct(t_command_line	*command)
+void	free_struct(t_command_line	*line)
 {
 	t_command	*buffer;
 
-	buffer = command->commands;
+	buffer = line->commands;
 	while (buffer)
 	{
-		command->commands = command->commands->next;
+		line->commands = buffer->next;
 		ft_clear_arg(&buffer->args, free);
-		ft_clear_redir(&buffer->redirs, free);
+		ft_clear_redir(&(buffer->redirs), free);
 		free(buffer);
-		buffer = command->commands;
+		buffer = line->commands;
 	}
 	free(buffer);
-	command->commands = NULL;
+	line->commands = NULL;
 }

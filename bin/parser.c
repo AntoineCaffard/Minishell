@@ -16,6 +16,7 @@ void	fill_struct(t_command_line *res, char *line)
 {
 	int				i;
 	bool			test_pipe;
+	char			*tmp;
 	t_command		*command;
 
 	i = 0;
@@ -33,11 +34,15 @@ void	fill_struct(t_command_line *res, char *line)
 	if (!command)
 		return ;
 	t_command_add_back(&(res->commands), command);
-	res->error_code += fill_command(command, ft_strdup(line));
+	tmp = ft_strdup(line);
+	if (!tmp)
+		return ;
+	res->error_code += fill_command(command, tmp);
 		if (res->error_code != 0)
 			return ;
 	if (test_pipe)
 		fill_struct(res, &(line[i + 1]));
+	free(tmp);
 }
 
 int	fill_command(t_command *cmd, char *line)
@@ -81,26 +86,32 @@ void	fill_redirection(t_command_line *line)
 {
 	t_redir		*new_redir;
 	t_argument	*buffer;
+	t_command	*cmd;
 
-	if (!line->commands->args)
-		line->error_code = 1;
-	buffer = line->commands->args;
-	while (buffer && line->error_code == 0)
+	cmd = line->commands;
+	while (cmd)
 	{
-		if (is_redir(buffer))
+		if (!cmd->args)
+			line->error_code = 1;
+		buffer = cmd->args;
+		while (buffer && line->error_code == 0)
 		{
-			if(!buffer->next || is_redir(buffer->next))
-				line->error_code = 1;
-			new_redir = create_redir(get_type(buffer), buffer->next->value);
-			if (!new_redir)
-				line->error_code = 1;
-			buffer = remove_args_from_list(&(line->commands->args), buffer);
-			if (!buffer)
-				line->error_code = 1;
-			t_redir_add_back(&(line->commands->redirs), new_redir);
+			if (is_redir(buffer))
+			{
+				if(!buffer->next || is_redir(buffer->next))
+					line->error_code = 1;
+				new_redir = create_redir(get_type(buffer), buffer->next->value);
+				if (!new_redir)
+					line->error_code = 1;
+				buffer = remove_args_from_list(&(cmd->args), buffer);
+				if (!buffer)
+					line->error_code = 1;
+				t_redir_add_back(&(cmd->redirs), new_redir);
+			}
+			else
+				buffer = buffer->next;
 		}
-		else
-			buffer = buffer->next;
+		cmd = cmd->next;
 	}
 
 }

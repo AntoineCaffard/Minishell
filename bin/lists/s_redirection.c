@@ -21,6 +21,11 @@ t_redir	*create_redir(t_redirection_type type, char *link)
 		return (NULL);
 	res->type = type;
 	res->link = ft_strdup(link);
+	if (!res->link)
+	{
+		free(res);
+		return (NULL);
+	}
 	res->next = NULL;
 	return (res);
 }
