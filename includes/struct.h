@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:47:36 by trebours          #+#    #+#             */
-/*   Updated: 2024/04/23 12:47:38 by trebours         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:43:43 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,7 @@ typedef struct s_pipe
 	int	nmb_max_cmd;
 	int	save_first_fd[2];
 }	t_pipe;
+
+t_redirection_type	get_type(t_argument *arg);
 
 #endif
