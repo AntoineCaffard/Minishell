@@ -22,7 +22,7 @@ void	_sigint()
 
 void	_sigquit()
 {
-	printf("bonjour");
+	printf("\nbonjour\n");
 }
 
 void	main_execution(t_command_line *command, t_list *envp)
@@ -110,11 +110,14 @@ int	main(int ac, char **av, char **envp)
 	(void) ac;
 	(void) av;
 	signal(SIGINT, _sigint);
+	signal(SIGQUIT, SIG_IGN);
 	env = init_stringtab_in_t_list(envp);
 	command_line.commands = NULL;
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
+		if (!line)
+			minishell_exit(&command_line, NULL, env);
 		if (line && line[0] != '\0')
 		{
 			add_history(line);
