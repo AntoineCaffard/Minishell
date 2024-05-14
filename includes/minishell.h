@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 11:21:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:37:21 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		t_command_add_back(t_command **lst, t_command *new_tail);
 t_argument	*create_argument(char *content);
 t_argument	*t_argument_get_last(t_argument *lst);
 void		t_argument_add_back(t_argument **lst, t_argument *new_tail);
+t_argument	*remove_args_from_list(t_argument **args, t_argument *node);
 
 t_redir		*create_redir(t_redirection_type type, char *link);
 t_redir		*t_redir_get_last(t_redir *lst);
@@ -64,9 +65,12 @@ void		fill_struct(t_command_line *res, char *line);
 void		fill_redirection(t_command_line *line);
 
 bool		is_space(char c);
-bool		_is_separator(char c);
+bool		minishell_is_separator(char c);
+bool		is_redir(t_argument *arg);
+t_redirection_type	get_type(t_argument *arg);
 char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
+void		ft_delone_args(t_argument **args, void (*del)(void*));
 void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
 void		main_redirection(t_command_line *command);
 void		main_execution(t_command_line *command, t_list *envp);

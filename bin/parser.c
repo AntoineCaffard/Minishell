@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/14 11:25:12 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/14 13:37:29 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	fill_command(t_command *cmd, char *line)
 	j = 0;
 	if (line[i] == '$')
 		j++;
-	while (line[i + j] && !_is_separator(line[i + j]));
+	while (line[i + j] && !minishell_is_separator(line[i + j]))
 		j++;
 	arg = create_argument(ft_strndup(&line[i], j));
 	if (!arg)
@@ -94,7 +94,9 @@ void	fill_redirection(t_command_line *line)
 			new_redir = create_redir(get_type(buffer), buffer->next->value);
 			if (!new_redir)
 				line->error_code = 1;
-			remove_n_elements_from_list(&(line->commands->args), buffer, 2);
+			buffer = remove_args_from_list(&(line->commands->args), buffer);
+			if (!buffer)
+				line->error_code = 1;
 			t_redir_add_back(&(line->commands->redirs), new_redir);
 		}
 		else
