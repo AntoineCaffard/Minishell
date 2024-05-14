@@ -12,20 +12,17 @@
 
 #include "../includes/minishell.h"
 
-t_command_line	*init_command(char *line, t_command_line *rsl)
-{
-	if (!rsl)
-		return (NULL);
-	rsl->commands->args->value = strdup(line);
-	return (rsl);
-}
-
 void	_sigint()
 {
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	rl_redisplay();
+}
+
+void	_sigquit()
+{
+	printf("bonjour");
 }
 
 void	main_execution(t_command_line *command, t_list *envp)
@@ -35,12 +32,7 @@ void	main_execution(t_command_line *command, t_list *envp)
 	cmd = init_t_args_in_stringtab(command->commands->args);
 	if (!cmd)
 		return ;
-	if (!ft_strncmp(cmd[0], "exit", 5))
-	{
-		if (parsing_exit(cmd))
-			minishell_exit(command, cmd, envp);
-	}
-	else if (!ft_strncmp(cmd[0], "echo", 5))
+	if (!ft_strncmp(cmd[0], "echo", 5))
 		parsing_echo(&cmd[1]);
 	else if (!ft_strncmp(cmd[0], "env", 4))
 		parsing_env(&cmd[1], envp);
@@ -87,11 +79,32 @@ void	main_pipe(t_command_line *command, t_list **envp)
 	close (save_fd.save_first_fd[0]);
 }
 
+void	ft_verif_exit(t_command_line *command_line, t_list **envp)
+{
+	char	**cmd;
+
+	if (ft_lst_command_size(command_line->commands) > 1)
+		return ;
+	else
+	{
+		cmd = init_t_args_in_stringtab(command_line->commands->args);
+		if (!cmd)
+			return ;
+		if (!ft_strncmp(cmd[0], "exit", 5))
+		{
+			if (parsing_exit(cmd))
+				minishell_exit(command_line, &cmd, *envp);
+		}
+		else
+			ft_free_stringtab(cmd);
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	t_command_line	command_line;
-	t_command_line	cmd;
+	t_command_line	cmd_buffer;
 	t_list *env;
 
 	(void) ac;
@@ -102,13 +115,14 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
-		if (line[0] != '\0')
+		if (line && line[0] != '\0')
 		{
 			add_history(line);
 			fill_struct(&command_line, line);
 			free (line);
-			cmd = command_line;
-			main_pipe(&cmd, &env);
+			cmd_buffer = command_line;
+			ft_verif_exit(&cmd_buffer, &env);
+			main_pipe(&cmd_buffer, &env);
 			free_struct(&command_line);
 		}
 		else

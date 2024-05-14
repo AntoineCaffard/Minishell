@@ -12,26 +12,35 @@
 
 #include "../includes/minishell.h"
 
-void	ft_delone_args(t_argument *args, void (*del)(void*))
+void	ft_delone_args(t_argument **args, void (*del)(void*))
 {
-	if (!args || !del)
+	if (!args || !del || !*args)
 		return ;
-	del(args->value);
-	free(args);
+	del((*args)->value);
+	free(*args);
 }
 
-void	ft_clear_arg(t_argument *args, void (*del)(void*))
+void	ft_clear_arg(t_argument **args, void (*del)(void*))
 {
-	if (!args || !del)
+	if (!args || !del || !*args)
 		return ;
-	if ((args->next) != NULL)
-		ft_clear_arg(args->next, del);
+	if (((*args)->next) != NULL)
+		ft_clear_arg(&(*args)->next, del);
 	ft_delone_args(args, del);
 }
 
 void	free_struct(t_command_line	*command)
 {
-	ft_clear_arg(command->commands->args, free);	
-	free(command->commands);
+	t_command	*buffer;
+
+	buffer = command->commands;
+	while (buffer)
+	{
+		command->commands = command->commands->next;
+		ft_clear_arg(&buffer->args, free);
+		free(buffer);
+		buffer = command->commands;
+	}
+	free(buffer);
 	command->commands = NULL;
 }
