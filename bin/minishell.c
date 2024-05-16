@@ -62,6 +62,7 @@ void	loop_main(t_command_line *command_line, t_list *envp)
 	t_command_line	cmd_buffer;
 	char			*line;
 
+	(void)command_line;
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
@@ -73,6 +74,8 @@ void	loop_main(t_command_line *command_line, t_list *envp)
 			fill_struct(command_line, line);
 			fill_redirection(command_line);
 			free (line);
+			cmd_buffer = *command_line;
+			main_expand(&cmd_buffer, &envp);
 			cmd_buffer = *command_line;
 			ft_verif_exit(&cmd_buffer, &envp);
 			main_pipe(&cmd_buffer, &envp);

@@ -77,5 +77,11 @@ void		main_execution(t_command_line *command, t_list *envp);
 void		_sigint(int signaux);
 void		main_redirection(t_command_line *command);
 void		main_pipe(t_command_line *command, t_list **envp);
+// rajouter
+char		*expand(char *line, t_list *envp);
+void		ft_verif_exit(t_command_line *command_line, t_list **envp);
+void		main_expand(t_command_line *cmd_line, t_list **envp);
+char		*get_value(t_list *list, char *param);
+int			ft_verif_var(char *line);
 
 #endif
