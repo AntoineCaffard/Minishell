@@ -3,107 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/15 11:11:47 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/27 09:18:13 by trebours         ###   ########.fr       */
+/*   Created: 2024/04/15 13:10:35 by Trebours          #+#    #+#             */
+/*   Updated: 2024/05/16 12:01:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	error_redirection(char *prompt)
+void	ft_change_outfile(char *link, int i)
 {
 	int	fd;
-	int	fd_error;
 
-	fd = dup(STDOUT_FILENO);
-	fd_error = dup(STDERR_FILENO);
-	dup2(fd_error, STDOUT_FILENO);
-	close(fd_error);
-	printf("Minishell: syntax error near unexpected token `%s'\n", prompt);
+	fd = -1;
+	if (i == 1)
+		fd = open(link, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	else if (i == 2)
+		fd = open(link, O_CREAT | O_APPEND | O_WRONLY, 0644);
+	if (fd < 0)
+		return ;
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
-void	redirect_save_fd(int save_fd[2], int action)
+void	ft_change_infile(char *link)
 {
-	if (action == 1)
-	{
-		save_fd[0] = dup(STDIN_FILENO);
-		save_fd[1] = dup(STDOUT_FILENO);
-	}
-	else if (action == 2)
-	{
-		dup2(save_fd[0], STDIN_FILENO);
-		dup2(save_fd[1], STDOUT_FILENO);
-		close(save_fd[0]);
-		close(save_fd[1]);
-	}
+	int	fd;
+
+	fd = open(link, O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
 
-void	loop_isolate_cmd(char **line, int pos, int i)
+void	main_redirection(t_command_line *command)
 {
-	while (pos != -1 && line[pos + i])
-	{
-		free(line[pos + i]);
-		line[pos + i] = NULL;
-		pos++;
-	}
-}
+	t_command	*cmd;
+	t_redir		*current;
+	t_redir		*next;
 
-static int	isolate_cmd(char **line)
-{
-	int	i;
-	int	pos_in;
-	int	pos_out;
-
-	i = 0;
-	pos_in = 0;
-	pos_out = 0;
-	while (!pos_in || !pos_out)
+	cmd = command->commands;
+	current = cmd->redirs;
+	while (current)
 	{
-		pos_in = locate_string_in_stringtab(&line[i], "<", 1);
-		pos_out = locate_string_in_stringtab(&line[i], ">", 1);
-		if (pos_in && pos_out)
-			break;
-		if ((pos_in != -1 && line[pos_in][1] != '\0')
-			|| (pos_out != -1 && line[pos_out][1] != '\0'))
-			i++;
-		else
-			i += 2;
+		next = current->next;
+		if (current->type == REDIRECTION_OUTFILE)
+			ft_change_outfile(current->link, 1);
+		else if (current->type == REDIRECTION_APPEND)
+			ft_change_outfile(current->link, 2);
+		else if (current->type == REDIRECTION_INFILE)
+			ft_change_infile(current->link);
+		else if (current->type == REDIRECTION_HEREDOC)
+			ft_change_infile(current->link);
+		current = next;
 	}
-	if (pos_out > -1 && (pos_in == -1 || pos_in > pos_out))
-		loop_isolate_cmd(line, pos_out, i);
-	else
-		loop_isolate_cmd(line, pos_in, i);
-	return (i);
-}
-
-int	main_redirection(char **line, t_list *envp)
-{
-	int	i;
-	int	save_fd[2];
-	int	rsl_input;
-	int	rsl_output;
-
-	redirect_save_fd(save_fd, 1);
-	rsl_input = redirect_input(line);
-	rsl_output = ft_parsing_output(line, ">", 1);
-	if (rsl_input == -1 && rsl_output > 0)
-	{
-		redirect_save_fd(save_fd, 2);
-		return (1);
-	}
-	rsl_output = redirect_output(line);
-	if (rsl_input && rsl_output)
-	{
-		redirect_save_fd(save_fd, 2);
-		return (1);
-	}
-	i = isolate_cmd(line);
-	if (line[i])
-		ft_start_minishell(&line[i], &envp);
-	redirect_save_fd(save_fd, 2);
-	return (0);
 }

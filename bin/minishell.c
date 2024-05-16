@@ -3,104 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 14:12:21 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/22 14:31:52 by trebours         ###   ########.fr       */
+/*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
+/*   Updated: 2024/05/15 09:28:10 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*ft_prompt(void)
+void	main_execution(t_command_line *command, t_list *envp)
 {
-	char	*prompt;
-	char	*save;
-	char	**link;
+	char	**cmd;
 
-	prompt = NULL;
-	prompt = getcwd(prompt, 0);
-	if (!ft_strncmp(prompt, "/", 2))
-		link = ft_split_str(prompt, " ");
-	else
-		link = ft_split_str(prompt, "/");
-	free(prompt);
-	prompt = NULL;
-	prompt = ft_strjoin("\033[1;32m > minishell\033[0;m", ": (");
-	save = ft_strjoin(prompt, link[ft_stringtab_len(link) - 1]);
-	free(prompt);
-	prompt = ft_strjoin(save, ") \033[1;36m✗\033[0;m ");
-	ft_free_stringtab(link);
-	free(save);
-	return (prompt);
-}
-
-void	ft_start_minishell(char **line, t_list **envp)
-{
-	if (!line)
+	cmd = init_t_args_in_stringtab(command->commands->args);
+	if (!cmd)
 		return ;
-	else if (locate_string_in_stringtab(line, ">>", 2) != -1)
-		main_append(line, *envp);
-	else if (ft_strncmp(line[0], "<<", 2) == 0)
-		heredoc(line, envp);
-	else if (!ft_strncmp(line[0], "echo", 5) || !ft_strncmp(line[0], "echo ", 5))
-		parsing_echo(&line[1]);
-	else if (!ft_strncmp(line[0], "cd", 3) || !ft_strncmp(line[0], "cd ", 3))
-		parsing_cd(&line[1]);
-	else if (!ft_strncmp(line[0], "env", 4) || !ft_strncmp(line[0], "env ", 4))
-		parsing_env(&line[1], *envp);
-	else if (!ft_strncmp(line[0], "export", 7)
-		|| !ft_strncmp(line[0], "export ", 7))
-		parsing_export(envp, &line[1]);
-	else if (!ft_strncmp(line[0], "pwd", 4) || !ft_strncmp(line[0], "pwd ", 4))
+	if (!ft_strncmp(cmd[0], "echo", 5))
+		parsing_echo(&cmd[1]);
+	else if (!ft_strncmp(cmd[0], "env", 4))
+		parsing_env(&cmd[1], envp);
+	else if (!ft_strncmp(cmd[0], "cd", 3))
+		parsing_cd(&cmd[1]);
+	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		minishell_pwd();
-	else if (!ft_strncmp(line[0], "unset", 6)
-		|| !ft_strncmp(line[0], "unset ", 6))
-		minishell_unset(envp, &line[1]);
-	else if (locate_string_in_stringtab(line, "<", 1) != -1
-		|| locate_string_in_stringtab(line, ">", 1) != -1)
-		main_redirection(line, *envp);
+	else if (!ft_strncmp(cmd[0], "export", 7))
+		parsing_export(&envp, &cmd[1]);
+	else if (!ft_strncmp(cmd[0], "unset", 6))
+		minishell_unset(&envp, &cmd[1]);
 	else
-		execute_command(line, *envp);
+		execute_command(cmd, envp);
+	ft_free_stringtab(cmd);
 }
 
-void	minishell(t_list *envp)
+void	ft_verif_exit(t_command_line *command_line, t_list **envp)
 {
-	char	*line;
-	char	*prompt;
+	char	**cmd;
+
+	if (ft_lst_command_size(command_line->commands) > 1)
+		return ;
+	else
+	{
+		cmd = init_t_args_in_stringtab(command_line->commands->args);
+		if (!cmd)
+			return ;
+		if (!ft_strncmp(cmd[0], "exit", 5))
+		{
+			if (parsing_exit(cmd))
+				minishell_exit(command_line, &cmd, *envp);
+		}
+		else
+			ft_free_stringtab(cmd);
+	}
+}
+
+void	loop_main(t_command_line *command_line, t_list *envp)
+{
+	t_command_line	cmd_buffer;
+	char			*line;
 
 	while (1)
 	{
-		prompt = ft_prompt();
-		line = readline(prompt);
-		free(prompt);
-		if (ft_strncmp(line, "", ft_strlen(line)))
+		line = readline("Minishell V-2.0 : ");
+		if (!line)
+			minishell_exit(command_line, NULL, envp);
+		if (line && line[0] != '\0')
 		{
 			add_history(line);
-			if ((!ft_strncmp(line, "exit", 5) || !ft_strncmp(line, "exit ", 5)))
-			{
-				if (parsing_exit(line))
-				{
-					free(line);
-					break ;
-				}
-			}
-			else
-				parsing_readline(line, &envp);
+			fill_struct(command_line, line);
+			fill_redirection(command_line);
+			free (line);
+			cmd_buffer = *command_line;
+			ft_verif_exit(&cmd_buffer, &envp);
+			main_pipe(&cmd_buffer, &envp);
+			free_struct(command_line);
 		}
-		free(line);
+		else
+			free(line);
 	}
-	clear_history();
 }
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_list	*t_list_envp;
+	t_command_line	command_line;
+	t_list			*env;
 
-	(void)argc;
-	(void)argv;
-	t_list_envp = init_stringtab_in_t_list(envp);
-	minishell(t_list_envp);
-	ft_lstclear(&t_list_envp, free);
-	return (0);
+	(void) ac;
+	(void) av;
+	signal(SIGINT, _sigint);
+	signal(SIGQUIT, SIG_IGN);
+	env = init_stringtab_in_t_list(envp);
+	command_line.commands = NULL;
+	command_line.error_code = 0;
+	loop_main(&command_line, env);
+	ft_lstclear(&env, free);
 }

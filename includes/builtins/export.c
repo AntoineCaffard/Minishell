@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "builtins_minishell.h"
 
 static size_t	ft_strlen_until_equal(char *str)
 {

@@ -14,8 +14,10 @@
 
 void	parsing_cd(char **params)
 {
-	if (ft_stringtab_len(params) != 1)
-		display_error_cmd(0, "too many or less argument", NULL);
+	if (ft_stringtab_len(params) > 1)
+		display_error_cmd(0, "too many argument", NULL);
+	else if (ft_stringtab_len(params) < 1)
+		display_error_cmd(0, "too less argument", NULL);
 	else if (access(params[0], F_OK))
 		display_error_cmd(0, "no such file in directory", params[0]);
 	else if (access(params[0], R_OK))

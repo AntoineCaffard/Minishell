@@ -2,9 +2,9 @@ NAME = minishell
 CC = cc
 CFLAGS= -Wall -Wextra -Werror -g
 
-SRCS = bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c bin/minishell.c bin/parsing_readline.c\
-		bin/split_modif.c bin/display_error.c bin/management_pipe.c bin/redirection.c bin/heredoc.c bin/redirection_append.c\
-		bin/redirect_input_output.c
+SRCS = bin/display_error.c bin/minishell.c bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c \
+	bin/pipe.c bin/redirection.c bin/parser.c bin/lists/s_argument.c bin/lists/s_command.c bin/lists/s_redirection.c \
+	bin/utils.c bin/free_struct.c bin/signaux.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT

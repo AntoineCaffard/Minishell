@@ -23,7 +23,8 @@ int	locate_string_in_stringtab(char **stringtab, char *string, int len_check)
 	{
 		if (len_check && !ft_strncmp(stringtab[i], string, len_check))
 			return (i);
-		else if (!ft_strncmp(stringtab[i], string, ft_strlen(stringtab[i])))
+		else if (!len_check && !ft_strncmp(stringtab[i],
+				string, ft_strlen(stringtab[i])))
 			return (i);
 		i++;
 	}

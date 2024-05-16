@@ -12,20 +12,16 @@
 
 #include "parsing_minishell.h"
 
-int	parsing_exit(char *line)
+int	parsing_exit(char **params)
 {
-	char	**params;
-
 	printf("exit\n");
-	params = ft_split_str(line, " ");
-	if (params && ft_stringtab_len(params) > 1 && !ft_string_isdigit(params[1]))
-		display_error_cmd(4, "not a digit", params[1]);
-	else if (params && ft_stringtab_len(params) > 2)
+	if (params && ft_stringtab_len(params) > 2)
 	{
 		display_error_cmd(4, "too many argument", NULL);
 		return (0);
 	}
-	if (params)
-		ft_free_stringtab(params);
+	else if (params && ft_stringtab_len(params) > 1
+		&& !ft_string_isdigit(params[1]))
+		display_error_cmd(4, "not a digit", params[1]);
 	return (1);
 }

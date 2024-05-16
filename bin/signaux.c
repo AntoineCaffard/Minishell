@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 11:17:36 by trebours         ###   ########.fr       */
+/*   Created: 2024/05/14 11:28:30 by trebours          #+#    #+#             */
+/*   Updated: 2024/05/14 11:28:34 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins_minishell.h"
+#include "../includes/minishell.h"
 
-void	minishell_cd(char *path)
+void	_sigint(int signaux)
 {
-	int	status;
-
-	status = chdir(path);
-	if (status != 0)
-		display_error("No such file or directory", path);
+	(void)signaux;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	rl_redisplay();
 }

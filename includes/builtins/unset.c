@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "builtins_minishell.h"
 
 static t_list	*get_node_by_value(t_list *list, char *param)
 {

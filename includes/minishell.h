@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 09:02:38 by trebours          #+#    #+#             */
-/*   Updated: 2024/03/27 09:03:00 by trebours         ###   ########.fr       */
+/*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
+/*   Updated: 2024/05/16 13:31:45 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
+# include "struct.h"
 # include <dirent.h>
 # include <curses.h>
-# include <unistd.h>
 # include <string.h>
 # include <signal.h>
 # include <unistd.h>
@@ -28,40 +28,56 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include "LIBFT/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "LIBFT/libft.h"
 # include "parsing/parsing_minishell.h"
 # include "builtins/builtins_minishell.h"
 
-typedef struct s_pipe
-{
-	int	save_fd;
-	int	pipe[2];
-	int	nmb_max_cmd;
-	int	save_first_fd[2];
-}t_pipe;
+char		**main_parseur(char *line);
+void		execute_command(char **line, t_list *envp);
+t_list		*init_stringtab_in_t_list(char **envp);
+char		**init_t_list_in_stringtab(t_list	*envp);
+char		**init_t_args_in_stringtab(t_argument *args);
+void		display_error(char *prompt, char *file_or_cmd);
+void		display_error_cmd(int cmd, char *prompt, char *file);
+void		management_fd(t_pipe *save_fd, int i);
+void		ft_change_outfile(char *link, int i);
+void		ft_change_infile(char *link);
+int			ft_lst_command_size(t_command *lst);
 
-char	**init_path(t_list *envp);
-int		redirect_input(char **line);
-int		redirect_output(char **line);
-void	error_redirection(char *prompt);
-char	*init_link(char *src, char **path);
-void	main_pipe(char *line, t_list *envp);
-char	**ft_split_modif(char *src, char c);
-void	heredoc(char **params,t_list **envp);
-t_list	*init_stringtab_in_t_list(char **envp);
-int		main_append(char **line, t_list *envp);
-void	execute_command(char **line, t_list *envp);
-char	**init_t_list_in_stringtab(t_list	*envp);
-int		main_redirection(char **line, t_list *envp);
-void	parsing_readline(char *line, t_list **envp);
-void	redirect_save_fd(int save_fd[2], int action);
-void	loop_isolate_cmd(char **line, int pos, int i);
-void	display_error(char *prompt, char *file_or_cmd);
-void	ft_start_minishell(char **line, t_list **envp);
-int		compare_string_to_character(char *line, char chr);
-void	display_error_cmd(int cmd, char *prompt, char *file);
-void	heredoc_pipe(char **params, t_list **envp, t_pipe *my_pipe);
+int			fill_command(t_command *cmd, char *line);
+
+t_command	*create_command(void);
+t_command	*t_command_get_last(t_command *lst);
+void		t_command_add_back(t_command **lst, t_command *new_tail);
+
+t_argument	*create_argument(char *content);
+t_argument	*t_argument_get_last(t_argument *lst);
+void		t_argument_add_back(t_argument **lst, t_argument *new_tail);
+t_argument	*remove_args_from_list(t_argument **args, t_argument *node);
+
+t_redir		*create_redir(t_redirection_type type, char *link);
+t_redir		*t_redir_get_last(t_redir *lst);
+void		t_redir_add_back(t_redir **lst, t_redir *tail);
+
+void		fill_struct(t_command_line *res, char *line);
+void		fill_redirection(t_command_line *line);
+t_command	*manage_creation(t_command_line *res);
+int			skip_spaces(char *s);
+
+bool		is_space(char c);
+bool		minishell_is_separator(char c);
+bool		is_redir(t_argument *arg);
+
+char		*ft_strndup(const char *s, size_t n);
+void		free_struct(t_command_line	*command);
+void		ft_delone_args(t_argument **args, void (*del)(void*));
+void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
+void		main_redirection(t_command_line *command);
+void		main_execution(t_command_line *command, t_list *envp);
+void		_sigint(int signaux);
+void		main_redirection(t_command_line *command);
+void		main_pipe(t_command_line *command, t_list **envp);
 
 #endif

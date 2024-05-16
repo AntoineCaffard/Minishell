@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "builtins_minishell.h"
 
 void	minishell_env(t_list *envp)
 {
