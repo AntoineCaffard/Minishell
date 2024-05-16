@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/14 14:02:42 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:33:26 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ void	fill_struct(t_command_line *res, char *line)
 	char			*tmp;
 	t_command		*command;
 
-	i = 0;
 	test_pipe = FALSE;
-	while (line[i] && is_space(line[i]))
-		i++;
+	i = skip_spaces(line);
 	if (line[i] == '\0')
 		return ;
 	while (line[i] && line[i] != '|')
@@ -30,45 +28,48 @@ void	fill_struct(t_command_line *res, char *line)
 	if (line[i] == '|')
 		test_pipe = TRUE;
 	line[i] = '\0';
-	command = create_command();
-	if (!command)
-		return ;
-	t_command_add_back(&(res->commands), command);
+	command = manage_creation(res);
 	tmp = ft_strdup(line);
-	if (!tmp)
+	if (!tmp || !command)
 		return ;
 	res->error_code += fill_command(command, tmp);
-		if (res->error_code != 0)
-			return ;
-	if (test_pipe)
+	if (res->error_code != 0)
+		return ;
+	if (test_pipe && res->error_code == 0)
 		fill_struct(res, &(line[i + 1]));
 	free(tmp);
 }
 
+static int	manage_redir(char *line, t_command *cmd, int i)
+{
+	int			j;
+	t_argument	*arg;
+
+	if (line[i + 1] == '<' || line[i + 1] == '>')
+		j = 2;
+	else
+		j = 1;
+	arg = create_argument(ft_strndup(&line[i], j));
+	if (!arg)
+		return (1);
+	t_argument_add_back(&(cmd->args), arg);
+	fill_command(cmd, &(line[i + j]));
+	return (0);
+}
+
 int	fill_command(t_command *cmd, char *line)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
 	t_argument	*arg;
 
 	i = 0;
 	while (line[i] && is_space(line[i]))
 		i++;
 	if (!line[i])
-		return 1;
-	if (line[i] == '<'|| line[i] == '>')
-	{
-		if(line[i + 1] == '<'|| line[i + 1] == '>')
-			j = 2;
-		else
-			j = 1;
-		arg = create_argument(ft_strndup(&line[i], j));
-		if (!arg)
-			return 1;
-		t_argument_add_back(&(cmd->args), arg);
-		fill_command(cmd, &(line[i + j]));
-		return 0;
-	}
+		return (1);
+	if (line[i] == '<' || line[i] == '>')
+		return (manage_redir(line, cmd, i));
 	j = 0;
 	if (line[i] == '$')
 		j++;
@@ -76,15 +77,30 @@ int	fill_command(t_command *cmd, char *line)
 		j++;
 	arg = create_argument(ft_strndup(&line[i], j));
 	if (!arg)
-		return 1;
+		return (1);
 	t_argument_add_back(&(cmd->args), arg);
 	fill_command(cmd, &(line[i + j]));
 	return (0);
 }
 
-void	fill_redirection(t_command_line *line)
+static t_argument	*fill_r(t_command_line *l, t_command *c, t_argument *buf)
 {
 	t_redir		*new_redir;
+
+	if (!buf->next || is_redir(buf->next))
+		l->error_code = 1;
+	new_redir = create_redir(get_type(buf), buf->next->value);
+	if (!new_redir)
+		l->error_code = 1;
+	buf = remove_args_from_list(&(c->args), buf);
+	if (!buf)
+		l->error_code = 1;
+	t_redir_add_back(&(c->redirs), new_redir);
+	return (buf);
+}
+
+void	fill_redirection(t_command_line *line)
+{
 	t_argument	*buffer;
 	t_command	*cmd;
 
@@ -97,22 +113,10 @@ void	fill_redirection(t_command_line *line)
 		while (buffer && line->error_code == 0)
 		{
 			if (is_redir(buffer))
-			{
-				if(!buffer->next || is_redir(buffer->next))
-					line->error_code = 1;
-				new_redir = create_redir(get_type(buffer), buffer->next->value);
-				if (!new_redir)
-					line->error_code = 1;
-				buffer = remove_args_from_list(&(cmd->args), buffer);
-				if (!buffer)
-					line->error_code = 1;
-				t_redir_add_back(&(cmd->redirs), new_redir);
-			}
+				buffer = fill_r(line, cmd, buffer);
 			else
 				buffer = buffer->next;
 		}
 		cmd = cmd->next;
 	}
-
 }
-
