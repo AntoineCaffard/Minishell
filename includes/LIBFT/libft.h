@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/19 10:51:40 by trebours         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:35:18 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ size_t	ft_strlen(const char *str);
 /******************************************************************************
  * LOCATE_STRING_IN_STRINGTAB :
  * This function locates a string in a stringtab and returns its position.
- * @param stringtab > the given stringtab 
+ * @param stringtab > the given stringtab
  * @param string > the given string
  * @param len_check > the number of charactere to check (if 0 then the whole
  * 					charactere string is checked)
@@ -115,6 +115,7 @@ int		locate_string_in_stringtab(char **stringtab, char *string,
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_atoi(const char *nptr);
 char	*ft_strdup(const char *s);
+char	*ft_strndup(const char *s, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);

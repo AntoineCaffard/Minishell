@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_command.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antoine <antoine@student.42.fr>            +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 14:23:20 by acaffard          #+#    #+#             */
-/*   Updated: 2024/04/15 11:30:27 by antoine          ###   ########.fr       */
+/*   Updated: 2024/05/16 13:33:42 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,15 @@ void	t_command_add_back(t_command **lst, t_command *new_tail)
 		return ;
 	}
 	t_command_get_last(*lst)->next = new_tail;
+}
+
+t_command	*manage_creation(t_command_line *res)
+{
+	t_command	*command;
+
+	command = create_command();
+	if (!command)
+		res->error_code = 1;
+	t_command_add_back(&(res->commands), command);
+	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:47:37 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 13:37:47 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:35:35 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,14 @@ bool	is_redir(t_argument *arg)
 	return (FALSE);
 }
 
-char	*ft_strndup(const char *s, size_t n)
+int	skip_spaces(char *s)
 {
-	size_t	i;
-	size_t	len;
-	char	*str;
-	char	*res;
+	int	i;
 
 	i = 0;
-	len = 0;
-	str = (char *) s;
-	while (str[len] && len < n)
-		len++;
-	res = (char *) malloc((len + 1) * sizeof(char));
-	if (!res)
-		return (NULL);
-	while (i < len)
-	{
-		res[i] = str[i];
+	while (s[i] && is_space(s[i]))
 		i++;
-	}
-	res[i] = '\0';
-	return (res);
+	return (i);
 }
 
 t_redirection_type	get_type(t_argument *arg)
