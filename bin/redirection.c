@@ -38,7 +38,7 @@ void	ft_change_infile(char *link)
 
 void	main_redirection(t_command_line *command)
 {
-	t_command 	*cmd;
+	t_command	*cmd;
 	t_redir		*current;
 	t_redir		*next;
 
