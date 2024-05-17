@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:47:37 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 13:37:47 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:31:55 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ bool	is_redir(t_argument *arg)
 	if (arg->value[0] == '<' || arg->value[0] == '>')
 		return (TRUE);
 	return (FALSE);
+}
+
+int	skip_spaces(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] && is_space(s[i]))
+		i++;
+	return (i);
 }
 
 char	*ft_strndup(const char *s, size_t n)

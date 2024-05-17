@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/14 14:43:19 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:30:59 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void		t_redir_add_back(t_redir **lst, t_redir *tail);
 
 void		fill_struct(t_command_line *res, char *line);
 void		fill_redirection(t_command_line *line);
+t_command	*manage_creation(t_command_line *res);
+int			skip_spaces(char *s);
 
 bool		is_space(char c);
 bool		minishell_is_separator(char c);
