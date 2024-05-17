@@ -33,7 +33,7 @@ void	ft_delone_redir(t_redir **redir, void (*del)(void*))
 {
 	if (!redir || !del || !*redir)
 		return ;
-	free((*redir)->link);
+	del((*redir)->link);
 	free(*redir);
 }
 

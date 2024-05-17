@@ -76,6 +76,7 @@ void	command_n(char **cmd, t_list *lst_envp)
 			ft_free_stringtab(cmd);
 			ft_free_stringtab(envp);
 			perror("execve");
+			exit(1); // revoir les free a faire en cas d'erreur
 		}
 	}
 	else

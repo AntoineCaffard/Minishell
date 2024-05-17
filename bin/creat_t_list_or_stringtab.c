@@ -83,3 +83,22 @@ char	**init_t_args_in_stringtab(t_argument *args)
 	}
 	return (res);
 }
+
+t_argument	*init_stringtab_in_t_args(char **args)
+{
+	t_argument	*res;
+	int			i;
+
+	if (!args)
+		return (NULL);
+	i = 0;
+	res = ft_calloc(1, sizeof(t_list));
+	res->value = ft_strdup(args[i]);
+	i++;
+	while (args[i])
+	{
+		t_argument_add_back(&res, create_argument(ft_strdup(args[i])));
+		i++;
+	}
+	return (res);
+}

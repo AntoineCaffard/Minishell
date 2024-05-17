@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 13:13:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/05/16 13:13:22 by trebours         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:41:50 by Trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,12 @@ void	main_expand(t_command_line *cmd_line, t_list **envp)
 	t_argument	*current;
 	t_argument	*next;
 
+	delete_cote(cmd_line);
 	cmd = cmd_line->commands;
-	current = cmd->args;
 	while (cmd)
 	{
 		cmd_next = cmd->next;
+		current = cmd->args;
 		while (current)
 		{
 			next = current->next;
