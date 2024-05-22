@@ -12,12 +12,13 @@
 
 #include "parsing_minishell.h"
 
-void	parsing_export(t_list **envp, char **params)
+int	parsing_export(t_list **envp, char **params)
 {
 	if (ft_stringtab_len(params) == 0)
 		minishell_env(*envp);
 	else if (count_occurences_in_string(params[1], '=') > 1)
-		strerror(0);
+		return (1);
 	else
 		minishell_export(envp, params);
+	return (0);
 }

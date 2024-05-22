@@ -32,7 +32,7 @@ char	*get_node(t_list *list, char *param)
 	return (res);
 }
 
-int	ft_stringtabchr(char **stringtab, char **line)
+int	ft_stringtabchr(char **stringtab, char **line, t_command_line *cmd_line)
 {
 	int	i;
 
@@ -47,6 +47,11 @@ int	ft_stringtabchr(char **stringtab, char **line)
 			ft_free_stringtab(stringtab);
 			return (-1);
 		}
+	}
+	if (stringtab[i][1] == '?')
+	{
+		(*line) = ft_itoa(cmd_line->error_code);
+		return (-1);
 	}
 	return (i);
 }
@@ -75,7 +80,7 @@ char	*init_res(char **stringtab)
 	return (res);
 }
 
-char	*expand(char *line, t_list *envp)
+char	*expand(char *line, t_list *envp, t_command_line *cmd_line)
 {
 	char	*res;
 	char	**stringtab;
@@ -84,7 +89,7 @@ char	*expand(char *line, t_list *envp)
 	if (ft_verif_var(line) == -1)
 		return (line);
 	stringtab = ft_split(line, ' ');
-	i = ft_stringtabchr(stringtab, &line);
+	i = ft_stringtabchr(stringtab, &line, cmd_line);
 	if (i < 0)
 		return (line);
 	res = get_node(envp, &stringtab[i][1]);
@@ -118,7 +123,7 @@ void	main_expand(t_command_line *cmd_line, t_list **envp)
 		while (current)
 		{
 			next = current->next;
-			current->value = expand(current->value, (*envp));
+			current->value = expand(current->value, (*envp), cmd_line);
 			current = next;
 		}
 		cmd = cmd_next;

@@ -12,13 +12,14 @@
 
 #include "builtins_minishell.h"
 
-void	minishell_env(t_list *envp)
+int	minishell_env(t_list *envp)
 {
 	if (!envp)
-		return ;
+		return (0);
 	while (envp)
 	{
 		printf("%s\n", (char *) envp->content);
 		envp = envp->next;
 	}
+	return (0);
 }

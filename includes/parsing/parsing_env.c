@@ -12,10 +12,11 @@
 
 #include "parsing_minishell.h"
 
-void	parsing_env(char **params, t_list *envp)
+int	parsing_env(char **params, t_list *envp)
 {
 	if (ft_stringtab_len(params) > 0)
 		display_error_cmd(2, "too many argument", NULL);
 	else
-		minishell_env(envp);
+		return (minishell_env(envp));
+	return (1);
 }

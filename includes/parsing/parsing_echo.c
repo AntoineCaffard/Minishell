@@ -20,14 +20,13 @@ int	check_option(char **params)
 		return (0);
 }
 
-void	parsing_echo(char **params)
+int	parsing_echo(char **params)
 {
 	if (!params || !ft_stringtab_len(params))
 		display_error_cmd(1, NULL, NULL);
 	else if (params && ft_stringtab_len(params) > 1 && check_option(params))
-		minishell_echo(params);
+		return (minishell_echo(params));
 	else if (params && ft_stringtab_len(params) && check_option(params) == 0)
-		minishell_echo(params);
-	else
-		return ;
+		return (minishell_echo(params));
+	return (0);
 }

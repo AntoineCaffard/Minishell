@@ -12,7 +12,7 @@
 
 #include "parsing_minishell.h"
 
-void	parsing_cd(char **params)
+int	parsing_cd(char **params)
 {
 	if (ft_stringtab_len(params) > 1)
 		display_error_cmd(0, "too many argument", NULL);
@@ -23,5 +23,6 @@ void	parsing_cd(char **params)
 	else if (access(params[0], R_OK))
 		display_error_cmd(0, "no such file in directory", params[0]);
 	else
-		minishell_cd(params[0]);
+		return (minishell_cd(params[0]));
+	return (1);
 }

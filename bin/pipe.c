@@ -47,19 +47,19 @@ int	ft_lst_command_size(t_command *lst)
 	return (1 + ft_lst_command_size(lst->next));
 }
 
-void	_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
+void	_pipe(t_command_line *cmd_line, t_list **envp, t_pipe *save_fd)
 {
 	int	i;
 
 	i = 0;
-	while (command->commands)
+	while (cmd_line->commands)
 	{
 		if (pipe(save_fd->pipe))
 			return ;
 		management_fd(save_fd, i);
-		main_redirection(command);
-		main_execution(command, *envp);
-		command->commands = command->commands->next;
+		main_redirection(cmd_line);
+		main_execution(cmd_line, *envp);
+		cmd_line->commands = cmd_line->commands->next;
 		if (save_fd->save_fd > -1)
 			close(save_fd->save_fd);
 		save_fd->save_fd = dup(save_fd->pipe[0]);
@@ -71,15 +71,15 @@ void	_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd)
 		close(save_fd->save_fd);
 }
 
-void	main_pipe(t_command_line *command, t_list **envp)
+void	main_pipe(t_command_line *cmd_line, t_list **envp)
 {
 	t_pipe	save_fd;
 
 	save_fd.save_first_fd[0] = dup(STDIN_FILENO);
 	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
-	save_fd.nmb_max_cmd = ft_lst_command_size(command->commands);
+	save_fd.nmb_max_cmd = ft_lst_command_size(cmd_line->commands);
 	save_fd.save_fd = -1;
-	_pipe(command, envp, &save_fd);
+	_pipe(cmd_line, envp, &save_fd);
 	management_fd(&save_fd, -1);
 	close (save_fd.save_first_fd[0]);
 	close (save_fd.save_first_fd[1]);

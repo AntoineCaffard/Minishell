@@ -13,11 +13,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "struct.h"
 # include <term.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <errno.h>
-# include "struct.h"
 # include <dirent.h>
 # include <curses.h>
 # include <string.h>
@@ -35,7 +35,7 @@
 # include "builtins/builtins_minishell.h"
 
 char		**main_parseur(char *line);
-void		execute_command(char **line, t_list *envp);
+int			execute_command(char **line, t_list *t_envp);
 t_list		*init_stringtab_in_t_list(char **envp);
 char		**init_t_list_in_stringtab(t_list	*envp);
 char		**init_t_args_in_stringtab(t_argument *args);
@@ -80,13 +80,13 @@ void		_sigint(int signaux);
 void		main_redirection(t_command_line *command);
 void		main_pipe(t_command_line *command, t_list **envp);
 // rajouter
-char		*expand(char *line, t_list *envp);
-void		ft_verif_exit(t_command_line *command_line, t_list **envp);
+char		*expand(char *line, t_list *envp, t_command_line *cmd_line);
+int			ft_verif_exit(t_command_line *command_line, t_list **envp);
 void		main_expand(t_command_line *cmd_line, t_list **envp);
 char		*get_value(t_list *list, char *param);
 int			ft_verif_var(char *line);
 void		delete_cote(t_command_line *cmd_line);
 t_argument	*init_stringtab_in_t_args(char **args);
-void	ft_clear_arg(t_argument **args, void (*del)(void*));
+void		ft_clear_arg(t_argument **args, void (*del)(void*));
 
 #endif

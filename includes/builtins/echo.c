@@ -12,7 +12,7 @@
 
 #include "builtins_minishell.h"
 
-void	minishell_echo(char **params)
+int	minishell_echo(char **params)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ void	minishell_echo(char **params)
 	{
 		if (!*params && params != NULL)
 			free(params);
-		return ;
+		return (0);
 	}
 	i = 0;
 	if (check_option(params) == 42)
@@ -34,4 +34,5 @@ void	minishell_echo(char **params)
 	}
 	if (check_option(params) != 42)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	return (0);
 }

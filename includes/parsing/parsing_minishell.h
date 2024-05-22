@@ -15,12 +15,12 @@
 
 # include "../minishell.h"
 
-void	parsing_cd(char **params);
-int		parsing_exit(char **params);
-int		check_option(char **params);
-void	parsing_echo(char **params);
-void	parsing_unset(t_list **envp, char **params);
-void	parsing_env(char **params, t_list *envp);
-void	parsing_export(t_list **envp, char **params);
+int	parsing_cd(char **params);
+int	parsing_exit(char **params);
+int	check_option(char **params);
+int	parsing_echo(char **params);
+int	parsing_unset(t_list **envp, char **params);
+int	parsing_env(char **params, t_list *envp);
+int	parsing_export(t_list **envp, char **params);
 
 #endif
