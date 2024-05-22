@@ -50,6 +50,8 @@ int	ft_stringtabchr(char **stringtab, char **line, t_command_line *cmd_line)
 	}
 	if (stringtab[i][1] == '?')
 	{
+		free((*line));
+		ft_free_stringtab(stringtab);
 		(*line) = ft_itoa(cmd_line->error_code);
 		return (-1);
 	}

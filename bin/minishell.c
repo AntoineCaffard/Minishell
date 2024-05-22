@@ -86,7 +86,7 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 		else
 			free(line);
 		if (command_line->error_code == -1)
-			return (-1);
+			return (1);
 	}
 	return (0);
 }
