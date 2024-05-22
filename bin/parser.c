@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/16 13:33:26 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/22 11:19:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	fill_command(t_command *cmd, char *line)
 	j = 0;
 	if (line[i] == '$')
 		j++;
+	if (line[i] == '\'' || line[i] == '\"')
+		j = skip_quotes(line, i);
 	while (line[i + j] && !minishell_is_separator(line[i + j]))
 		j++;
 	arg = create_argument(ft_strndup(&line[i], j));
