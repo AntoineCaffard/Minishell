@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 14:07:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/22 11:17:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:26:01 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ size_t	ft_strlen(const char *str);
 int		locate_string_in_stringtab(char **stringtab, char *string,
 			int len_check);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(const char *s1, const char *s2);
 int		ft_atoi(const char *nptr);
 char	*ft_strdup(const char *s);
 char	*ft_strndup(const char *s, size_t n);
