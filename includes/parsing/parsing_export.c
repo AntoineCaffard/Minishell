@@ -62,7 +62,7 @@ int	print_sort_list(t_list *list)
 			ft_lstclear(&res, free);
 			return (1);
 		}
-		ft_lstadd_back(&res,new);
+		ft_lstadd_back(&res, new);
 		list = list->next;
 	}
 	manage_print(&res);

@@ -66,7 +66,7 @@ int	command_n(char **cmd, char **envp)
 	int		error;
 
 	tfork = fork();
-	error = 0;	
+	error = 0;
 	if (tfork < 0)
 		return (1);
 	if (tfork == 0)

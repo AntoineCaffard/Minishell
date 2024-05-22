@@ -52,6 +52,7 @@ typedef struct s_command
 typedef struct s_command_line
 {
 	int			error_code;
+	int			return_value;
 	t_command	*commands;
 }	t_command_line;
 

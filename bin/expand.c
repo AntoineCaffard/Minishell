@@ -52,7 +52,7 @@ int	ft_stringtabchr(char **stringtab, char **line, t_command_line *cmd_line)
 	{
 		free((*line));
 		ft_free_stringtab(stringtab);
-		(*line) = ft_itoa(cmd_line->error_code);
+		(*line) = ft_itoa(cmd_line->return_value);
 		return (-1);
 	}
 	return (i);

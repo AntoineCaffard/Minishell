@@ -40,7 +40,10 @@ static char	*remove_cote(char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(&str[1]);
-	res = ft_strndup(&str[1], len - 1);
+	if (str[len - 1] == '"')
+		res = ft_strndup(&str[1], len - 1);
+	else
+		res = ft_strndup(&str[1], len);
 	free(str);
 	return (res);
 }
