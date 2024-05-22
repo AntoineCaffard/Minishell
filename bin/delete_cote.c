@@ -40,7 +40,10 @@ static char	*remove_cote(char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(&str[1]);
-	res = ft_strndup(&str[1], len - 1);
+	if (str[len - 1] == '"')
+		res = ft_strndup(&str[1], len - 1);
+	else
+		res = ft_strndup(&str[1], len);
 	free(str);
 	return (res);
 }
@@ -84,7 +87,6 @@ static char **create_new_stringtab(char **current)
 	while (current[save - 1] && save <= i)
 	{
 		tmp = ft_strjoin(new[j], current[save - 1]);
-		printf("\n1. new[j] = %s\n\n1. tmp = %s\n", new[j], tmp);
 		if (new[j][0] != 0)
 			free(new[j]);
 		if (save < i)
@@ -98,7 +100,6 @@ static char **create_new_stringtab(char **current)
 	j++;
 	while (current[save - 1])
 	{
-		printf("\n2. current[save] = %s\n", current[save - 1]);
 		new[j] = ft_strdup(current[save - 1]);
 		j++;
 		save++;

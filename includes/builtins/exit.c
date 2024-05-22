@@ -12,7 +12,7 @@
 
 #include "builtins_minishell.h"
 
-void	minishell_exit(t_command_line *command, char ***cmd, t_list *envp)
+int	minishell_exit(t_command_line *command, char ***cmd, t_list *envp)
 {
 	int	save;
 

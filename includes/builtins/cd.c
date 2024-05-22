@@ -12,11 +12,15 @@
 
 #include "builtins_minishell.h"
 
-void	minishell_cd(char *path)
+int	minishell_cd(char *path)
 {
 	int	status;
 
 	status = chdir(path);
 	if (status != 0)
+	{
 		display_error("No such file or directory", path);
+		return (1);
+	}
+	return (0);
 }

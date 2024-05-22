@@ -33,11 +33,11 @@ void	fill_struct(t_command_line *res, char *line)
 	if (!tmp || !command)
 		return ;
 	res->error_code += fill_command(command, tmp);
+	free(tmp);
 	if (res->error_code != 0)
 		return ;
 	if (test_pipe && res->error_code == 0)
 		fill_struct(res, &(line[i + 1]));
-	free(tmp);
 }
 
 static int	manage_redir(char *line, t_command *cmd, int i)

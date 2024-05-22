@@ -62,19 +62,20 @@ int	print_sort_list(t_list *list)
 			ft_lstclear(&res, free);
 			return (1);
 		}
-		ft_lstadd_back(&res,new);
+		ft_lstadd_back(&res, new);
 		list = list->next;
 	}
 	manage_print(&res);
 	return (0);
 }
 
-void	parsing_export(t_list **envp, char **params)
+int	parsing_export(t_list **envp, char **params)
 {
 	if (ft_stringtab_len(params) == 0)
 		print_sort_list(*envp);
 	else if (count_occurences_in_string(params[1], '=') > 1)
-		strerror(0);
+		return (1);
 	else
 		minishell_export(envp, params);
+	return (0);
 }

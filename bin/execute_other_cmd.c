@@ -60,40 +60,44 @@ char	**init_path(t_list *envp)
 	return (res);
 }
 
-void	command_n(char **cmd, t_list *lst_envp)
+int	command_n(char **cmd, char **envp)
 {
 	pid_t	tfork;
-	char	**envp;
+	int		error;
 
-	envp = init_t_list_in_stringtab(lst_envp);
 	tfork = fork();
+	error = 0;
 	if (tfork < 0)
-		return ;
+		return (1);
 	if (tfork == 0)
 	{
 		if (execve(cmd[0], cmd, envp))
 		{
-			ft_free_stringtab(cmd);
 			ft_free_stringtab(envp);
 			perror("execve");
-			exit(1); // revoir les free a faire en cas d'erreur
+			return (-1);
 		}
 	}
 	else
 	{
 		ft_free_stringtab(envp);
-		while (waitpid(-1, NULL, 0) != -1)
+		while (waitpid(-1, &error, 0) != -1)
 			continue ;
+		if (error > 0)
+			return (error);
 	}
+	return (0);
 }
 
-void	execute_command(char **line, t_list *envp)
+int	execute_command(char **line, t_list *t_envp)
 {
 	char	**path;
+	char	**envp;
 	int		fd;
+	int		error;
 
 	fd = dup(STDOUT_FILENO);
-	path = init_path(envp);
+	path = init_path(t_envp);
 	if (access(line[0], X_OK))
 		line[0] = init_link(line[0], path);
 	if (!line[0])
@@ -101,10 +105,12 @@ void	execute_command(char **line, t_list *envp)
 		if (path)
 			ft_free_stringtab(path);
 		close(fd);
-		return ;
+		return (1);
 	}
-	command_n(line, envp);
+	envp = init_t_list_in_stringtab(t_envp);
+	error = command_n(line, envp);
 	ft_free_stringtab(path);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (error);
 }
