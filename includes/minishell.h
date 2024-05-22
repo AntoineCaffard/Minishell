@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/17 10:30:59 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:49:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void		fill_struct(t_command_line *res, char *line);
 void		fill_redirection(t_command_line *line);
 t_command	*manage_creation(t_command_line *res);
 int			skip_spaces(char *s);
+int			skip_quotes(char *line, int i);
 
 bool		is_space(char c);
 bool		minishell_is_separator(char c);
@@ -80,6 +81,7 @@ void		_sigint(int signaux);
 void		main_redirection(t_command_line *command);
 void		main_pipe(t_command_line *command, t_list **envp);
 // rajouter
+int			lexer(char *string);
 char		*expand(char *line, t_list *envp, t_command_line *cmd_line);
 int			ft_verif_exit(t_command_line *command_line, t_list **envp);
 void		main_expand(t_command_line *cmd_line, t_list **envp);
@@ -88,5 +90,5 @@ int			ft_verif_var(char *line);
 void		delete_cote(t_command_line *cmd_line);
 t_argument	*init_stringtab_in_t_args(char **args);
 void		ft_clear_arg(t_argument **args, void (*del)(void*));
-
+int			print_sort_list(t_list *list);
 #endif
