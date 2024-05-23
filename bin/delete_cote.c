@@ -34,14 +34,50 @@ static int	verif_cote(char **args, char c)
 	return (0);
 }
 
+int	ft_charchr(const char *s, int c)
+{
+	char	*str;
+	int		i;
+
+	str = (char *) s;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c % 256)
+			return (i);
+		i++;
+	}
+	if (str[i] == c % 256)
+		return (i);
+	return (0);
+}
+
 static char	*remove_cote(char *str, char c)
 {
+	char *tmp;
 	char *res;
 	int	len;
+	int	len_2;
 
 	if (!str)
 		return (NULL);
 	len = ft_strlen(&str[1]);
+	len_2 = ft_charchr(&str[0], c);
+	while (len_2)
+	{
+		tmp = ft_strndup(str, len_2);
+		res = ft_strjoin(tmp, &str[len_2 + 1]);
+		free(tmp);
+		if (res[len - 1]== c)
+		{
+			tmp = ft_strndup(res, len - 1);
+			free(res);
+			res = tmp;
+		}
+		len_2 = ft_charchr(res, c);
+	}
+	if (res)
+		return (res);
 	if (str[len] == c)
 		res = ft_strndup(&str[1], len - 1);
 	else

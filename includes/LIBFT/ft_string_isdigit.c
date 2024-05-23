@@ -19,7 +19,7 @@ int	ft_string_isdigit(char *src)
 	i = 0;
 	while (src[i])
 	{
-		if (ft_isdigit(src[i]))
+		if (ft_isdigit(src[i]) || (i == 0 && ( src[0] == '+' || src[0] == '-')))
 			i++;
 		else
 			return (0);

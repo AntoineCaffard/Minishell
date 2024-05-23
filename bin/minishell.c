@@ -47,10 +47,9 @@ int	ft_verif_exit(t_command_line *command_line, t_list **envp)
 		command_line->return_value = 1;
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
-		if (parsing_exit(cmd))
+		command_line->return_value = parsing_exit(cmd);
+		if (!command_line->return_value)
 			minishell_exit(command_line, &cmd, *envp);
-		else
-			command_line->return_value = 1;
 	}
 	else
 	{
