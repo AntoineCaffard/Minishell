@@ -14,47 +14,40 @@
 
 void	display_error_cmd(int cmd, char *prompt, char *file)
 {
-	int	fd;
-	int	fd_error;
-
-	fd = dup(STDOUT_FILENO);
-	fd_error = dup(STDERR_FILENO);
-	dup2(fd_error, STDOUT_FILENO);
-	close(fd_error);
 	if (cmd == 0)
-		printf("Minishell: cd: ");
+		write(2,"Minishell: cd: ", 15);
 	else if (cmd == 1)
-		printf("\n");
+		write(2,"\n", 1);
 	else if (cmd == 2)
-		printf("Minishell: env: ");
+		write(2,"Minishell: env: ", 16);
 	else if (cmd == 3)
-		printf("Minishell: export: ");
+		write(2,"Minishell: export: ", 19);
 	else if (cmd == 4)
-		printf("Minishell: exit: ");
+		write(2,"Minishell: exit: ", 17);
 	else if (cmd == 5)
-		printf("Minishell: unset: ");
+		write(2,"Minishell: unset: ", 18);
 	if (file)
-		printf("%s: ", file);
+	{
+		write(2, file, ft_strlen(file));
+		write(2, ": ", 2);
+	}
 	if (prompt)
-		printf("%s\n", prompt);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+	{
+		write(2, prompt, ft_strlen(prompt));
+		write(2,"\n", 1);
+	}
 }
 
 void	display_error(char *prompt, char *file_or_cmd)
 {
-	int	fd;
-	int	fd_error;
-
-	fd = dup(STDOUT_FILENO);
-	fd_error = dup(STDERR_FILENO);
-	dup2(fd_error, STDOUT_FILENO);
-	close(fd_error);
-	printf("Minishell: ");
+	write(2,"Minishell: ", 11);
 	if (file_or_cmd)
-		printf("%s: %s\n", file_or_cmd, prompt);
+	{
+		write(2, file_or_cmd, ft_strlen(file_or_cmd));
+		write(2,": ", 2);
+		write(2, prompt, ft_strlen(prompt));
+	}
 	else
-		printf("%s\n", prompt);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+		write(2, prompt, ft_strlen(prompt));
+	write(2,"\n", 1);
 }

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static int	verif_cote(char **args)
+static int	verif_cote(char **args, char c)
 {
 	int	i;
 	int	j;
@@ -23,8 +23,10 @@ static int	verif_cote(char **args)
 		i = 0;
 		while (args[j][i])
 		{
-			if (args[j][i] == '\"')
-				return (1);
+			if (!c && (args[j][i] == '\"' || args[j][i] == '\''))
+				return (args[j][i]);
+			else if (c && args[j][i] == c)
+				return (args[j][i]);
 			i++;
 		}
 		j++;
@@ -32,7 +34,7 @@ static int	verif_cote(char **args)
 	return (0);
 }
 
-static char	*remove_cote(char *str)
+static char	*remove_cote(char *str, char c)
 {
 	char *res;
 	int	len;
@@ -40,7 +42,7 @@ static char	*remove_cote(char *str)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(&str[1]);
-	if (str[len - 1] == '"')
+	if (str[len] == c)
 		res = ft_strndup(&str[1], len - 1);
 	else
 		res = ft_strndup(&str[1], len);
@@ -48,7 +50,7 @@ static char	*remove_cote(char *str)
 	return (res);
 }
 
-static char **create_new_stringtab(char **current)
+static char **create_new_stringtab(char **current, char c)
 {
 	char	**new;
 	int		i;
@@ -62,9 +64,9 @@ static char **create_new_stringtab(char **current)
 	save = 0;
 	while (current[i])
 	{
-		if (!save && ft_strchr(current[i], '\"'))
+		if (!save && ft_strchr(current[i], c))
 			save = i + 1;
-		if (save && ft_strchr(current[i], '\"') != ft_strrchr(current[i], '\"'))
+		if (save && ft_strchr(current[i], c) != ft_strrchr(current[i], c))
 			break;
 		if (!current[i])
 			break;
@@ -73,7 +75,7 @@ static char **create_new_stringtab(char **current)
 	}
 	if (save == i + 1)
 	{	
-		current[i] = remove_cote(current[i]);
+		current[i] = remove_cote(current[i], c);
 		return (current);
 	}
 	new = ft_calloc(ft_stringtab_len(current) - (i - save) + 1, sizeof(char *));
@@ -96,7 +98,7 @@ static char **create_new_stringtab(char **current)
 		free(tmp);
 		save++;
 	}
-	new[j] = remove_cote(new[j]);
+	new[j] = remove_cote(new[j], c);
 	j++;
 	while (current[save - 1])
 	{
@@ -113,11 +115,13 @@ static t_argument	*recreate_args(t_argument *args)
 	char		**args_stringtab;
 	t_argument	*res;
 	t_argument	*tmp;
+	char		c;
 
 	tmp = args;
 	args_stringtab = init_t_args_in_stringtab(tmp);
-	while (verif_cote(args_stringtab))
-		args_stringtab = create_new_stringtab(args_stringtab);
+	c = verif_cote(args_stringtab, 0);
+	if (c != 0)
+		args_stringtab = create_new_stringtab(args_stringtab, c);
 	res = init_stringtab_in_t_args(args_stringtab);
 	ft_clear_arg(&args, free);
 	ft_free_stringtab(args_stringtab);
