@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:44 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/22 13:51:15 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:52:52 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ int	print_sort_list(t_list *list)
 
 int	parsing_export(t_list **envp, char **params)
 {
+	int	error_code;
+
+	error_code = 0;
 	if (ft_stringtab_len(params) == 0)
 		print_sort_list(*envp);
 	else if (count_occurences_in_string(params[1], '=') > 1)
 		return (1);
 	else
-		minishell_export(envp, params);
-	return (0);
+		error_code = minishell_export(envp, params);
+	return (error_code);
 }

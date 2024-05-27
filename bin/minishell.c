@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:53:41 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/22 13:52:14 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:31:17 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_verif_exit(t_command_line *command_line, t_list **envp)
 int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 {
 	t_command_line	cmd_buffer;
+	int				i;
 
 	while (1)
 	{
@@ -72,6 +73,12 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 		{
 			command_line->error_code = 0;
 			add_history(line);
+			i = lexer(line);
+			if (i)
+			{
+				printf("wololo\n");
+				continue ;
+			}
 			fill_struct(command_line, line);
 			fill_redirection(command_line);
 			free (line);
