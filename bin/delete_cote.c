@@ -49,7 +49,7 @@ int	ft_charchr(const char *s, int c)
 	}
 	if (str[i] == c % 256)
 		return (i);
-	return (0);
+	return (-1);
 }
 
 static char	*remove_cote(char *str, char c)
@@ -62,8 +62,8 @@ static char	*remove_cote(char *str, char c)
 	if (!str)
 		return (NULL);
 	len = ft_strlen(&str[1]);
-	len_2 = ft_charchr(&str[0], c);
-	while (len_2)
+	len_2 = ft_charchr(str, c);
+	while (len_2 >= 0)
 	{
 		tmp = ft_strndup(str, len_2);
 		res = ft_strjoin(tmp, &str[len_2 + 1]);
@@ -75,8 +75,9 @@ static char	*remove_cote(char *str, char c)
 			res = tmp;
 		}
 		len_2 = ft_charchr(res, c);
+		free(tmp);
 	}
-	if (res)
+	if (len_2 > 0 && res)
 		return (res);
 	if (str[len] == c)
 		res = ft_strndup(&str[1], len - 1);
