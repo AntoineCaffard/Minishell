@@ -54,129 +54,47 @@ int	ft_charchr(const char *s, int c)
 
 static char	*remove_cote(char *str, char c)
 {
-	char *tmp;
-	char *res;
-	int	len;
-	int	len_2;
-
-	if (!str)
-		return (NULL);
-	len = ft_strlen(&str[1]);
-	len_2 = ft_charchr(str, c);
-	while (len_2 >= 0)
-	{
-		tmp = ft_strndup(str, len_2);
-		res = ft_strjoin(tmp, &str[len_2 + 1]);
-		free(tmp);
-		if (res[len - 1]== c)
-		{
-			tmp = ft_strndup(res, len - 1);
-			free(res);
-			res = tmp;
-		}
-		len_2 = ft_charchr(res, c);
-		free(tmp);
-	}
-	if (len_2 > 0 && res)
-		return (res);
-	if (str[len] == c)
-		res = ft_strndup(&str[1], len - 1);
-	else
-		res = ft_strndup(&str[1], len);
-	free(str);
-	return (res);
+	return (str);
 }
 
 static char **create_new_stringtab(char **current, char c)
 {
-	char	**new;
-	int		i;
-	int		j;
-	int		save;
-	char	*tmp;
-
-	if (!current)
-		return (NULL);
-	i = 0;
-	save = 0;
-	while (current[i])
-	{
-		if (!save && ft_strchr(current[i], c))
-			save = i + 1;
-		if (save && ft_strchr(current[i], c) != ft_strrchr(current[i], c))
-			break;
-		if (!current[i])
-			break;
-		else
-			i++;
-	}
-	if (save == i + 1)
-	{	
-		current[i] = remove_cote(current[i], c);
-		return (current);
-	}
-	new = ft_calloc(ft_stringtab_len(current) - (i - save) + 1, sizeof(char *));
-	j = 0;
-	while (j < save - 1)
-	{
-		new[j] = ft_strdup(current[j]);
-		j++;
-	}
-	new[j] = "\0";
-	while (current[save - 1] && save <= i)
-	{
-		tmp = ft_strjoin(new[j], current[save - 1]);
-		if (new[j][0] != 0)
-			free(new[j]);
-		if (save < i)
-			new[j] = ft_strjoin(tmp, " ");
-		else
-			new[j] = ft_strdup(tmp);
-		free(tmp);
-		save++;
-	}
-	new[j] = remove_cote(new[j], c);
-	j++;
-	while (current[save - 1])
-	{
-		new[j] = ft_strdup(current[save - 1]);
-		j++;
-		save++;
-	}
-	ft_free_stringtab(current);
-	return (new);
+	return (current);
 }
 
 static t_argument	*recreate_args(t_argument *args)
 {
-	char		**args_stringtab;
-	t_argument	*res;
-	t_argument	*tmp;
-	char		c;
+	return (args);
+}
 
-	tmp = args;
-	args_stringtab = init_t_args_in_stringtab(tmp);
-	c = verif_cote(args_stringtab, 0);
-	if (c != 0)
-		args_stringtab = create_new_stringtab(args_stringtab, c);
-	res = init_stringtab_in_t_args(args_stringtab);
-	ft_clear_arg(&args, free);
-	ft_free_stringtab(args_stringtab);
-	return (res);
+static t_redir	*recreate_redir(t_redir *reds)
+{
+	return (reds);
 }
 
 void	delete_cote(t_command_line *cmd_line)
 {
 	t_command	*cmd;
 	t_command	*cmd_next;
+	t_argument	*current_args;
+	t_redir		*current_redir;
 
 	cmd = cmd_line->commands;
 	while (cmd)
 	{
 		cmd_next = cmd->next;
-		cmd->args = recreate_args(cmd->args);
+		current_args = cmd->args;
+		current_redir = cmd->redirs;
+		while(current_args)
+		{
+			current_args->value = recreate_args(current_args->value);
+			current_args = current_args->next;
+		}
+		while (current_redir)
+		{
+			current_redir->link = recreate_redir(current_redir->link);
+			current_redir = current_redir->next;
+		}
 		cmd = cmd_next;
 	}
 }
-
-// a faire dans la creation des argument pour pouvoir gerder ou enlever les espaces entre cotes. exemple : "bonjour je suis "
