@@ -74,7 +74,6 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 			command_line->error_code = 0;
 			add_history(line);
 			i = lexer(line);
-			i = 1;
 			if (i)
 			{
 				command_line->return_value = i;
