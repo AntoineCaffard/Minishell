@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:13 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/22 11:24:26 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:38:47 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ static int	check_double_pipe(char *string)
 	res = 0;
 	while (string[res])
 	{
-		if (string[res] == '|')
+		if (string[res] == '\'' || string[res] == '\"')
+			res += skip_quotes(string, res);
+		else if (string[res] == '|')
 		{
 			if (string[res + 1] == '|')
 				return (res);

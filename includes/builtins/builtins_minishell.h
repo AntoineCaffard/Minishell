@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 14:20:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/13 09:22:58 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:51:35 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int		minishell_env(t_list *envp);
 int		minishell_exit(t_command_line *command, char ***cmd, t_list *envp);
 void	minishell_pwd(void);
 void	minishell_unset(t_list **envp, char **params);
-void	minishell_export(t_list **envp, char **params);
+int		minishell_export(t_list **envp, char **params);
 
 #endif
