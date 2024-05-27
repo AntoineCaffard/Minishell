@@ -127,5 +127,5 @@ void	main_expand(t_command_line *cmd_line, t_list **envp)
 		}
 		cmd = cmd_next;
 	}
-	delete_cote(cmd_line);
+	// delete_cote(cmd_line);
 }
