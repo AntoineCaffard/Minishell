@@ -114,9 +114,7 @@ void	main_expand(t_command_line *cmd_line, t_list **envp)
 	t_command	*cmd;
 	t_command	*cmd_next;
 	t_argument	*current;
-	t_argument	*next;
 
-	delete_cote(cmd_line);
 	cmd = cmd_line->commands;
 	while (cmd)
 	{
@@ -124,10 +122,10 @@ void	main_expand(t_command_line *cmd_line, t_list **envp)
 		current = cmd->args;
 		while (current)
 		{
-			next = current->next;
 			current->value = expand(current->value, (*envp), cmd_line);
-			current = next;
+			current = current->next;
 		}
 		cmd = cmd_next;
 	}
+	delete_cote(cmd_line->commands);
 }

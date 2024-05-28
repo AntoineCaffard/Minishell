@@ -76,18 +76,21 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 			i = lexer(line);
 			if (i)
 			{
-				printf("wololo\n");
-				continue ;
+				command_line->return_value = i;
+				free(line);
+				continue;
 			}
 			fill_struct(command_line, line);
-			fill_redirection(command_line);
+			if (!command_line->error_code)
+				fill_redirection(command_line);
 			free (line);
-			cmd_buffer = *command_line;
 			if (command_line->error_code)
 			{
+				command_line->return_value = command_line->error_code;
 				free_struct(command_line);
 				continue;
 			}
+			cmd_buffer = *command_line;
 			main_expand(&cmd_buffer, &envp);
 			cmd_buffer = *command_line;
 			if (ft_verif_exit(&cmd_buffer, &envp))
