@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_cote.c                                      :+:      :+:    :+:   */
+/*   delete_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-/* static int	verif_cote(char *args, char c)
+static int	verif_quote(char *args, char c)
 {
 	int	j;
 
@@ -28,7 +28,7 @@
 	return (0);
 }
 
-int	ft_charchr(const char *s, int c)
+int	ft_charchr(const char *s)
 {
 	char	*str;
 	int		i;
@@ -37,36 +37,85 @@ int	ft_charchr(const char *s, int c)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == c % 256)
+		if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
+		{
+			if (i == 0 || (i > 0 && str[i - 1] != '\\'))
+				return (i);
+		}
+		i++;
+	}
+	if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
+		return (i);
+	return (-1);
+}
+
+int	ft_charrchr(const char *s)
+{
+	char	*str;
+	char	c;
+	int		i;
+
+	str = (char *) s;
+	i = ft_charchr(s);
+	if (i == -1)
+		return (-1);
+	c = s[i];
+	i++;
+	while (str[i])
+	{
+		if (str[i] == c % 256 && str[i - 1] != '\\')
 			return (i);
 		i++;
 	}
-	if (str[i] == c % 256)
+	if (str[i] == c % 256 && str[i - 1] != '\\')
 		return (i);
 	return (-1);
-}*/
+}
 
-static char	*recreate_args_and_redir(char *args)
+static char	*loop_recreate(int first_quote, int second_quote, char *args)
 {
-	// int	i;
-	int		len;
+	char	*tmp;
+	char	*tmp_2;
 	char	*res;
 
-	res = NULL;
-	len = ft_strlen(args);
-	if ((args[0] == '\'' || args[0] == '\"') && (args[len - 1] == args[0]))
-		res = ft_strndup(&args[1], len - 2);
-	else if ((args[0] == '\'' || args[0] == '\"') && !ft_strrchr(args, args[0]))
-		res = ft_strndup(&args[1], len - 1);
-	else if (args[0] != '\'' && args[0] != '\"' && (args[len - 1] == args[0]))
-		res = ft_strndup(args, len - 3);
-	if (!res)
-		return (args);
+	tmp = ft_strndup(args, first_quote);
+	res = ft_strndup(&args[first_quote + 1], second_quote - first_quote - 1);
+	tmp_2 = ft_strjoin(tmp, res);
+	free(tmp);
+	free(res);
+	if (args[second_quote + 1] == '\0')
+		return (tmp_2);
+	tmp = ft_strdup(&args[second_quote + 1]);
+	res = ft_strjoin(tmp_2, tmp);
+	free(tmp);
+	free(tmp_2);
 	free(args);
 	return (res);
 }
 
-void	delete_cote(t_command *cmd)
+static char	*recreate_args_and_redir(char *args)
+{
+	int		first_quote;
+	int		second_quote;
+	char	*res;
+	char	c;
+
+	first_quote = ft_charchr(args);
+	second_quote = ft_charrchr(args);
+	if (first_quote == second_quote)
+		return (args);
+	c = args[first_quote];
+	res = loop_recreate(first_quote, second_quote, args);
+	while (verif_quote(res, c))
+	{
+		first_quote = ft_charchr(res);
+		second_quote = ft_charrchr(res);
+		res = loop_recreate(first_quote, second_quote, res);
+	}
+	return (res);
+}
+
+void	delete_quote(t_command *cmd)
 {
 	t_command	*cmd_next;
 	t_argument	*current_args;
@@ -79,7 +128,7 @@ void	delete_cote(t_command *cmd)
 		cmd_next = cmd->next;
 		current_args = cmd->args;
 		current_redir = cmd->redirs;
-		while(current_args)
+		while (current_args)
 		{
 			next_args = current_args->next;
 			current_args->value = recreate_args_and_redir(current_args->value);
