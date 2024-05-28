@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:33:09 by trebours          #+#    #+#             */
-/*   Updated: 2024/05/16 14:33:12 by trebours         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:54:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_verif_var(char *line)
 	return (-1);
 }
 
-static size_t	ft_strlen_until_equal(char *str)
+/*static size_t	ft_strlen_until_equal(char *str)
 {
 	size_t	i;
 
@@ -34,7 +34,7 @@ static size_t	ft_strlen_until_equal(char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (i);
-}
+}*/
 
 char	*get_value(t_list *list, char *param)
 {

@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:55:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/28 12:04:35 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:53:11 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins_minishell.h"
 
-static size_t	ft_strlen_until_equal(char *str)
+size_t	ft_strlen_until_equal(char *str)
 {
 	size_t	i;
 
