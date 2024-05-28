@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/22 13:49:02 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:52:08 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		management_fd(t_pipe *save_fd, int i);
 void		ft_change_outfile(char *link, int i);
 void		ft_change_infile(char *link);
 int			ft_lst_command_size(t_command *lst);
+size_t		ft_strlen_until_equal(char *str);
 
 int			fill_command(t_command *cmd, char *line);
 

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:44 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/27 11:52:52 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:57:33 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,20 @@ static void	manage_print(t_list **list)
 {
 	t_list	*min;
 	int		min_index;
+	int		first_equal_index;
 
 	while (ft_lstsize(*list) != 0)
 	{
 		min = find_min(*list);
-		printf("%s\n", (char *) min->content);
+		first_equal_index = ft_strlen_until_equal((char *) min->content);
+		if (!((char*) min->content)[first_equal_index])
+			printf("declare -x %s\n", (char *) min->content);
+		else
+		{
+			((char *)min->content)[first_equal_index] = '\0';
+			printf("declare -x %s=\"%s\"\n", (char *) min->content, &((char *) min->content)[first_equal_index + 1]);
+		}
+
 		min_index = ft_lst_get_index(*list, min);
 		ft_lst_remove_index(list, min_index);
 	}
@@ -76,8 +85,6 @@ int	parsing_export(t_list **envp, char **params)
 	error_code = 0;
 	if (ft_stringtab_len(params) == 0)
 		print_sort_list(*envp);
-	else if (count_occurences_in_string(params[1], '=') > 1)
-		return (1);
 	else
 		error_code = minishell_export(envp, params);
 	return (error_code);
