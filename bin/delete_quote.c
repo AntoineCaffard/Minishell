@@ -38,10 +38,7 @@ int	ft_charchr(const char *s)
 	while (str[i])
 	{
 		if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
-		{
-			if (i == 0 || (i > 0 && str[i - 1] != '\\'))
 				return (i);
-		}
 		i++;
 	}
 	if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
@@ -63,11 +60,11 @@ int	ft_charrchr(const char *s)
 	i++;
 	while (str[i])
 	{
-		if (str[i] == c % 256 && str[i - 1] != '\\')
+		if (str[i] == c % 256)
 			return (i);
 		i++;
 	}
-	if (str[i] == c % 256 && str[i - 1] != '\\')
+	if (str[i] == c % 256)
 		return (i);
 	return (-1);
 }
@@ -79,6 +76,11 @@ static char	*loop_recreate(int first_quote, int second_quote, char *args)
 	char	*res;
 
 	tmp = ft_strndup(args, first_quote);
+	if (second_quote == -1)
+	{
+		free(args);
+		return (tmp);
+	}
 	res = ft_strndup(&args[first_quote + 1], second_quote - first_quote - 1);
 	tmp_2 = ft_strjoin(tmp, res);
 	free(tmp);
@@ -112,6 +114,8 @@ static char	*recreate_args_and_redir(char *args)
 		second_quote = ft_charrchr(res);
 		res = loop_recreate(first_quote, second_quote, res);
 	}
+	if (args)
+		free(args);
 	return (res);
 }
 
