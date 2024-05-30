@@ -88,7 +88,7 @@ int			ft_verif_exit(t_command_line *command_line, t_list **envp);
 void		main_expand(t_command_line *cmd_line, t_list **envp);
 char		*get_value(t_list *list, char *param);
 int			ft_verif_var(char *line);
-void		delete_cote(t_command *cmd);
+void		delete_quote(t_command *cmd);
 t_argument	*init_stringtab_in_t_args(char **args);
 void		ft_clear_arg(t_argument **args, void (*del)(void*));
 int			print_sort_list(t_list *list);
