@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:38:44 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/28 13:57:33 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/05/30 09:08:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	manage_print(t_list **list)
 	{
 		min = find_min(*list);
 		first_equal_index = ft_strlen_until_equal((char *) min->content);
-		if (!((char*) min->content)[first_equal_index])
+		if (!((char *) min->content)[first_equal_index])
 			printf("declare -x %s\n", (char *) min->content);
 		else
 		{
 			((char *)min->content)[first_equal_index] = '\0';
-			printf("declare -x %s=\"%s\"\n", (char *) min->content, &((char *) min->content)[first_equal_index + 1]);
+			printf("declare -x %s=\"%s\"\n", (char *) min->content,
+				&((char *) min->content)[first_equal_index + 1]);
 		}
-
 		min_index = ft_lst_get_index(*list, min);
 		ft_lst_remove_index(list, min_index);
 	}
