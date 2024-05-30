@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: trebours <trebours@student.42.fr>          +#+  +:+       +#+         #
+#    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 14:08:21 by acaffard          #+#    #+#              #
-#    Updated: 2024/03/18 11:18:37 by trebours         ###   ########.fr        #
+#    Updated: 2024/05/30 08:58:21 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = builtins_minishell.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRCS = cd.c echo.c env.c exit.c export.c pwd.c unset.c
+SRCS = cd.c echo.c env.c exit.c export.c pwd.c unset.c export_utils.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = ../LIBFT
