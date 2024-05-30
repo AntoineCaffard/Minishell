@@ -5,7 +5,7 @@ CFLAGS= -Wall -Wextra -Werror -g
 SRCS = bin/display_error.c bin/minishell.c bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c \
 	bin/pipe.c bin/redirection.c bin/parser.c bin/lists/s_argument.c bin/lists/s_command.c bin/lists/s_redirection.c \
 	bin/utils.c bin/free_struct.c bin/signaux.c bin/expand.c bin/expand_utils.c bin/delete_quote.c bin/lexer.c \
-	bin/creat_t_args_or_stringtab.c
+	bin/creat_t_args_or_stringtab.c bin/quote_utils.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT
