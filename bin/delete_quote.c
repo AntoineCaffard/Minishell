@@ -29,7 +29,10 @@ static char	*loop_recreate(int first_quote, int second_quote, char *args)
 	free(tmp);
 	free(res);
 	if (args[second_quote + 1] == '\0')
+	{
+		free(args);
 		return (tmp_2);
+	}
 	tmp = ft_strdup(&args[second_quote + 1]);
 	res = ft_strjoin(tmp_2, tmp);
 	free(tmp);
@@ -45,20 +48,21 @@ static char	*recreate_args_and_redir(char *args)
 	char	*res;
 	char	c;
 
-	first_quote = ft_charchr(args);
-	second_quote = ft_charrchr(args);
+	first_quote = ft_charchr(args, 0);
+	second_quote = ft_charrchr(args, 0);
 	if (first_quote == second_quote)
 		return (args);
 	c = args[first_quote];
 	res = loop_recreate(first_quote, second_quote, args);
-	while (verif_quote(res, c))
+		printf("%d, %zu\n", second_quote, ft_strlen(res));
+	while (res[second_quote - 1]
+		&& verif_quote(&res[second_quote - 1]))
 	{
-		first_quote = ft_charchr(res);
-		second_quote = ft_charrchr(res);
+		first_quote = ft_charchr(res, second_quote - 1);
+		second_quote = ft_charrchr(res, second_quote - 1);
 		res = loop_recreate(first_quote, second_quote, res);
+		
 	}
-	if (args)
-		free(args);
 	return (res);
 }
 

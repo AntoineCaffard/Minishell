@@ -20,7 +20,7 @@ static int	check_double_pipe(char *string)
 	while (string[res])
 	{
 		if (string[res] == '\'' || string[res] == '\"')
-			res += skip_quotes(string, res);
+			res += skip_quotes(string, res) - 1;
 		else if (string[res] == '|')
 		{
 			if (string[res + 1] == '|')
