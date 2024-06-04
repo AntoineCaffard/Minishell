@@ -93,9 +93,9 @@ t_argument	*init_stringtab_in_t_args(char **args);
 void		ft_clear_arg(t_argument **args, void (*del)(void*));
 int			print_sort_list(t_list *list);
 void		ft_clear_redir(t_redir **redir, void (*del)(void*));
-int			verif_quote(char *args, char c);
-int			ft_charchr(const char *s);
-int			ft_charrchr(const char *s);
+int			verif_quote(char *args);
+int			ft_charchr(const char *s, unsigned int y);
+int			ft_charrchr(const char *s, unsigned int y);
 
 int		ft_manage_heredoc(char *limiter);
 

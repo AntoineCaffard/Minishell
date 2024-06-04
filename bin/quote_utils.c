@@ -12,29 +12,29 @@
 
 #include "../includes/minishell.h"
 
-int	verif_quote(char *args, char c)
+int	verif_quote(char *args)
 {
 	int	j;
 
+	if (!args)
+		return (0);
 	j = 0;
 	while (args[j])
 	{
-		if (!c && (args[j] == '\"' || args[j] == '\''))
-			return (args[j]);
-		else if (c && args[j] == c)
+		if (args[j] == '\"' || args[j] == '\'')
 			return (args[j]);
 		j++;
 	}
 	return (0);
 }
 
-int	ft_charchr(const char *s)
+int	ft_charchr(const char *s, unsigned int y)
 {
 	char	*str;
 	int		i;
 
 	str = (char *) s;
-	i = 0;
+	i = y;
 	while (str[i])
 	{
 		if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
@@ -46,14 +46,14 @@ int	ft_charchr(const char *s)
 	return (-1);
 }
 
-int	ft_charrchr(const char *s)
+int	ft_charrchr(const char *s, unsigned int y)
 {
 	char	*str;
 	char	c;
 	int		i;
 
 	str = (char *) s;
-	i = ft_charchr(s);
+	i = ft_charchr(s, y);
 	if (i == -1)
 		return (-1);
 	c = s[i];
