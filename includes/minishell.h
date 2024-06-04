@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/28 13:52:08 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:17:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,7 @@ void		ft_clear_redir(t_redir **redir, void (*del)(void*));
 int			verif_quote(char *args, char c);
 int			ft_charchr(const char *s);
 int			ft_charrchr(const char *s);
+
+int		ft_manage_heredoc(char *limiter);
 
 #endif
