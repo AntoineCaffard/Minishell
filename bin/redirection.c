@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:10:35 by Trebours          #+#    #+#             */
-/*   Updated: 2024/04/15 13:21:10 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:47:11 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_change_infile(char *link)
 	close(fd);
 }
 
-void	main_redirection(t_command_line *command)
+void	main_redirection(t_command_line *command, int save_io[2], t_list *env)
 {
 	t_command	*cmd;
 	t_redir		*current;
@@ -54,7 +54,7 @@ void	main_redirection(t_command_line *command)
 		else if (current->type == REDIRECTION_INFILE)
 			ft_change_infile(current->link);
 		else if (current->type == REDIRECTION_HEREDOC)
-			ft_change_infile(current->link);
+			ft_manage_heredoc(current->link, save_io, env);
 		current = next;
 	}
 }

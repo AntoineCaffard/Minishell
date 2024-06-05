@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/05 13:15:49 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:17:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
 void		ft_delone_args(t_argument **args, void (*del)(void*));
 void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
-void		main_execution(t_command_line *command, t_list *envp);
+int			main_execution(t_command_line *command, t_list *envp);
 void		_sigint(int signaux);
 void		main_redirection(t_command_line *command, int save_io[2], t_list *env);
 void		main_pipe(t_command_line *command, t_list **envp);

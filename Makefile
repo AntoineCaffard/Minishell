@@ -5,7 +5,7 @@ CFLAGS= -Wall -Wextra -Werror -g
 SRCS = bin/display_error.c bin/minishell.c bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c \
 	bin/pipe.c bin/redirection.c bin/parser.c bin/lists/s_argument.c bin/lists/s_command.c bin/lists/s_redirection.c \
 	bin/utils.c bin/free_struct.c bin/signaux.c bin/expand.c bin/expand_utils.c bin/delete_quote.c bin/lexer.c \
-	bin/creat_t_args_or_stringtab.c bin/quote_utils.c
+	bin/creat_t_args_or_stringtab.c bin/quote_utils.c bin/heredoc.c
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_DIR = includes/LIBFT
@@ -34,21 +34,21 @@ $(NAME) : $(LIBFT) $(PARSING) $(BUILTINS) $(OBJS)
 	fi
 
 %.o : %.c includes/minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
-	@make --directory $(LIBFT_DIR)
+	@make --no-print --directory $(LIBFT_DIR)
 
 $(PARSING) :
-	@make --directory $(PARSING_DIR)
+	@make --no-print --directory $(PARSING_DIR)
 
 $(BUILTINS) :
-	@make --directory $(BUILTINS_DIR)
+	@make --no-print --directory $(BUILTINS_DIR)
 
 clean :
-	@make clean --directory $(LIBFT_DIR)
-	@make clean --directory $(PARSING_DIR)
-	@make clean --directory $(BUILTINS_DIR)
+	@make clean --no-print --directory $(LIBFT_DIR)
+	@make clean --no-print --directory $(PARSING_DIR)
+	@make clean --no-print --directory $(BUILTINS_DIR)
 	@clear
 	@$(RM) $(OBJS)
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}

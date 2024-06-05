@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/06/05 13:16:10 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:26:42 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,36 @@ void	_pipe(t_command_line *cmd_line, t_list **envp, t_pipe *save_fd)
 	{
 		if (pipe(save_fd->pipe))
 			return ;
-		management_fd(save_fd, i);
+		if (i <= save_fd->nmb_max_cmd)
+			tfork[i] = fork();
 		main_redirection(cmd_line, save_fd->save_first_fd, *envp);
-		main_execution(cmd_line, *envp);
-		cmd_line->commands = cmd_line->commands->next;
-		if (save_fd->save_fd > -1)
-			close(save_fd->save_fd);
-		save_fd->save_fd = dup(save_fd->pipe[0]);
-		close(save_fd->pipe[0]);
-		close(save_fd->pipe[1]);
-		i++;
+		if (!tfork[i])
+		{
+			management_fd(save_fd, i);
+			error = main_execution(cmd_line, *envp);
+			if (save_fd->save_fd > -1)
+				close(save_fd->save_fd);
+			close(save_fd->pipe[0]);
+			close(save_fd->pipe[1]);
+			close(save_fd->save_first_fd[1]);
+			close(save_fd->save_first_fd[0]);
+			exit (error);
+		}
+		else if (tfork[i] > 0) {
+			if (save_fd->save_fd > -1)
+				close(save_fd->save_fd);
+			save_fd->save_fd = dup(save_fd->pipe[0]);
+			close(save_fd->pipe[0]);
+			close(save_fd->pipe[1]);
+			cmd_line->commands = cmd_line->commands->next;
+			i++;
+		}
+	}
+	j = 0;
+	while (j < i && tfork[j] != -1)
+	{
+		waitpid(tfork[j++], &error, 0);
+		cmd_line->return_value = WEXITSTATUS(error);
 	}
 	if (save_fd->save_fd > -1)
 		close(save_fd->save_fd);
@@ -84,7 +104,7 @@ void	main_pipe(t_command_line *cmd_line, t_list **envp)
 	save_fd.save_fd = -1;
 	if (save_fd.nmb_max_cmd == 1)
 	{
-		main_redirection(cmd_line);
+		main_redirection(cmd_line, save_fd.save_first_fd, *envp);
 		cmd_line->return_value = main_execution(cmd_line, *envp);
 	}
 	else
