@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 14:08:21 by acaffard          #+#    #+#              #
-#    Updated: 2024/05/30 08:58:21 by acaffard         ###   ########.fr        #
+#    Updated: 2024/06/04 14:21:04 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,10 @@ RM = rm -rf
 all : $(NAME)
 
 $(NAME): $(LIBFT) $(PARSING) $(OBJS)
-	ar rcs $(NAME) $(OBJS) $(LIBFT) $(PARSING)
+	@ar rcs $(NAME) $(OBJS) $(LIBFT) $(PARSING)
 
 %.o : %.c builtins_minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
 	@make --directory $(LIBFT_DIR)
@@ -44,9 +44,9 @@ clean :
 	@make clean --directory $(PARSING_DIR)
 
 fclean : clean
-	$(RM) $(NAME)
-	$(RM) $(LIBFT)
-	$(RM) $(PARSING)
+	@$(RM) $(NAME)
+	@$(RM) $(LIBFT)
+	@$(RM) $(PARSING)
 
 re : fclean all
 

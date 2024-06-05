@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:54:53 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 11:30:11 by trebours         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:04:25 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins_minishell.h"
 
-static t_list	*get_node_by_value(t_list *list, char *param)
+t_list	*get_node_by_value(t_list *list, char *param)
 {
 	while (list)
 	{
