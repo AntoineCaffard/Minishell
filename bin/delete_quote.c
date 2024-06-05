@@ -54,14 +54,12 @@ static char	*recreate_args_and_redir(char *args)
 		return (args);
 	c = args[first_quote];
 	res = loop_recreate(first_quote, second_quote, args);
-		printf("%d, %zu\n", second_quote, ft_strlen(res));
 	while (res[second_quote - 1]
 		&& verif_quote(&res[second_quote - 1]))
 	{
 		first_quote = ft_charchr(res, second_quote - 1);
 		second_quote = ft_charrchr(res, second_quote - 1);
 		res = loop_recreate(first_quote, second_quote, res);
-		
 	}
 	return (res);
 }
