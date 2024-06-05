@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:46:54 by Trebours          #+#    #+#             */
-/*   Updated: 2024/05/17 10:46:54 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:58:58 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	delete_quote(t_command *cmd)
 		{
 			next_args = current_args->next;
 			current_args->value = recreate_args_and_redir(current_args->value);
+			printf("%s\n", current_args->value);
 			current_args = next_args;
 		}
 		while (current_redir)
