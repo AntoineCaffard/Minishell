@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Trebours <Trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/04/24 14:19:08 by Trebours         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:45:59 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	_pipe(t_command_line *cmd_line, t_list **envp, t_pipe *save_fd)
 		if (pipe(save_fd->pipe))
 			return ;
 		management_fd(save_fd, i);
-		main_redirection(cmd_line);
+		main_redirection(cmd_line, save_fd->save_first_fd, *envp);
 		main_execution(cmd_line, *envp);
 		cmd_line->commands = cmd_line->commands->next;
 		if (save_fd->save_fd > -1)
