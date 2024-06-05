@@ -27,7 +27,7 @@ char	**init_t_args_in_stringtab(t_argument *args)
 	int		size;
 	int		i;
 
-	if (!args)
+	if (!args || !args->value)
 		return (NULL);
 	size = ft_t_argssize(args);
 	res = ft_calloc(size + 1, sizeof(char *));

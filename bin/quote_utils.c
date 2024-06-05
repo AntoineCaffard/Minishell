@@ -33,6 +33,8 @@ int	ft_charchr(const char *s, unsigned int y)
 	char	*str;
 	int		i;
 
+	if (!s)
+		return (-1);
 	str = (char *) s;
 	i = y;
 	while (str[i])
@@ -52,6 +54,8 @@ int	ft_charrchr(const char *s, unsigned int y)
 	char	c;
 	int		i;
 
+	if (!s)
+		return (-1);
 	str = (char *) s;
 	i = ft_charchr(s, y);
 	if (i == -1)

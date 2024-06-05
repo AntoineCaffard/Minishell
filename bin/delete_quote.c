@@ -48,6 +48,8 @@ static char	*recreate_args_and_redir(char *args)
 	char	*res;
 	char	c;
 
+	if (!args)
+		return (args);
 	first_quote = ft_charchr(args, 0);
 	second_quote = ft_charrchr(args, 0);
 	if (first_quote == second_quote)

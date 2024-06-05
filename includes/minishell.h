@@ -76,7 +76,7 @@ char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
 void		ft_delone_args(t_argument **args, void (*del)(void*));
 void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
-void		main_execution(t_command_line *command, t_list *envp);
+int			main_execution(t_command_line *command, t_list *envp);
 void		_sigint(int signaux);
 void		main_redirection(t_command_line *command, int save_io[2], t_list *env);
 void		main_pipe(t_command_line *command, t_list **envp);
