@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:21:53 by antoine           #+#    #+#             */
-/*   Updated: 2024/05/22 16:01:55 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:56:40 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@ void	fill_struct(t_command_line *res, char *line)
 	if (line[i] == '\0')
 		return ;
 	while (line[i] && line[i] != '|')
-		i++;
+	{
+		if (line[i] == '\'' || line[i] == '\"')
+			i += skip_quotes(line, i);
+		else
+			i++;
+	}
 	if (line[i] == '|')
 		test_pipe = TRUE;
 	line[i] = '\0';
@@ -76,7 +81,12 @@ int	fill_command(t_command *cmd, char *line)
 	if (line[i + j] == '\'' || line[i +j] == '\"')
 		j = skip_quotes(line, i);
 	while (line[i + j] && !minishell_is_separator(line[i + j]))
-		j++;
+	{
+		if (line[i + j] == '\'' || line[i +j] == '\"')
+			j += skip_quotes(line, i + j);
+		else
+			j++;
+	}
 	arg = create_argument(ft_strndup(&line[i], j));
 	if (!arg)
 		return (1);
