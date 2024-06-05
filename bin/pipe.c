@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/06/04 14:45:59 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/05 13:16:10 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int	ft_lst_command_size(t_command *lst)
 void	_pipe(t_command_line *cmd_line, t_list **envp, t_pipe *save_fd)
 {
 	int	i;
+	int	j;
+	int	error = 0;
+	pid_t	tfork[save_fd->nmb_max_cmd];
 
 	i = 0;
 	while (cmd_line->commands)
@@ -79,7 +82,13 @@ void	main_pipe(t_command_line *cmd_line, t_list **envp)
 	save_fd.save_first_fd[1] = dup(STDOUT_FILENO);
 	save_fd.nmb_max_cmd = ft_lst_command_size(cmd_line->commands);
 	save_fd.save_fd = -1;
-	_pipe(cmd_line, envp, &save_fd);
+	if (save_fd.nmb_max_cmd == 1)
+	{
+		main_redirection(cmd_line);
+		cmd_line->return_value = main_execution(cmd_line, *envp);
+	}
+	else
+		_pipe(cmd_line, envp, &save_fd);
 	management_fd(&save_fd, -1);
 	close (save_fd.save_first_fd[0]);
 	close (save_fd.save_first_fd[1]);

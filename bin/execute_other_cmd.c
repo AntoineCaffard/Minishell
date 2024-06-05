@@ -75,7 +75,7 @@ int	command_n(char **cmd, char **envp)
 		{
 			ft_free_stringtab(envp);
 			perror("execve");
-			return (-1);
+			exit (1);
 		}
 	}
 	else
@@ -83,8 +83,9 @@ int	command_n(char **cmd, char **envp)
 		ft_free_stringtab(envp);
 		while (waitpid(-1, &error, 0) != -1)
 			continue ;
-		if (error > 0)
-			return (error);
+		if (WIFSIGNALED(error))
+			return (WTERMSIG(error) + 128);
+		return (WEXITSTATUS(error));
 	}
 	return (0);
 }

@@ -12,28 +12,31 @@
 
 #include "../includes/minishell.h"
 
-void	main_execution(t_command_line *cmd_l, t_list *envp)
+int	main_execution(t_command_line *cmd_l, t_list *envp)
 {
 	char	**cmd;
+	int		error;
 
 	cmd = init_t_args_in_stringtab(cmd_l->commands->args);
+	error = 0;
 	if (!cmd)
-		return ;
+		return (1);
 	if (!ft_strncmp(cmd[0], "echo", 5))
-		cmd_l->return_value = parsing_echo(&cmd[1]);
+		error = parsing_echo(&cmd[1]);
 	else if (!ft_strncmp(cmd[0], "env", 4))
-		cmd_l->return_value = parsing_env(&cmd[1], envp);
+		error = parsing_env(&cmd[1], envp);
 	else if (!ft_strncmp(cmd[0], "cd", 3))
-		cmd_l->return_value = parsing_cd(&cmd[1]);
+		error = parsing_cd(&cmd[1]);
 	else if (!ft_strncmp(cmd[0], "pwd", 4))
 		minishell_pwd();
 	else if (!ft_strncmp(cmd[0], "export", 7))
-		cmd_l->return_value = parsing_export(&envp, &cmd[1]);
+		error = parsing_export(&envp, &cmd[1]);
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		minishell_unset(&envp, &cmd[1]);
 	else
-		cmd_l->return_value = execute_command(cmd, envp);
+		error = execute_command(cmd, envp);
 	ft_free_stringtab(cmd);
+	return (error);
 }
 
 int	ft_verif_exit(t_command_line *command_line, t_list **envp)
