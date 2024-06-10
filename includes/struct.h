@@ -56,14 +56,20 @@ typedef struct s_command_line
 	t_command	*commands;
 }	t_command_line;
 
+typedef struct s_int_list
+{
+	int				content;
+	struct s_int_list	*next;
+}	t_int_list;
+
 typedef struct s_pipe
 {
-	int	save_fd;
+	int	previous;
 	int	pipe[2];
 	int	nmb_max_cmd;
-	int	save_first_fd[2];
+	int	std_fd[2];
 }	t_pipe;
 
 t_redirection_type	get_type(t_argument *arg);
 
-#endif
+# endif

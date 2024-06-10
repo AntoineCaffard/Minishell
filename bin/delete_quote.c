@@ -83,7 +83,6 @@ void	delete_quote(t_command *cmd)
 		{
 			next_args = current_args->next;
 			current_args->value = recreate_args_and_redir(current_args->value);
-			printf("%s\n", current_args->value);
 			current_args = next_args;
 		}
 		while (current_redir)

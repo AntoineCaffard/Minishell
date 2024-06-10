@@ -17,7 +17,7 @@ t_list	*init_stringtab_in_t_list(char **envp)
 	t_list	*res;
 	int		i;
 
-	if (!envp)
+	if (!envp || !envp[0])
 		return (NULL);
 	i = 0;
 	res = ft_calloc(1, sizeof(t_list));

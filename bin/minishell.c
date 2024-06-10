@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int	main_execution(t_command_line *cmd_l, t_list *envp)
+int	main_execution(t_command_line *cmd_l, t_list *envp, t_pipe *pipe_fds)
 {
 	char	**cmd;
 	int		error;
@@ -34,7 +34,7 @@ int	main_execution(t_command_line *cmd_l, t_list *envp)
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		minishell_unset(&envp, &cmd[1]);
 	else
-		error = execute_command(cmd, envp);
+		error = execute_command(cmd, envp, pipe_fds);
 	ft_free_stringtab(cmd);
 	return (error);
 }
@@ -121,7 +121,10 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
-	env = init_stringtab_in_t_list(envp);
+	if (envp)
+		env = init_stringtab_in_t_list(envp);
+	else
+		env = NULL;
 	command_line.commands = NULL;
 	command_line.error_code = 0;
 	command_line.return_value = 0;

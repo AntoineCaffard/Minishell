@@ -60,7 +60,7 @@ char	**init_path(t_list *envp)
 	return (res);
 }
 
-int	command_n(char **cmd, char **envp)
+int	command_n(char **cmd, char **envp, int fd, t_pipe *pipe_fds)
 {
 	pid_t	tfork;
 	int		error;
@@ -71,9 +71,15 @@ int	command_n(char **cmd, char **envp)
 		return (1);
 	if (tfork == 0)
 	{
+		close(fd);
+		close(pipe_fds->pipe[0]);
+		close(pipe_fds->pipe[1]);
+		close(pipe_fds->std_fd[0]);
+		close(pipe_fds->std_fd[1]);
 		if (execve(cmd[0], cmd, envp))
 		{
 			ft_free_stringtab(envp);
+			
 			perror("execve");
 			exit (1);
 		}
@@ -81,16 +87,18 @@ int	command_n(char **cmd, char **envp)
 	else
 	{
 		ft_free_stringtab(envp);
-		while (waitpid(-1, &error, 0) != -1)
+		dup2(pipe_fds->std_fd[0], STDIN_FILENO);
+		dup2(pipe_fds->std_fd[1], STDOUT_FILENO);
+		while (waitpid(tfork, &error, 0) != -1)
 			continue ;
 		if (WIFSIGNALED(error))
 			return (WTERMSIG(error) + 128);
 		return (WEXITSTATUS(error));
 	}
-	return (0);
+	return (error);
 }
 
-int	execute_command(char **line, t_list *t_envp)
+int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 {
 	char	**path;
 	char	**envp;
@@ -109,7 +117,7 @@ int	execute_command(char **line, t_list *t_envp)
 		return (1);
 	}
 	envp = init_t_list_in_stringtab(t_envp);
-	error = command_n(line, envp);
+	error = command_n(line, envp, fd, pipe_fds);
 	ft_free_stringtab(path);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);

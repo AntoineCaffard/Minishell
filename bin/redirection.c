@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	ft_change_outfile(char *link, int i)
+static int	ft_change_outfile(char *link, int i)
 {
 	int	fd;
 
@@ -22,37 +22,42 @@ void	ft_change_outfile(char *link, int i)
 	else if (i == 2)
 		fd = open(link, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (fd < 0)
-		return ;
+		return (1);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	return (0);
 }
 
-void	ft_change_infile(char *link)
+static int	ft_change_infile(char *link)
 {
 	int	fd;
 
-	fd = open(link, O_RDONLY);
+	if (!access(link, O_RDONLY))
+		fd = open(link, O_RDONLY);
+	else
+		return (1);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	return (0);
 }
 
-void	main_redirection(t_command_line *command, int save_io[2], t_list *env)
+void	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 {
 	t_command	*cmd;
 	t_redir		*current;
 	t_redir		*next;
 
-	cmd = command->commands;
+	cmd = cmd_line->commands;
 	current = cmd->redirs;
-	while (current)
+	while (current && !cmd_line->error_code)
 	{
 		next = current->next;
 		if (current->type == REDIRECTION_OUTFILE)
-			ft_change_outfile(current->link, 1);
+			cmd_line->error_code = ft_change_outfile(current->link, 1);
 		else if (current->type == REDIRECTION_APPEND)
-			ft_change_outfile(current->link, 2);
+			cmd_line->error_code = ft_change_outfile(current->link, 2);
 		else if (current->type == REDIRECTION_INFILE)
-			ft_change_infile(current->link);
+			cmd_line->error_code = ft_change_infile(current->link);
 		else if (current->type == REDIRECTION_HEREDOC)
 			ft_manage_heredoc(current->link, save_io, env);
 		current = next;
