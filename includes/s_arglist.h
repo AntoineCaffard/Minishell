@@ -6,12 +6,12 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:37:54 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 15:48:31 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:01:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_ARGUMENT_H
-# define S_ARGUMENT_H
+#ifndef S_ARGLIST_H
+# define S_ARGLIST_H
 # include "LIBFT/libft.h"
 
 typedef struct s_arglist
@@ -21,6 +21,6 @@ typedef struct s_arglist
 }	t_arglist;
 
 void		ft_argdelone(t_arglist **args, void (*del)(void*));
-t_arglist	*ft_arglast(t_arglist *lst)
+t_arglist	*ft_arglast(t_arglist *lst);
 
 #endif

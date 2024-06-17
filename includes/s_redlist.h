@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_redirection.h                                    :+:      :+:    :+:   */
+/*   s_redlist.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:38:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:17:46 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/17 16:00:53 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_REDIRECTION_H
-# define S_REDIRECTION_H
+#ifndef S_REDLIST_H
+# define S_REDLIST_H
 # include "LIBFT/libft.h"
 
 typedef enum e_redirection_type
@@ -26,7 +26,7 @@ typedef struct s_redlist
 {
 	t_redirection_type		type;
 	char					*link;
-	struct s_redlist	*next;
+	struct s_redlist		*next;
 }	t_redlist;
 
 #endif

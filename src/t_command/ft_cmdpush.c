@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:03:51 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:04:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:59:12 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/s_command.h"
+#include "../../includes/s_cmdlist.h"
 
-void	ft_cmdpush(t_command **lst, t_command *to_push)
+void	ft_cmdpush(t_cmdlist **lst, t_cmdlist *to_push)
 {
 	if (!lst || !to_push)
 		return ;

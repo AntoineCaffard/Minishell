@@ -6,17 +6,17 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:35:12 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:03:25 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:59:07 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/s_command.h"
+#include "../../includes/s_cmdlist.h"
 
-t_command	*ft_cmdnew(void)
+t_cmdlist	*ft_cmdnew(void)
 {
-	t_command	*new_command;
+	t_cmdlist	*new_command;
 
-	new_command = ft_calloc(1, sizeof(t_command));
+	new_command = ft_calloc(1, sizeof(t_cmdlist));
 	if (!new_command)
 		return (NULL);
 	new_command->args = NULL;
@@ -24,5 +24,3 @@ t_command	*ft_cmdnew(void)
 	new_command->next = NULL;
 	return (new_command);
 }
-
-

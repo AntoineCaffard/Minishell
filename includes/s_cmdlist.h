@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_command.h                                        :+:      :+:    :+:   */
+/*   s_cmdlist.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:35:43 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:18:50 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:58:50 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef S_cmdlist_H
-# define S_cmdlist_H
+#ifndef S_CMDLIST_H
+# define S_CMDLIST_H
 # include "LIBFT/libft.h"
 # include "s_arglist.h"
 # include "s_redlist.h"
