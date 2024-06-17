@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins_minishell.h                               :+:      :+:    :+:   */
+/*   ft_cmdnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 14:20:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/05/13 09:22:58 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/17 13:35:12 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 14:03:25 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_MINISHELL_H
-# define BUILTINS_MINISHELL_H
+#include "../../includes/s_command.h"
 
-# include "../minishell.h"
+t_command	*ft_cmdnew(void)
+{
+	t_command	*new_command;
 
-void	minishell_cd(char *path);
-void	minishell_echo(char **params);
-void	minishell_env(t_list *envp);
-void	minishell_exit(t_command_line *command, char ***cmd, t_list *envp);
-void	minishell_pwd(void);
-void	minishell_unset(t_list **envp, char **params);
-void	minishell_export(t_list **envp, char **params);
+	new_command = ft_calloc(1, sizeof(t_command));
+	if (!new_command)
+		return (NULL);
+	new_command->args = NULL;
+	new_command->redirs = NULL;
+	new_command->next = NULL;
+	return (new_command);
+}
 
-#endif
+

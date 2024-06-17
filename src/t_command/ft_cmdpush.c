@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_export.c                                   :+:      :+:    :+:   */
+/*   ft_cmdpush.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:38:44 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 13:16:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/17 14:03:51 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 14:04:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_minishell.h"
+#include "../../includes/s_command.h"
 
-void	parsing_export(t_list **envp, char **params)
+void	ft_cmdpush(t_command **lst, t_command *to_push)
 {
-	if (ft_stringtab_len(params) == 0)
-		minishell_env(*envp);
-	else if (count_occurences_in_string(params[1], '=') > 1)
-		strerror(0);
-	else
-		minishell_export(envp, params);
+	if (!lst || !to_push)
+		return ;
+	if (!*lst)
+	{
+		*lst = to_push;
+		return ;
+	}
+	ft_cmdlast(*lst)->next = to_push;
 }

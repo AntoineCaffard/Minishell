@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/01 12:04:03 by antoine           #+#    #+#              #
-#    Updated: 2024/05/16 13:35:32 by acaffard         ###   ########.fr        #
+#    Updated: 2024/06/17 10:36:34 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,17 +77,17 @@ OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 
 %.o : %.c libft.h
-	$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
 
 all: $(NAME)
 
 clean:
-	rm -rf $(OBJS) $(OBJS_BONUS)
+	@rm -rf $(OBJS) $(OBJS_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

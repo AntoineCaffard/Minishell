@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_arglast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 14:12:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:13:42 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/17 14:15:53 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 15:46:25 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../includes/s_arglist.h"
 
-#endif
+t_arglist	*ft_arglast(t_arglist *lst)
+{
+	if (!lst)
+		return (NULL);
+	if (!(lst->next))
+		return (lst);
+	return (ft_arglast(lst->next));
+}

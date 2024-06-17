@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_int_lstsize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 14:01:25 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 11:01:51 by trebours         ###   ########.fr       */
+/*   Created: 2024/06/17 12:20:18 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 12:21:20 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins_minishell.h"
+#include "../../includes/s_int_list.h"
 
-void	minishell_pwd(void)
+int	ft_int_lstsize(t_int_list *lst)
 {
-	char	*buffer;
-
-	buffer = NULL;
-	buffer = getcwd(buffer, 0);
-	if (!buffer)
-		return ;
-	printf("%s\n", buffer);
-	free(buffer);
+	if (!lst)
+		return (0);
+	if (!lst->next)
+		return (1);
+	return (1 + ft_int_lstsize(lst->next));
 }

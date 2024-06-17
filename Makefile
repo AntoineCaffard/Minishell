@@ -1,53 +1,64 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/17 09:46:26 by acaffard          #+#    #+#              #
+#    Updated: 2024/06/17 15:53:14 by acaffard         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
-CC = cc
-CFLAGS= -Wall -Wextra -Werror -g
-
-SRCS = bin/display_error.c bin/minishell.c bin/creat_t_list_or_stringtab.c bin/execute_other_cmd.c \
-	bin/pipe.c bin/redirection.c bin/parser.c bin/lists/s_argument.c bin/lists/s_command.c bin/lists/s_redirection.c \
-	bin/utils.c bin/free_struct.c bin/signaux.c
-OBJS = $(SRCS:.c=.o)
-
-LIBFT_DIR = includes/LIBFT
-LIBFT = $(LIBFT_DIR)/libft.a
-
-PARSING_DIR = includes/parsing
-PARSING = $(PARSING_DIR)/parsing_minishell.a
-
-BUILTINS_DIR = includes/builtins
-BUILTINS = $(BUILTINS_DIR)/builtins_minishell.a
-
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g
 RM=rm -rf
 
 CYAN='\033[1;36m'
 BLUE='\033[1;34m'
+PURPLE='\033[6;35m'
 GREEN='\033[6;32m'
 WHITE='\033[0;m'
 
+INCLUDES_PATH = includes
+INCLUDES =  $(INCLUDES_PATH)/s_int_list.h
+
+LIBFT_DIR = includes/LIBFT
+LIBFT = $(LIBFT_DIR)/libft.a
+
+INT_LIST_DIR = $(SRC_PATH)/t_int_list
+INT_LIST =	$(INT_LIST_DIR)/ft_int_lstnew.c $(INT_LIST_DIR)/ft_int_lstlast.c $(INT_LIST_DIR)/ft_int_lstget_index.c \
+			$(INT_LIST_DIR)/ft_int_lstsize.c $(INT_LIST_DIR)/ft_int_lstpush.c $(INT_LIST_DIR)/ft_int_lstpop_index.c \
+			$(INT_LIST_DIR)/ft_int_lstclear.c
+
+SRC_PATH = src
+SRCS = 	$(INT_LIST) \
+		$(SRC_PATH)/main.c
+
+OBJS = $(SRCS:.c=.o)
+
 all : $(NAME)
 
-$(NAME) : $(LIBFT) $(PARSING) $(BUILTINS) $(OBJS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(PARSING) $(BUILTINS) $(LIBFT) -lreadline
+$(NAME) : $(LIBFT) $(INCLUDES) $(OBJS)
+
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) -lreadline
 	@clear
 	@if [ $$? -eq 0 ]; then \
 		echo ${GREEN}">-Compilation successful-<"${WHITE}; \
 	fi
 
-%.o : %.c includes/minishell.h
-	$(CC) $(CFLAGS) -c $< -o $@
+%.o : %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
-	@make --directory $(LIBFT_DIR)
-
-$(PARSING) :
-	@make --directory $(PARSING_DIR)
-
-$(BUILTINS) :
-	@make --directory $(BUILTINS_DIR)
+	@echo ${PURPLE} ">- COMPILING LIBFT ...... -<"${WHITE}
+	@make --no-print --directory $(LIBFT_DIR)
+	@clear
+	@echo ${PURPLE} ">- COMPILING MINISHELL...... -<"${WHITE}
 
 clean :
-	@make clean --directory $(LIBFT_DIR)
-	@make clean --directory $(PARSING_DIR)
-	@make clean --directory $(BUILTINS_DIR)
+	@make clean --no-print --directory $(LIBFT_DIR)
 	@clear
 	@$(RM) $(OBJS)
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
@@ -55,8 +66,6 @@ clean :
 fclean : clean
 	@$(RM) $(NAME)
 	@$(RM) $(LIBFT)
-	@$(RM) $(PARSING)
-	@$(RM) $(BUILTINS)
 	@clear
 	@echo ${BLUE}">------Files clean-------<\n"${WHITE}
 	@echo ${CYAN}">-------Name clean-------<\n"${WHITE}

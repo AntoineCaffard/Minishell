@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_cmdlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 09:34:34 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 11:17:36 by trebours         ###   ########.fr       */
+/*   Created: 2024/06/17 13:51:58 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 13:53:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins_minishell.h"
+#include "../../includes/s_command.h"
 
-void	minishell_cd(char *path)
+t_command	*ft_cmdlast(t_command *lst)
 {
-	int	status;
-
-	status = chdir(path);
-	if (status != 0)
-		display_error("No such file or directory", path);
+	if (!lst)
+		return (NULL);
+	if (!(lst->next))
+		return (lst);
+	return (t_cmdlast(lst->next));
 }

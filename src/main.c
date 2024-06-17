@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_env.c                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 16:39:08 by acaffard          #+#    #+#             */
-/*   Updated: 2024/03/18 09:46:41 by trebours         ###   ########.fr       */
+/*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 10:10:31 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing_minishell.h"
+#include "../includes/s_int_list.h"
+#include <stdio.h>
 
-void	parsing_env(char **params, t_list *envp)
+int	main(void)
 {
-	if (ft_stringtab_len(params) > 0)
-		display_error_cmd(2, "too many argument", NULL);
-	else
-		minishell_env(envp);
+	ft_int_lstnew(1);
+	printf("HELLO WORLD\n");
+	return (0);
 }

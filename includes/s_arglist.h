@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   s_arglist.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 14:12:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:13:42 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/17 13:37:54 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/17 15:48:31 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef S_ARGUMENT_H
+# define S_ARGUMENT_H
+# include "LIBFT/libft.h"
+
+typedef struct s_arglist
+{
+	char				*value;
+	struct s_arglist	*next;
+}	t_arglist;
+
+void		ft_argdelone(t_arglist **args, void (*del)(void*));
+t_arglist	*ft_arglast(t_arglist *lst)
 
 #endif
