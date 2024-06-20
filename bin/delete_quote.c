@@ -88,7 +88,8 @@ void	delete_quote(t_command *cmd)
 		while (current_redir)
 		{
 			next_redir = current_redir->next;
-			current_redir->link = recreate_args_and_redir(current_redir->link);
+			if (!current_redir->type == REDIRECTION_HEREDOC)
+				current_redir->link = recreate_args_and_redir(current_redir->link);
 			current_redir = next_redir;
 		}
 		cmd = cmd_next;
