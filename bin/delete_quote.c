@@ -46,7 +46,6 @@ static char	*recreate_args_and_redir(char *args)
 	int		first_quote;
 	int		second_quote;
 	char	*res;
-	char	c;
 
 	if (!args)
 		return (args);
@@ -54,7 +53,6 @@ static char	*recreate_args_and_redir(char *args)
 	second_quote = ft_charrchr(args, 0);
 	if (first_quote == second_quote)
 		return (args);
-	c = args[first_quote];
 	res = loop_recreate(first_quote, second_quote, args);
 	while (res[second_quote - 1]
 		&& verif_quote(&res[second_quote - 1]))
@@ -88,7 +86,8 @@ void	delete_quote(t_command *cmd)
 		while (current_redir)
 		{
 			next_redir = current_redir->next;
-			current_redir->link = recreate_args_and_redir(current_redir->link);
+			if (current_redir->type != REDIRECTION_HEREDOC)
+				current_redir->link = recreate_args_and_redir(current_redir->link);
 			current_redir = next_redir;
 		}
 		cmd = cmd_next;

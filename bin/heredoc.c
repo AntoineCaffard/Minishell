@@ -16,7 +16,7 @@ int	has_quotes(char *string)
 {
 	while (*string)
 	{
-		if (*string == '\'' | *string == '\"')
+		if ((*string == '\'') | (*string == '\"'))
 			return (1);
 		string++;
 	}
