@@ -65,7 +65,10 @@ typedef struct s_int_list
 typedef struct s_pipe
 {
 	int	previous;
-	int	pipe[2];
+	int	pipe1[2];
+	int	pipe2[2];
+	int	redirs;
+	int	index;
 	int	nmb_max_cmd;
 	int	std_fd[2];
 }	t_pipe;

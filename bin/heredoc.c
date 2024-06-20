@@ -84,6 +84,7 @@ int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
 	int		pipe_fds[2];
 	int		save_output;
 
+	signal(SIGINT, _sigintheredoc);
 	test = 1;
 	pipe(pipe_fds);
 	save_output = dup(STDOUT_FILENO);

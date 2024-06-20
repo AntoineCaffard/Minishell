@@ -20,3 +20,15 @@ void	_sigint(int signaux)
 	rl_replace_line("", 1);
 	rl_redisplay();
 }
+
+void	_sigint_exec(int signaux)
+{
+	(void)signaux;
+	printf("CCCCCCCC\n");
+}
+
+void	_sigintheredoc(int signaux)
+{
+	(void)signaux;
+	printf("Test\n");
+}

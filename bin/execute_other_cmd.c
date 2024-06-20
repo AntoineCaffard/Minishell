@@ -72,8 +72,6 @@ int	command_n(char **cmd, char **envp, int fd, t_pipe *pipe_fds)
 	if (tfork == 0)
 	{
 		close(fd);
-		close(pipe_fds->pipe[0]);
-		close(pipe_fds->pipe[1]);
 		close(pipe_fds->std_fd[0]);
 		close(pipe_fds->std_fd[1]);
 		if (execve(cmd[0], cmd, envp))

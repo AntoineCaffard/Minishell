@@ -41,7 +41,6 @@ char		**init_t_list_in_stringtab(t_list	*envp);
 char		**init_t_args_in_stringtab(t_argument *args);
 void		display_error(char *prompt, char *file_or_cmd);
 void		display_error_cmd(int cmd, char *prompt, char *file);
-void		management_fd(t_pipe *save_fd, int i);
 int			ft_lst_command_size(t_command *lst);
 size_t		ft_strlen_until_equal(char *str);
 
@@ -73,10 +72,9 @@ bool		is_redir(t_argument *arg);
 char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
 void		ft_delone_args(t_argument **args, void (*del)(void*));
-void		_pipe(t_command_line *command, t_list **envp, t_pipe *save_fd);
-int			main_execution(t_command_line *command, t_list *envp, t_pipe *pipe_fds);
+int			main_execution(t_command *command, t_list *envp, t_pipe *pipe_fds, int i);
 void		_sigint(int signaux);
-void		main_redirection(t_command_line *command, int save_io[2], t_list *env);
+int			main_redirection(t_command_line *command, int save_io[2], t_list *env);
 int			main_pipe(t_command_line *cmd_line, t_list **envp);
 // rajouter
 int			lexer(char *string);
@@ -102,6 +100,11 @@ size_t		ft_int_lst_get_index(t_int_list *list, t_int_list *node);
 void		ft_int_lstadd_back(t_int_list **lst, t_int_list *new_tail);
 t_int_list	*ft_int_lstlast(t_int_list *lst);
 t_int_list	*ft_int_lstnew(int content);
+void		_sigintheredoc(int signaux);
+char		*init_link(char *src, char **path);
+char		**init_path(t_list *envp);
+int			execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds);
+void		_sigint_exec(int sig);
 
 
 #endif

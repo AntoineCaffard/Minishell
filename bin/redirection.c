@@ -41,17 +41,25 @@ static int	ft_change_infile(char *link)
 	return (0);
 }
 
-void	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
+int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 {
 	t_command	*cmd;
 	t_redir		*current;
 	t_redir		*next;
+	int			i;
+	int			y;
 
 	cmd = cmd_line->commands;
 	current = cmd->redirs;
+	i = 0;
+	y = 0;
 	while (current && !cmd_line->error_code)
 	{
 		next = current->next;
+		if (current->type == REDIRECTION_APPEND || current->type == REDIRECTION_OUTFILE)
+			i = 1;
+		if (current->type == REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC)
+			y = 2;
 		if (current->type == REDIRECTION_OUTFILE)
 			cmd_line->error_code = ft_change_outfile(current->link, 1);
 		else if (current->type == REDIRECTION_APPEND)
@@ -62,4 +70,5 @@ void	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 			ft_manage_heredoc(current->link, save_io, env);
 		current = next;
 	}
+	return (i + y);
 }
