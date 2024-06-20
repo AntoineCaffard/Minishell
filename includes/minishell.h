@@ -6,11 +6,34 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:12:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 14:13:42 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:02:06 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# include <term.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <dirent.h>
+# include <curses.h>
+# include <string.h>
+# include <signal.h>
+# include <termios.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include "s_cmdlist.h"
+# include "builtins.h"
+# include "errors.h"
+
+typedef struct s_cmdline
+{
+	int			error_code;
+	int			return_value;
+	t_cmdlist	*cmds;
+}	t_cmdline;
 
 #endif

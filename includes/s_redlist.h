@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:38:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 16:00:53 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/18 09:23:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,11 @@ typedef struct s_redlist
 	char					*link;
 	struct s_redlist		*next;
 }	t_redlist;
+
+t_redlist	*ft_rednew(t_redirection_type type, char *link);
+t_redlist	*t_redlast(t_redlist *lst);
+void		ft_redpush(t_redlist **lst, t_redlist *to_push);
+void		ft_red_delone(t_redlist **list, void (*del)(void*));
+void		ft_redclear(t_redlist **list, void (*del)(void*));
 
 #endif

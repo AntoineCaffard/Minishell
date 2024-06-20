@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:37:54 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 16:01:05 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:57:37 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ typedef struct s_arglist
 	struct s_arglist	*next;
 }	t_arglist;
 
-void		ft_argdelone(t_arglist **args, void (*del)(void*));
+t_arglist	*ft_argnew(char *content);
 t_arglist	*ft_arglast(t_arglist *lst);
+t_arglist	*ft_argpop_two(t_arglist **head, t_arglist *node);
+void		ft_argpush(t_arglist **list, t_arglist *to_push);
+void		ft_argdelone(t_arglist **args, void (*del)(void*));
+void		ft_argclear(t_arglist **list, void (*del)(void*));
 
 #endif

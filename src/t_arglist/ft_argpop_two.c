@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_argdeltwo.c                                     :+:      :+:    :+:   */
+/*   ft_argpop_two.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:47:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 15:45:12 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/18 08:56:50 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_arglist	*get_new_next(t_arglist *node)
 	ft_argdelone(&node, free);
 }
 
-t_arglist	*ft_argdel_two(t_arglist **head, t_arglist *node)
+t_arglist	*ft_argpop_two(t_arglist **head, t_arglist *node)
 {
 	t_arglist	*tmp;
 

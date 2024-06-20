@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_argclear.c                                      :+:      :+:    :+:   */
+/*   ft_cmdclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/17 15:50:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 15:52:02 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/18 09:28:23 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/18 09:29:45 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/s_arglist.h"
+#include "../../includes/s_cmdlist.h"
 
-void	ft_argclear(t_arglist **list, void (*del)(void*))
+void	ft_cmdclear(t_cmdlist **list, void (*del)(void*))
 {
 	if (!list || !del || !*list)
 		return ;
 	if (((*list)->next) != NULL)
-		ft_argclear(&(*list)->next, del);
-	ft_delone_list(list, del);
+		ft_cmdclear(&(*list)->next, del);
+	ft_cmd_delone(list, del);
 }
