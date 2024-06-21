@@ -14,19 +14,21 @@
 
 int	multi_command(char **cmd, char **envp, t_pipe *pipe_fds)
 {
-	int		error;
-
-	error = 0;
 	(void)pipe_fds;
 	// close(pipe_fds->std_fd[0]);
 	// close(pipe_fds->std_fd[1]);
-	if (execve(cmd[0], cmd, envp))
+	// int i = open("/home/utilisateur/Bureau/Minishell/test", O_APPEND | O_RDONLY);
+	// write(2, cmd[0], ft_strlen(cmd[0]));
+	// write(2, "\n123\n", 6);
+	// write(2, cmd[1], ft_strlen(cmd[1]));
+	// write(2, "\n", 2);
+	if (execve(cmd[0], cmd, NULL /*envp*/))
 	{
 		ft_free_stringtab(envp);
 		perror("execve");
 		exit (1);
 	}
-	return (error);
+	return (1);
 }
 
 int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
@@ -46,7 +48,6 @@ int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	}
 	envp = init_t_list_in_stringtab(t_envp);
 	error = multi_command(line, envp, pipe_fds);
-	write(2, "ddddddddddd\n", 12);
 	ft_free_stringtab(path);
 	return (error);
 }

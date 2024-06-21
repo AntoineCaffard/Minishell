@@ -72,7 +72,7 @@ bool		is_redir(t_argument *arg);
 char		*ft_strndup(const char *s, size_t n);
 void		free_struct(t_command_line	*command);
 void		ft_delone_args(t_argument **args, void (*del)(void*));
-int			main_execution(t_command *command, t_list *envp, t_pipe *pipe_fds, int i);
+int         main_execution(const t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, const int i);
 void		_sigint(int signaux);
 int			main_redirection(t_command_line *command, int save_io[2], t_list *env);
 int			main_pipe(t_command_line *cmd_line, t_list **envp);
@@ -106,5 +106,6 @@ char		**init_path(t_list *envp);
 int			execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds);
 void		_sigint_exec(int sig);
 
+void        sigint_handler(int sign_num);
 
 #endif

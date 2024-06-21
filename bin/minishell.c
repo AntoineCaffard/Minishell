@@ -12,15 +12,15 @@
 
 #include "../includes/minishell.h"
 
-int	main_execution(t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, int i)
+int	main_execution(const t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, const int i)
 {
 	char	**cmd;
 	int		error;
 
 	cmd = init_t_args_in_stringtab(cmd_l->args);
-	error = 0;
-	if (!cmd)
+	if (cmd == NULL)
 		return (1);
+	error = 0;
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		error = parsing_echo(&cmd[1]);
 	else if (!ft_strncmp(cmd[0], "env", 4))

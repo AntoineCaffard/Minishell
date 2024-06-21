@@ -12,6 +12,46 @@
 
 #include "../includes/minishell.h"
 
+// static void    process(int sign_num)
+// {
+// 	if (!kill(getpid(), sign_num))
+// 	{
+// 		if (sign_num == SIGQUIT)
+// 		{
+// 			ft_putstr_fd("Quit: 3\n", 1);
+// 			// g_status = 131;
+// 		}
+// 		else if (sign_num == SIGINT)
+// 		{
+// 			ft_putchar_fd('\n', 1);
+// 			// g_status = 130;
+// 		}
+// 	}
+// 	else if (sign_num == SIGINT)
+// 	{
+// 		ft_putchar_fd('\n', 1);
+// 		// g_status = 1;
+// 		// prompt();
+// 	}
+// }
+//
+// void        sigint_handler(int sign_num)
+// {
+// 	if ((sign_num == SIGINT || sign_num == SIGQUIT) && getpid() != 0)
+// 		process(sign_num);
+// 	else
+// 	{
+// 		if (sign_num == SIGINT)
+// 		{
+// 			ft_putchar_fd('\n', 1);
+// 			// g_status = 1;
+// 			// prompt();
+// 		}
+// 		else if (sign_num == SIGQUIT)
+// 			ft_putstr_fd("\b\b  \b\b", 1);
+// 	}
+// }
+
 void	_sigint(int signaux)
 {
 	(void)signaux;
@@ -24,7 +64,8 @@ void	_sigint(int signaux)
 void	_sigint_exec(int signaux)
 {
 	(void)signaux;
-	printf("CCCCCCCC\n");
+	printf("\n");
+	fflush(stdout);
 }
 
 void	_sigintheredoc(int signaux)
