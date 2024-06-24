@@ -15,14 +15,7 @@
 int	multi_command(char **cmd, char **envp, t_pipe *pipe_fds)
 {
 	(void)pipe_fds;
-	// close(pipe_fds->std_fd[0]);
-	// close(pipe_fds->std_fd[1]);
-	// int i = open("/home/utilisateur/Bureau/Minishell/test", O_APPEND | O_RDONLY);
-	// write(2, cmd[0], ft_strlen(cmd[0]));
-	// write(2, "\n123\n", 6);
-	// write(2, cmd[1], ft_strlen(cmd[1]));
-	// write(2, "\n", 2);
-	if (execve(cmd[0], cmd, NULL /*envp*/))
+	if (execve(cmd[0], cmd, envp))
 	{
 		ft_free_stringtab(envp);
 		perror("execve");

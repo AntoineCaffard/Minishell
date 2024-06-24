@@ -25,38 +25,15 @@ char	*get_node(t_list *list, char *param)
 	while (tmp[i] != '=' && tmp[i] != '\0')
 		i++;
 	if (!tmp[i])
+	{
+		free(tmp);
 		return (NULL);
+	}
 	i++;
 	res = ft_strdup(&tmp[i]);
 	free(tmp);
 	return (res);
 }
-
-/* int	ft_stringtabchr(char **stringtab, char **line, t_command_line *cmd_line)
-{
-	int	i;
-
-	free((*line));
-	(*line) = ft_strdup("\0");
-	i = 0;
-	while (stringtab[i] && stringtab[i][0] != '$')
-	{
-		i++;
-		if (!stringtab[i])
-		{
-			ft_free_stringtab(stringtab);
-			return (-1);
-		}
-	}
-	if (stringtab[i][1] == '?')
-	{
-		free((*line));
-		ft_free_stringtab(stringtab);
-		(*line) = ft_itoa(cmd_line->return_value);
-		return (-1);
-	}
-	return (i);
-} */
 
 char	*init_res(char *line, int i, t_list *envp, t_command_line *cmd_line)
 {
@@ -91,9 +68,9 @@ char	*init_res(char *line, int i, t_list *envp, t_command_line *cmd_line)
 		free(res);
 	}
 	res = ft_strjoin(save_first_part, tmp);
-	free(save_first_part);
 	if (tmp)
 		free(tmp);
+	free(save_first_part);
 	if (save_end_part)
 	{
 		save_first_part = ft_strjoin(res, save_end_part);
@@ -110,11 +87,11 @@ char	*expand(char *line, t_list *envp, t_command_line *cmd_line)
 	int		i;
 	char	c;
 
-	if (!line)
-		return (NULL);
 	i = 0;
+	if (!line || !line[i])
+		return (NULL);
 	c = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (!c && (line[i] == '\"' || line[i] == '\''))
 			c = line[i];
@@ -126,33 +103,6 @@ char	*expand(char *line, t_list *envp, t_command_line *cmd_line)
 		i++;
 	}
 	return (line);
-
-
-
-
-/* 	char	*res;
-	char	**stringtab;
-	int		i;
-
-	if (ft_verif_var(line) == -1)
-		return (line);
-	stringtab = ft_split(line, ' ');
-	i = ft_stringtabchr(stringtab, &line, cmd_line);
-	if (i < 0)
-		return (line);
-	res = get_node(envp, &stringtab[i][1]);
-	if (!res)
-	{
-		ft_free_stringtab(stringtab);
-		return (line);
-	}
-	free(stringtab[i]);
-	free(line);
-	stringtab[i] = ft_strdup(res);
-	free(res);
-	res = init_res(stringtab);
-	ft_free_stringtab(stringtab);
-	return (res); */
 }
 
 void	main_expand(t_command_line *cmd_line, t_list **envp)

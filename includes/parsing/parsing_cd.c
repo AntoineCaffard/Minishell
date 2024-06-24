@@ -15,7 +15,7 @@
 int	parsing_cd(char **params)
 {
 	if (ft_stringtab_len(params) > 1)
-		display_error_cmd(0, "too many argument", NULL);
+		display_error_cmd(0, "too many arguments", NULL);
 	else if (ft_stringtab_len(params) < 1)
 		display_error_cmd(0, "too less argument", NULL);
 	else if (access(params[0], F_OK))
