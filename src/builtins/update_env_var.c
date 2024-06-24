@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   update_env_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 16:26:52 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 16:27:50 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-size_t	ft_env_var_len(char *env_var)
+int	update_env_var(t_list **envp, char *argument)
 {
+	t_list	*to_update;
 	size_t	var_len;
+	char	*tmp;
 
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	var_len = ft_env_var_len(argument);
+	to_update = ft_get_env_node(*envp, argument, var_len);
+	if (!to_update)
+		return (ft_add_new_node(envp, argument));
+	if (!argument[var_len])
+		return (0);
+	tmp = ft_strdup(argument);
+	if (!tmp)
+		return (print_error(MALLOC_ERROR));
+	free(to_update->content);
+	to_update->content = tmp;
+	return (0);
 }

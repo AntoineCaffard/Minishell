@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 15:30:03 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 15:42:24 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-size_t	ft_env_var_len(char *env_var)
+int	ft_unset(t_list **envp, char **arguments)
 {
+	size_t	iterator;
 	size_t	var_len;
+	int		del_index;
+	t_list	*to_unset;
 
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	iterator = 0;
+	while(arguments[iterator])
+	{
+		var_len = ft_env_var_len(arguments[iterator]);
+		to_unset = ft_get_env_node(*envp, arguments[iterator], var_len);
+		if (to_unset != NULL)
+		{
+			del_index = ft_lst_get_index(*envp, to_unset);
+			ft_lst_remove_index(envp, del_index);
+		}
+		iterator++;
+	}
+	return (0);
 }

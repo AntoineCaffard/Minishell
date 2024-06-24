@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   ft_cmd_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 10:47:37 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 10:48:42 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/builtins.h"
+#include "../../includes/s_cmdlist.h"
 
-size_t	ft_env_var_len(char *env_var)
+int	ft_cmdsize(t_cmdlist *lst)
 {
-	size_t	var_len;
-
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	if (!lst)
+		return (0);
+	if (!lst->next)
+		return (1);
+	return (1 + ft_cmdsize(lst->next));
 }

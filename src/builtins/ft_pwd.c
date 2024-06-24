@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 15:26:41 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 15:28:54 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-size_t	ft_env_var_len(char *env_var)
+int	ft_pwd(void)
 {
-	size_t	var_len;
+	char	*pwd;
 
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	pwd = NULL;
+	getcwd(pwd, 0);
+	if (!pwd)
+		return (print_error(MALLOC_ERROR));
+	printf("%s\n", pwd);
+	free(pwd);
+	return (0);
 }

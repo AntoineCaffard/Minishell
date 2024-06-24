@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 15:42:33 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 15:44:35 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-size_t	ft_env_var_len(char *env_var)
+int	minishell_env(t_list *envp)
 {
-	size_t	var_len;
-
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	while (envp)
+	{
+		printf("%s\n", (char *) envp->content);
+		envp = envp->next;
+	}
+	return (0);
 }

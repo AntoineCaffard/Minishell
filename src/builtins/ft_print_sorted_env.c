@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_export.c                                  :+:      :+:    :+:   */
+/*   ft_print_sorted_env.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:12:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/20 16:33:28 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:10:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,27 @@ static void	print_sorted(t_list **list)
 	t_list	*min;
 	char	*content;
 	int		min_index;
-	int		e_index;
+	size_t	e_index;
 
 	while (ft_lstsize(*list) != 0)
 	{
 		min = find_min(*list);
-		content = min->content;
-		e_index = ft_strlen_until_equal((char *) content);
-		if (!content[0] == '_' && !content[1] == '=')
+		content = min->content;\
+		e_index = ft_env_var_len((char *) content);
+		if (content[0] == '_' && content[1] == '=')
+			;
+		else if (!content[e_index])
+			printf("declare -x %s\n", content);
+		else
 		{
-			if (!content[e_index])
-				printf("declare -x %s\n", content);
-			else
-			{
-				((char *)content)[e_index] = '\0';
-				printf("declare -x %s=\"%s\"\n", content, &content[e_index + 1]);
-			}
+			((char *)content)[e_index] = '\0';
+			printf("declare -x %s=\"%s\"\n", content, &content[e_index + 1]);
 		}
 		min_index = ft_lst_get_index(*list, min);
 		ft_lst_remove_index(list, min_index);
 	}
 }
+
 
 static	t_list	*copy_list(t_list *to_copy)
 {
@@ -72,7 +72,7 @@ static	t_list	*copy_list(t_list *to_copy)
 	return (new_list);
 }
 
-int	ft_print_export(t_list *list)
+int	ft_print_sorted_env(t_list *list)
 {
 	t_list	*new_list;
 

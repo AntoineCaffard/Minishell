@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env_var_len.c                                   :+:      :+:    :+:   */
+/*   ft_get_env_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 09:06:29 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 09:12:25 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 13:56:44 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-size_t	ft_env_var_len(char *env_var)
+t_list	*ft_get_env_node(t_list *envp, char *var_name, int var_len)
 {
-	size_t	var_len;
-
-	var_len = 0;
-	while (env_var[var_len] && ft_isalpha(env_var[var_len]))
-		var_len++;
-	return (var_len);
+	if(!envp || !var_name)
+		return (NULL);
+	while (envp)
+	{
+		if (ft_strncmp(envp->content, var_name, var_len) == 0)
+		{
+			if (((char *)(envp->content))[var_len] == '\0')
+				return (envp);
+			if (((char *)(envp->content))[var_len] == '=')
+				return (envp);
+		}
+		envp = envp->next;
+	}
+	return (NULL);
 }
