@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:56:45 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/21 11:03:18 by elvondir         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:01:46 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 # include "errors.h"
 
 int	ft_add_new_node(t_list **list, char *value);
-int	ft_print_export(t_list *list);
+int	ft_print_sorted_env(t_list *list);
+size_t	ft_env_var_len(char *env_var);
+t_list	*ft_get_env_node(t_list *envp, char *var_name, int var_len);
+int	ft_append_node(t_list **envp, char *argument);
+int	ft_export(t_list **envp, char **arguments);
+int	update_env_var(t_list **envp, char *argument);
+int	ft_cd(t_list **envp, char **arguments);
+int	minishell_env(t_list *envp);
+int	ft_pwd(void);
+int	ft_unset(t_list **envp, char **arguments);
+int switch_directory(char *path, t_list **envp);
 
 #endif

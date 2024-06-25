@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_int_lstclear.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:21:43 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 12:22:06 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:48:18 by elvondir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,4 @@ void	ft_int_lstclear(t_int_list **lst)
 	if (((*lst)->next) != NULL)
 		ft_int_lstclear(&((*lst)->next));
 	free(lst);
-	*lst = NULL;
 }

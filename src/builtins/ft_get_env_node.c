@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.h                                           :+:      :+:    :+:   */
+/*   ft_get_env_node.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/18 12:47:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 16:09:11 by acaffard         ###   ########.fr       */
+/*   Created: 2024/06/24 09:12:25 by acaffard          #+#    #+#             */
+/*   Updated: 2024/06/24 13:56:44 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERRORS_H
-# define ERRORS_H
-# include <stdio.h>
-# include "LIBFT/libft.h"
+#include "../../includes/builtins.h"
 
-typedef enum e_error
+t_list	*ft_get_env_node(t_list *envp, char *var_name, int var_len)
 {
-	NO_ERROR,
-	MALLOC_ERROR,
-	EXPORT_ERROR,
-	TOO_MUCH_ARG_ERROR,
-	PATH_ERROR,
-	MISSING_HOME_ERROR,
-} t_error;
-
-size_t	print_error(int error_type);
-
-#endif
+	if(!envp || !var_name)
+		return (NULL);
+	while (envp)
+	{
+		if (ft_strncmp(envp->content, var_name, var_len) == 0)
+		{
+			if (((char *)(envp->content))[var_len] == '\0')
+				return (envp);
+			if (((char *)(envp->content))[var_len] == '=')
+				return (envp);
+		}
+		envp = envp->next;
+	}
+	return (NULL);
+}

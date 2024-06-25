@@ -6,7 +6,7 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/21 11:03:39 by elvondir         ###   ########.fr       */
+/*   Updated: 2024/06/25 13:47:18 by elvondir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,24 @@ static bool	check_validity(char *string)
 	iterator = 0;
 	while (string[iterator] && ft_isalpha(string[iterator]))
 		iterator++;
-	if (string[iterator] && string[iterator] == '+')
+	if (string[iterator] && string[iterator] == '+' && string[iterator + 1])
 		iterator++;
 	if (string[iterator] && string[iterator] != '=')
 		return (false);
 	return (true);
 }
 
-static size_t	export_loop(t_list **envp, char *argument)
+static int	export(t_list **envp, char *argument)
+{
+	size_t	var_len;
+
+	var_len = ft_env_var_len(argument);
+	if (argument[var_len] == '+')
+		return (ft_append_node(envp, argument));
+	return (update_env_var(envp, argument));
+}
+
+static size_t	init_export_loop(t_list **envp, char *argument)
 {
 	bool	checker;
 
@@ -37,9 +47,8 @@ static size_t	export_loop(t_list **envp, char *argument)
 	if (checker == false)
 		return (print_error(EXPORT_ERROR));
 	if (!*envp)
-		return (add_new_env_var(envp, argument));
-	return (0);
-	//export()
+		return (ft_add_new_node(envp, argument));
+	return (export(envp, argument));
 }
 
 int	ft_export(t_list **envp, char **arguments)
@@ -48,7 +57,7 @@ int	ft_export(t_list **envp, char **arguments)
 	size_t	nb_error;
 
 	if (ft_stringtab_len(arguments) == 0)
-		return (ft_print_export(*envp));
+		return (ft_print_sorted_env(*envp));
 	iterator = 0;
 	nb_error = 0;
 	while (arguments[iterator])
@@ -56,7 +65,7 @@ int	ft_export(t_list **envp, char **arguments)
 		nb_error += init_export_loop(envp, arguments[iterator]);
 		iterator++;
 	}
-	if (nb_error)
+	if (nb_error > 0)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 09:46:26 by acaffard          #+#    #+#              #
-#    Updated: 2024/06/17 15:53:14 by acaffard         ###   ########.fr        #
+#    Updated: 2024/06/25 14:00:33 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,9 +32,16 @@ INT_LIST =	$(INT_LIST_DIR)/ft_int_lstnew.c $(INT_LIST_DIR)/ft_int_lstlast.c $(IN
 			$(INT_LIST_DIR)/ft_int_lstsize.c $(INT_LIST_DIR)/ft_int_lstpush.c $(INT_LIST_DIR)/ft_int_lstpop_index.c \
 			$(INT_LIST_DIR)/ft_int_lstclear.c
 
+BUILTINS_DIR =	$(SRC_PATH)/builtins
+BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(BUILTINS_DIR)/ft_env_var_len.c \
+			$(BUILTINS_DIR)/ft_export.c $(BUILTINS_DIR)/ft_get_env_node.c $(BUILTINS_DIR)/ft_print_sorted_env.c \
+			$(BUILTINS_DIR)/update_env_var.c $(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c \
+			$(BUILTINS_DIR)/ft_unset.c
+
 SRC_PATH = src
 SRCS = 	$(INT_LIST) \
-		$(SRC_PATH)/main.c
+		$(BUILTINS) \
+		$(SRC_PATH)/main.c $(SRC_PATH)/print_error.c
 
 OBJS = $(SRCS:.c=.o)
 
