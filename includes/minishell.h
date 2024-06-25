@@ -89,7 +89,7 @@ size_t		ft_int_lst_get_index(t_int_list *list, t_int_list *node);
 void		ft_int_lstadd_back(t_int_list **lst, t_int_list *new_tail);
 t_int_list	*ft_int_lstlast(t_int_list *lst);
 t_int_list	*ft_int_lstnew(int content);
-char		*init_link(char *src, char **path);
+char		*init_link(char *src, char **path, int *error);
 char		**init_path(t_list *envp);
 int			execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds);
 void		_sigintheredoc(int signaux);

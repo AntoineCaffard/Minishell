@@ -12,16 +12,24 @@
 
 #include "../includes/minishell.h"
 
-char	*init_link(char *src, char **path)
+char	*init_link(char *src, char **path, int *error)
 {
 	char	*verif_link;
 	char	*save;
 	int		i;
+	struct stat	buf;
 
 	if (!src || !path)
 		return (NULL);
 	i = 0;
 	save = ft_strjoin("/", src);
+	stat(save, &buf);
+	if (S_ISDIR(buf.st_mode))
+	{
+		display_error("Is a directory", &save[1]);
+		*error = 126;
+		return (NULL);
+	}
 	while (path[i])
 	{
 		verif_link = ft_strjoin(path[i], save);
@@ -36,6 +44,7 @@ char	*init_link(char *src, char **path)
 	}
 	free(save);
 	display_error("command not found", src);
+	*error = 127;
 	free(src);
 	return (NULL);
 }
@@ -96,18 +105,38 @@ int	command_n(char **cmd, char **envp, t_pipe *pipe_fds)
 
 int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 {
-	char	**path;
-	char	**envp;
-	int		error;
+	char		**path;
+	char		**envp;
+	int			error;
+	struct stat	buf;
 
 	path = init_path(t_envp);
-	if (access(line[0], X_OK))
-		line[0] = init_link(line[0], path);
-	if (!line[0])
+	error = 0;
+	if (ft_strchr(line[0], '/'))
+	{
+		if (stat(line[0], &buf))
+		{
+			display_error("file or directory not found", line[0]);
+			return (127);
+		}
+		if ((buf.st_mode != S_IXUSR))
+		{
+			display_error("Permission denied", line[0]);
+			return (126);
+		}
+		if (S_ISDIR(buf.st_mode))
+		{
+			display_error("Is a directory", line[0]);
+			return (126);
+		}
+	}
+	else if (access(line[0], X_OK))
+		line[0] = init_link(line[0], path, &error);
+	if (!line[0] || error > 0)
 	{
 		if (path)
 			ft_free_stringtab(path);
-		return (1);
+		return (error);
 	}
 	envp = init_t_list_in_stringtab(t_envp);
 	error = command_n(line, envp, pipe_fds);

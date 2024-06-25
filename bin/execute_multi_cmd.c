@@ -26,14 +26,34 @@ int	multi_command(char **cmd, char **envp, t_pipe *pipe_fds)
 
 int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
 {
-	char	**path;
-	char	**envp;
-	int		error;
+	char		**path;
+	char		**envp;
+	int			error;
+	struct stat	buf;
 
 	path = init_path(t_envp);
+	error = 0;
+	if (ft_strchr(line[0], '/'))
+	{
+		if (stat(line[0], &buf))
+		{
+			display_error("file or directory not found", line[0]);
+			return (127);
+		}
+		if ((buf.st_mode != S_IXUSR))
+		{
+			display_error("Permission denied", line[0]);
+			return (126);
+		}
+		if (S_ISDIR(buf.st_mode))
+		{
+			display_error("Is a directory", line[0]);
+			return (127);
+		}
+	}
 	if (access(line[0], X_OK))
-		line[0] = init_link(line[0], path);
-	if (!line[0])
+		line[0] = init_link(line[0], path, &error);
+	if (!line[0] || error > 0)
 	{
 		if (path)
 			ft_free_stringtab(path);

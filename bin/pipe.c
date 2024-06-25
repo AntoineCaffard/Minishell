@@ -149,7 +149,9 @@ void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 		// printf("\033[1;31mWaiting for pid: %d\033[0;m\n", pid[fds->index]);
 		waitpid(pid[fds->index], &cmd_line->return_value, 0);
 		// printf("\033[1;36mPid is finish: %d\033[0;m\n", pid[fds->index]);
-		if (WIFSIGNALED(cmd_line->return_value))
+		if (cmd_line->return_value == 126)
+			continue;
+		else if (WIFSIGNALED(cmd_line->return_value))
 			cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
 		else if (WIFEXITED(cmd_line->return_value))
 			cmd_line->return_value = WEXITSTATUS(cmd_line->return_value);

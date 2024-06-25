@@ -36,19 +36,15 @@ int	main_execution(const t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, const
 	else if (i == 0)
 	{
 		error = execute_command(cmd, envp, pipe_fds);
-		if (WIFSIGNALED(error))
+		if (error == 127 || error == 126)
+			return (error);
+		else if (WIFSIGNALED(error))
 			error = WTERMSIG(error) + 128;
 		else if (WIFEXITED(error))
 			error = WEXITSTATUS(error);
 	}
 	else
-	{
 		error = execute_multi(cmd, envp, pipe_fds);
-		if (WIFSIGNALED(error))
-			error = WTERMSIG(error) + 128;
-		else if (WIFEXITED(error))
-			error = WEXITSTATUS(error);
-	}
 	ft_free_stringtab(cmd);
 	return (error);
 }
