@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/18 13:12:55 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/21 11:03:39 by elvondir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_export(t_list **envp, char **arguments)
 	size_t	nb_error;
 
 	if (ft_stringtab_len(arguments) == 0)
-		//return print
+		return (ft_print_export(*envp));
 	iterator = 0;
 	nb_error = 0;
 	while (arguments[iterator])
