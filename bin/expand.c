@@ -50,36 +50,18 @@ char	*init_res(char *line, int i, t_list *envp, t_command_line *cmd_line)
 	while (line[j])
 	{
 		if (!ft_isalnum(line[j]) || (line[j - 1] == '$' && line[j] == '?'))
-			break;
+			break ;
 		j++;
 	}
 	if (line[j] == '?')
-		save_end_part = ft_strdup(&line[j + 1]);
+		return (get_return_value(&line, j, save_first_part, cmd_line));
 	else
-		save_end_part = ft_strdup(&line[j]);
-	if (j == i + 1 && line[i + 1] != '?')
-		return (ft_strjoin(save_end_part, save_end_part));
-	if (line[i + 1] == '?')
-		tmp = ft_itoa(cmd_line->return_value);
-	if (!tmp)
 	{
-		res = ft_strndup(&line[i + 1], j - i - 1);
-		tmp = get_node(envp, res);
-		free(res);
-	}
-	res = ft_strjoin(save_first_part, tmp);
-	if (tmp)
+		tmp = ft_strndup(&line[i + 1], j - i - 1);
+		res = get_node(envp, tmp);
 		free(tmp);
-	free(save_first_part);
-	if (save_end_part)
-	{
-		save_first_part = ft_strjoin(res, save_end_part);
-		free(save_end_part);
-		free(line);
-		return (save_first_part);
+		return (get_env_var(&line, j, save_first_part, res));
 	}
-	free(line);
-	return (res);
 }
 
 char	*expand(char *line, t_list *envp, t_command_line *cmd_line)
@@ -97,9 +79,13 @@ char	*expand(char *line, t_list *envp, t_command_line *cmd_line)
 			c = line[i];
 		else if (c && line[i] == c)
 			c = 0;
-		else if (c != '\'' && line[i] == '$' && (line[i + 1] && (ft_isalnum(line[i + 1])
-				|| line[i + 1] == '?')))
+		else if (c != '\'' && line[i] == '$' && (line[i + 1]
+				&& (ft_isalnum(line[i + 1])
+					|| line[i + 1] == '?')))
+		{
 			line = init_res(line, i, envp, cmd_line);
+			i = -1;
+		}
 		i++;
 	}
 	return (line);

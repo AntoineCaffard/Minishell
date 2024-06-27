@@ -71,7 +71,6 @@ char		*expand(char *line, t_list *envp, t_command_line *cmd_line);
 int			ft_verif_exit(t_command_line *command_line, t_list **envp);
 void		main_expand(t_command_line *cmd_line, t_list **envp);
 char		*get_value(t_list *list, char *param);
-int			ft_verif_var(char *line);
 void		delete_quote(t_command *cmd);
 char		**init_t_args_in_stringtab(t_argument *args);
 t_argument	*init_stringtab_in_t_args(char **args);
@@ -95,5 +94,8 @@ int			execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds);
 void		_sigintheredoc(int signaux);
 void		_sigint_exec(int sigaux);
 void		_sigint(int signaux);
+int			verif_stat(char **line);
+char		*get_return_value(char **line, int j, char *first, t_command_line *cmd_line);
+char		*get_env_var(char **line, int j, char *first, char *var);
 
 #endif

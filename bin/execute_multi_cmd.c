@@ -12,6 +12,26 @@
 
 #include "../includes/minishell.h"
 
+char	**init_path(t_list *envp)
+{
+	char	*path;
+	char	**res;
+
+	path = NULL;
+	if (!envp)
+		return (NULL);
+	while (envp)
+	{
+		if (ft_strnstr((char *)envp->content, "PATH\0", 4))
+			path = (char *)envp->content;
+		envp = envp->next;
+	}
+	if (!path)
+		return (NULL);
+	res = ft_split_str(path, ":");
+	return (res);
+}
+
 int	multi_command(char **cmd, char **envp, t_pipe *pipe_fds)
 {
 	(void)pipe_fds;
@@ -29,27 +49,14 @@ int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	char		**path;
 	char		**envp;
 	int			error;
-	struct stat	buf;
 
 	path = init_path(t_envp);
 	error = 0;
 	if (ft_strchr(line[0], '/'))
 	{
-		if (stat(line[0], &buf))
-		{
-			display_error("file or directory not found", line[0]);
-			return (127);
-		}
-		if ((buf.st_mode != S_IXUSR))
-		{
-			display_error("Permission denied", line[0]);
-			return (126);
-		}
-		if (S_ISDIR(buf.st_mode))
-		{
-			display_error("Is a directory", line[0]);
-			return (127);
-		}
+		error = verif_stat(line);
+		if (error)
+			return (error);
 	}
 	if (access(line[0], X_OK))
 		line[0] = init_link(line[0], path, &error);

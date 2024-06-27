@@ -15,17 +15,17 @@
 void	display_error_cmd(int cmd, char *prompt, char *file)
 {
 	if (cmd == 0)
-		write(2,"Minishell: cd: ", 15);
+		write(2, "Minishell: cd: ", 15);
 	else if (cmd == 1)
-		write(2,"\n", 1);
+		write(2, "\n", 1);
 	else if (cmd == 2)
-		write(2,"Minishell: env: ", 16);
+		write(2, "Minishell: env: ", 16);
 	else if (cmd == 3)
-		write(2,"Minishell: export: ", 19);
+		write(2, "Minishell: export: ", 19);
 	else if (cmd == 4)
-		write(2,"Minishell: exit: ", 17);
+		write(2, "Minishell: exit: ", 17);
 	else if (cmd == 5)
-		write(2,"Minishell: unset: ", 18);
+		write(2, "Minishell: unset: ", 18);
 	if (file)
 	{
 		write(2, file, ft_strlen(file));
@@ -33,21 +33,21 @@ void	display_error_cmd(int cmd, char *prompt, char *file)
 	}
 	if (prompt)
 	{
-		write(2, prompt, ft_strlen(prompt));
-		write(2,"\n", 1);
+		write (2, prompt, ft_strlen(prompt));
+		write (2, "\n", 1);
 	}
 }
 
 void	display_error(char *prompt, char *file_or_cmd)
 {
-	write(2,"Minishell: ", 11);
+	write(2, "Minishell: ", 11);
 	if (file_or_cmd)
 	{
 		write(2, file_or_cmd, ft_strlen(file_or_cmd));
-		write(2,": ", 2);
+		write(2, ": ", 2);
 		write(2, prompt, ft_strlen(prompt));
 	}
 	else
 		write(2, prompt, ft_strlen(prompt));
-	write(2,"\n", 1);
+	write(2, "\n", 1);
 }
