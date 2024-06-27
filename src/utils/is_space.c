@@ -6,9 +6,11 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:07:35 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 15:07:35 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:04:52 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 bool	is_space(char c)
 {

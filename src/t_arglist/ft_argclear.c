@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:50:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/18 08:54:14 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:52:29 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ void	ft_argclear(t_arglist **list, void (*del)(void*))
 		return ;
 	if (((*list)->next) != NULL)
 		ft_argclear(&(*list)->next, del);
-	ft_delone_list(list, del);
+	ft_argdelone(list, del);
 }

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:35:43 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/18 09:37:06 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:47:01 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ typedef struct s_cmdlist
 	t_redlist			*redirs;
 	struct s_cmdlist	*next;
 }	t_cmdlist;
+
+typedef struct s_cmdline
+{
+	int			error_code;
+	int			return_value;
+	t_cmdlist	*cmds;
+}	t_cmdline;
 
 t_cmdlist	*ft_cmdnew(void);
 t_cmdlist	*ft_cmdlast(t_cmdlist *lst);

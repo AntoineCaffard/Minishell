@@ -6,9 +6,11 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:51:18 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 14:51:18 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:51:04 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/minishell.h"
 
 static int	check_double_pipe(char *string)
 {

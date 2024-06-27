@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 09:07:13 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/18 09:22:42 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:55:28 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ void	ft_redpush(t_redlist **lst, t_redlist *to_push)
 		*lst = to_push;
 		return ;
 	}
-	t_redlast(*lst)->next = to_push;
+	ft_redlast(*lst)->next = to_push;
 }

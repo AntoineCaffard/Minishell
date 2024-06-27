@@ -6,37 +6,46 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 13:49:24 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:18:19 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../includes/s_int_list.h"
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-static t_list *create_env_list(char **envp)
-{
-	int		i;
-	t_list  *new = NULL;
+int	main(int ac, char **av, char **envp) {
+	t_cmdline cmdline;
+	t_list *env;
+	char *prompt;
+	char *line;
 
-	i = 0;
-	while (envp[i])
-	{
-		ft_add_new_node(&new, envp[i]);
-		i++;
-	}
-	return (new);
-}
-
-int	main(int ac, char **av, char **envp)
-{
 	(void) ac;
-	t_list	*env = create_env_list(envp);
-	//ft_export(&env, &(av[1]));
-    ft_pwd();
-    ft_cd(&env, &(av[1]));
-	ft_export(&env, NULL);
-    ft_pwd();
+	(void) av;
+	cmdline.error_code = 0;
+	cmdline.return_value = 0;
+	cmdline.cmds = NULL;
+	env = listify_str_array(envp);
+
+	while (1) {
+		prompt = ft_prompt(&cmdline);
+		line = readline(prompt);
+		ft_fill_cmdline(&cmdline, line);
+		free(line);
+		free(prompt);
+		while (cmdline.cmds) {
+			while (cmdline.cmds->args) {
+				printf("%s ", cmdline.cmds->args->value);
+				cmdline.cmds->args = cmdline.cmds->args->next;
+			}
+			printf("\n");
+			while (cmdline.cmds->redirs) {
+				printf("%s ", cmdline.cmds->redirs->link);
+				cmdline.cmds->redirs = cmdline.cmds->redirs->next;
+			}
+			cmdline.cmds = cmdline.cmds->next;
+		}
+		ft_cmdclear(&(cmdline.cmds), free);
+	}
 	ft_lstclear(&env, free);
 	return (0);
 }

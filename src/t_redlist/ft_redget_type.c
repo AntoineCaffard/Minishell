@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:11:44 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 15:11:58 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:48:53 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redirection_type	get_type(t_arglist *arg)
+t_redirection_type	ft_redget_type(t_arglist *arg)
 {
 	char	*str;
 

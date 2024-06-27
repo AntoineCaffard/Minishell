@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:47:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/18 08:56:50 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 17:53:29 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static t_arglist	*get_new_next(t_arglist *node)
 	new_next = node->next->next;
 	ft_argdelone(&(node->next), free);
 	ft_argdelone(&node, free);
+	return (new_next);
 }
 
 t_arglist	*ft_argpop_two(t_arglist **head, t_arglist *node)

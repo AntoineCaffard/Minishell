@@ -6,25 +6,14 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:29:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 15:32:21 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 18:04:22 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int get_pipe_index()
-
-void	ft_fill_cmdline(t_cmdline *cmdline, char *line)
+static int	get_command_end(char *line, int i)
 {
-	int				i;
-	bool			test_pipe;
-	char			*tmp;
-	t_command		*command;
-
-	test_pipe = false;
-	i = skip_spaces(line);
-	if (line[i] == '\0')
-		return ;
 	while (line[i] && line[i] != '|')
 	{
 		if (line[i] == '\'' || line[i] == '\"')
@@ -32,17 +21,44 @@ void	ft_fill_cmdline(t_cmdline *cmdline, char *line)
 		else
 			i++;
 	}
+	return (i);
+}
+
+static t_cmdlist	*manage_creation(t_cmdline *res)
+{
+	t_cmdlist	*command;
+
+	command = NULL;
+	command = ft_cmdnew();
+	if (!command)
+		res->error_code = 1;
+	ft_cmdpush(&(res->cmds), command);
+	return (command);
+}
+
+void	ft_fill_cmdline(t_cmdline *cmdline, char *line)
+{
+	int				i;
+	bool			test_pipe;
+	char			*tmp;
+	t_cmdlist		*command;
+
+	test_pipe = false;
+	i = skip_spaces(line);
+	if (line[i] == '\0')
+		return ;
+	i = get_command_end(line, i);
 	if (line[i] == '|')
 		test_pipe = TRUE;
 	line[i] = '\0';
-	command = manage_creation(res);
+	command = manage_creation(cmdline);
 	tmp = ft_strdup(line);
 	if (!tmp || !command)
 		return ;
-	res->error_code += fill_command(command, tmp);
+	cmdline->error_code += fill_command(command, tmp);
 	free(tmp);
-	if (res->error_code != 0)
+	if (cmdline->error_code != 0)
 		return ;
-	if (test_pipe && res->error_code == 0)
-		fill_struct(res, &(line[i + 1]));
+	if (test_pipe && cmdline->error_code == 0)
+		ft_fill_cmdline(cmdline, &(line[i + 1]));
 }

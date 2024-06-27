@@ -22,15 +22,11 @@ GREEN='\033[6;32m'
 WHITE='\033[0;m'
 
 INCLUDES_PATH = includes
-INCLUDES =  $(INCLUDES_PATH)/s_int_list.h
+INCLUDES =  $(INCLUDES_PATH)/builtins.h $(INCLUDES_PATH)/errors.h $(INCLUDES_PATH)/minishell.h $(INCLUDES_PATH)/parsing.h \
+			$(INCLUDES_PATH)/s_arglist.h $(INCLUDES_PATH)/s_cmdlist.h $(INCLUDES_PATH)/s_redlist.h $(INCLUDES_PATH)/utils.h
 
 LIBFT_DIR = includes/LIBFT
 LIBFT = $(LIBFT_DIR)/libft.a
-
-INT_LIST_DIR = $(SRC_PATH)/t_int_list
-INT_LIST =	$(INT_LIST_DIR)/ft_int_lstnew.c $(INT_LIST_DIR)/ft_int_lstlast.c $(INT_LIST_DIR)/ft_int_lstget_index.c \
-			$(INT_LIST_DIR)/ft_int_lstsize.c $(INT_LIST_DIR)/ft_int_lstpush.c $(INT_LIST_DIR)/ft_int_lstpop_index.c \
-			$(INT_LIST_DIR)/ft_int_lstclear.c
 
 BUILTINS_DIR =	$(SRC_PATH)/builtins
 BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(BUILTINS_DIR)/ft_env_var_len.c \
@@ -38,13 +34,32 @@ BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(
 			$(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c $(BUILTINS_DIR)/ft_unset.c \
 			$(BUILTINS_DIR)/update_env_var.c
 
+ARGLIST_DIR = $(SRC_PATH)/t_arglist
+ARGLIST =	$(ARGLIST_DIR)/ft_argclear.c $(ARGLIST_DIR)/ft_argdelone.c $(ARGLIST_DIR)/ft_arglast.c $(ARGLIST_DIR)/ft_argnew.c \
+			$(ARGLIST_DIR)/ft_argpop_two.c $(ARGLIST_DIR)/ft_argpush.c
+
+REDLIST_DIR = $(SRC_PATH)/t_redlist
+REDLIST = 	$(REDLIST_DIR)/ft_red_delone.c $(REDLIST_DIR)/ft_redclear.c $(REDLIST_DIR)/ft_redget_type.c $(REDLIST_DIR)/ft_redlast.c \
+			$(REDLIST_DIR)/ft_rednew.c $(REDLIST_DIR)/ft_redpush.c
+
+CMDLIST_DIR = $(SRC_PATH)/t_cmdlist
+CMDLIST =	$(CMDLIST_DIR)/ft_cmd_delone.c $(CMDLIST_DIR)/ft_cmd_size.c $(CMDLIST_DIR)/ft_cmdclear.c $(CMDLIST_DIR)/ft_cmdlast.c \
+			$(CMDLIST_DIR)/ft_cmdnew.c $(CMDLIST_DIR)/ft_cmdpush.c
+
 UTILS_DIR = $(SRC_PATH)/utils
-UTILS = $(UTILS_DIR)/print_error.c $(UTILS_DIR)/skip_quotes.c.c
+UTILS = $(UTILS_DIR)/print_error.c $(UTILS_DIR)/skip_quotes.c $(UTILS_DIR)/ft_prompt.c $(UTILS_DIR)/is_space.c \
+		$(UTILS_DIR)/list_to_array.c $(UTILS_DIR)/skip_spaces.c
+
+PARSING_DIR = $(SRC_PATH)/parsing
+PARSING = $(PARSING_DIR)/fill_command.c $(PARSING_DIR)/fill_redlist.c $(PARSING_DIR)/ft_fill_cmdline.c $(PARSING_DIR)/lexer.c
 
 SRC_PATH = src
-SRCS = 	$(INT_LIST) \
+SRCS = 	$(ARGLIST) \
+		$(REDLIST) \
+		$(CMDLIST) \
 		$(UTILS) \
 		$(BUILTINS) \
+		$(PARSING) \
 		$(SRC_PATH)/main.c
 
 OBJS = $(SRCS:.c=.o)
