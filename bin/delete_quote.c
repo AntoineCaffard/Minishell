@@ -67,28 +67,24 @@ static char	*recreate_args_and_redir(char *args)
 void	delete_quote(t_command *cmd)
 {
 	t_command	*cmd_next;
-	t_argument	*current_args;
-	t_argument	*next_args;
-	t_redir		*current_redir;
-	t_redir		*next_redir;
+	t_argument	*args;
+	t_redir		*redir;
 
 	while (cmd)
 	{
 		cmd_next = cmd->next;
-		current_args = cmd->args;
-		current_redir = cmd->redirs;
-		while (current_args)
+		args = cmd->args;
+		redir = cmd->redirs;
+		while (args)
 		{
-			next_args = current_args->next;
-			current_args->value = recreate_args_and_redir(current_args->value);
-			current_args = next_args;
+			args->value = recreate_args_and_redir(args->value);
+			args = args->next;
 		}
-		while (current_redir)
+		while (redir)
 		{
-			next_redir = current_redir->next;
-			if (current_redir->type != REDIRECTION_HEREDOC)
-				current_redir->link = recreate_args_and_redir(current_redir->link);
-			current_redir = next_redir;
+			if (redir->type != REDIRECTION_HEREDOC)
+				redir->link = recreate_args_and_redir(redir->link);
+			redir = redir->next;
 		}
 		cmd = cmd_next;
 	}

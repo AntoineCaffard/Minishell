@@ -30,7 +30,7 @@ int	init_pipe(t_pipe *save_fd, t_command *cmd)
 	n = save_fd->nmb_max_cmd -1;
 	if (n == 0)
 		return (1);
-	save_fd->pipe = ft_calloc(n + 1, sizeof(int*));
+	save_fd->pipe = ft_calloc(n + 1, sizeof(int *));
 	if (!save_fd->pipe)
 		return (-1);
 	i = 0;
@@ -40,14 +40,15 @@ int	init_pipe(t_pipe *save_fd, t_command *cmd)
 		pipe(save_fd->pipe[i]);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 void	gestion_pipe(t_pipe *fds, t_redir *redirs)
 {
 	if (fds->index == 0)
 	{
-		if (!redirs || (redirs->type != REDIRECTION_APPEND && redirs->type != REDIRECTION_OUTFILE))
+		if (!redirs || (redirs->type != REDIRECTION_APPEND
+				&& redirs->type != REDIRECTION_OUTFILE))
 		{
 			dup2(fds->pipe[fds->index][1], STDOUT_FILENO);
 			close(fds->pipe[fds->index][1]);
@@ -63,9 +64,8 @@ void	gestion_pipe(t_pipe *fds, t_redir *redirs)
 	}
 	else if (fds->index == fds->nmb_max_cmd - 1)
 	{
-		// if (!redirs || (redirs->type != REDIRECTION_APPEND && redirs->type != REDIRECTION_OUTFILE))
-			// dup2(fds->std_fd[1], STDOUT_FILENO);
-		if (!redirs || (redirs->type != REDIRECTION_INFILE && redirs->type != REDIRECTION_HEREDOC))
+		if (!redirs || (redirs->type != REDIRECTION_INFILE
+				&& redirs->type != REDIRECTION_HEREDOC))
 		{
 			dup2(fds->pipe[fds->index - 1][0], STDIN_FILENO);
 			close(fds->pipe[fds->index - 1][0]);
@@ -79,7 +79,8 @@ void	gestion_pipe(t_pipe *fds, t_redir *redirs)
 	}
 	else if (fds->index < fds->nmb_max_cmd - 1)
 	{
-		if (!redirs || (redirs->type != REDIRECTION_APPEND && redirs->type != REDIRECTION_OUTFILE))
+		if (!redirs || (redirs->type != REDIRECTION_APPEND
+				&& redirs->type != REDIRECTION_OUTFILE))
 		{
 			dup2(fds->pipe[fds->index][1], STDOUT_FILENO);
 			close(fds->pipe[fds->index][1]);
@@ -90,23 +91,24 @@ void	gestion_pipe(t_pipe *fds, t_redir *redirs)
 			close(fds->pipe[fds->index][1]);
 			fds->pipe[fds->index][1] = -1;
 		}
-		if (!redirs || (redirs->type != REDIRECTION_INFILE && redirs->type != REDIRECTION_HEREDOC))
+		if (!redirs || (redirs->type != REDIRECTION_INFILE
+				&& redirs->type != REDIRECTION_HEREDOC))
 		{
 			dup2(fds->pipe[fds->index - 1][0], STDIN_FILENO);
 			close(fds->pipe[fds->index -1][0]);
-			fds->pipe[fds->index - 1 ][0] = -1;
+			fds->pipe[fds->index - 1][0] = -1;
 		}
 		else
 		{
 			close(fds->pipe[fds->index -1][0]);
-			fds->pipe[fds->index - 1 ][0] = -1;
+			fds->pipe[fds->index - 1][0] = -1;
 		}
 	}
-}
+} // more 25 line
 
-void close_pipe(t_pipe *fds)
+void	close_pipe(t_pipe *fds)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (fds->pipe[i])
@@ -124,7 +126,7 @@ void close_pipe(t_pipe *fds)
 
 void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 {
-	pid_t *pid;
+	pid_t	*pid;
 
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	while (fds->index < fds->nmb_max_cmd)
@@ -138,7 +140,6 @@ void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 			main_execution(cmd_line->commands, *envp, fds, 1);
 			exit(1);
 		}
-		// printf("\033[0;32mNew Pid: %d\033[0;m\n", pid[fds->index]);
 		fds->index++;
 		cmd_line->commands = cmd_line->commands->next;
 	}
@@ -146,25 +147,23 @@ void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 	fds->index--;
 	while (fds->index >= 0)
 	{
-		// printf("\033[1;31mWaiting for pid: %d\033[0;m\n", pid[fds->index]);
 		waitpid(pid[fds->index], &cmd_line->return_value, 0);
-		// printf("\033[1;36mPid is finish: %d\033[0;m\n", pid[fds->index]);
-		if (cmd_line->return_value == 126)
-			continue;
+//		check_error(&cmd_line->return_value);
+		if (cmd_line->return_value == 126 || cmd_line->return_value == 127)
+			continue ;
 		else if (WIFSIGNALED(cmd_line->return_value))
 			cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
 		else if (WIFEXITED(cmd_line->return_value))
-			cmd_line->return_value = WEXITSTATUS(cmd_line->return_value);
+			cmd_line ->return_value = WEXITSTATUS(cmd_line->return_value);
 		fds->index--;
 	}
-	return ;
-}
+} // more 25 line and save error of the last command
 
 int	main_pipe(t_command_line *cmd_line, t_list **envp)
 {
-	int	i;
+	int		i;
 	t_pipe	save_fd;
-	
+
 	(void)envp;
 	signal(SIGINT, _sigint_exec);
 	save_fd.index = 0;
@@ -188,5 +187,5 @@ int	main_pipe(t_command_line *cmd_line, t_list **envp)
 	dup2(save_fd.std_fd[0], STDIN_FILENO);
 	dup2(save_fd.std_fd[1], STDOUT_FILENO);
 	signal(SIGINT, _sigint);
-	return(1);
-}
+	return (1);
+} // more 25 line and create pipe_utils

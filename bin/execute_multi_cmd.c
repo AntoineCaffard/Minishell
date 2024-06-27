@@ -12,6 +12,35 @@
 
 #include "../includes/minishell.h"
 
+char	*init_link(char *src, char **path, int *error)
+{
+	char	*verif_link;
+	char	*save;
+	int		i;
+
+	if (!src || !path)
+		return (NULL);
+	i = 0;
+	save = ft_strjoin("/", src);
+	while (path[i])
+	{
+		verif_link = ft_strjoin(path[i], save);
+		if (access(verif_link, X_OK) == 0)
+		{
+			free(src);
+			free(save);
+			return (verif_link);
+		}
+		i++;
+		free(verif_link);
+	}
+	free(save);
+	display_error("command not found", src);
+	*error = 127;
+	free(src);
+	return (NULL);
+}
+
 char	**init_path(t_list *envp)
 {
 	char	*path;

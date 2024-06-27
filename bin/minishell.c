@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-int	main_execution(const t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, const int i)
+int	main_execution(const t_command *cmd_l, t_list *envp,
+					t_pipe *pipe_fds, const int i)
 {
 	char	**cmd;
 	int		error;
@@ -34,15 +35,7 @@ int	main_execution(const t_command *cmd_l, t_list *envp, t_pipe *pipe_fds, const
 	else if (!ft_strncmp(cmd[0], "unset", 6))
 		minishell_unset(&envp, &cmd[1]);
 	else if (i == 0)
-	{
 		error = execute_command(cmd, envp, pipe_fds);
-		if (error == 127 || error == 126)
-			return (error);
-		else if (WIFSIGNALED(error))
-			error = WTERMSIG(error) + 128;
-		else if (WIFEXITED(error))
-			error = WEXITSTATUS(error);
-	}
 	else
 		error = execute_multi(cmd, envp, pipe_fds);
 	ft_free_stringtab(cmd);
@@ -91,7 +84,7 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 			{
 				command_line->return_value = i;
 				free(line);
-				continue;
+				continue ;
 			}
 			fill_struct(command_line, line);
 			if (!command_line->error_code)
@@ -101,7 +94,7 @@ int	loop_main(t_command_line *command_line, t_list *envp, char *line)
 			{
 				command_line->return_value = command_line->error_code;
 				free_struct(command_line);
-				continue;
+				continue ;
 			}
 			cmd_buffer = *command_line;
 			main_expand(&cmd_buffer, &envp);

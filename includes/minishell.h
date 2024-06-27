@@ -97,5 +97,6 @@ void		_sigint(int signaux);
 int			verif_stat(char **line);
 char		*get_return_value(char **line, int j, char *first, t_command_line *cmd_line);
 char		*get_env_var(char **line, int j, char *first, char *var);
+void		check_error(int *error);
 
 #endif

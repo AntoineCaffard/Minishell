@@ -12,33 +12,14 @@
 
 #include "../includes/minishell.h"
 
-char	*init_link(char *src, char **path, int *error)
+void	check_error(int *error)
 {
-	char	*verif_link;
-	char	*save;
-	int		i;
-
-	if (!src || !path)
-		return (NULL);
-	i = 0;
-	save = ft_strjoin("/", src);
-	while (path[i])
-	{
-		verif_link = ft_strjoin(path[i], save);
-		if (access(verif_link, X_OK) == 0)
-		{
-			free(src);
-			free(save);
-			return (verif_link);
-		}
-		i++;
-		free(verif_link);
-	}
-	free(save);
-	display_error("command not found", src);
-	*error = 127;
-	free(src);
-	return (NULL);
+	if (*error == 127 || *error == 126)
+		return ;
+	else if (WIFSIGNALED(*error))
+		*error = WTERMSIG(*error) + 128;
+	else if (WIFEXITED(*error))
+		*error = WEXITSTATUS(*error);
 }
 
 static int	parent(char **envp, t_pipe *fds, pid_t pid)
@@ -127,5 +108,6 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	envp = init_t_list_in_stringtab(t_envp);
 	error = command_n(line, envp, pipe_fds);
 	ft_free_stringtab(path);
+	check_error(&error);
 	return (error);
 }
