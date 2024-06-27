@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/errors.h"
+#include "../../includes/errors.h"
 
 size_t	print_error(int error_type)
 {

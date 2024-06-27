@@ -38,10 +38,14 @@ BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(
 			$(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c $(BUILTINS_DIR)/ft_unset.c \
 			$(BUILTINS_DIR)/update_env_var.c
 
+UTILS_DIR = $(SRC_PATH)/utils
+UTILS = $(UTILS_DIR)/print_error.c $(UTILS_DIR)/skip_quotes.c.c
+
 SRC_PATH = src
 SRCS = 	$(INT_LIST) \
+		$(UTILS) \
 		$(BUILTINS) \
-		$(SRC_PATH)/main.c $(SRC_PATH)/print_error.c
+		$(SRC_PATH)/main.c
 
 OBJS = $(SRCS:.c=.o)
 
