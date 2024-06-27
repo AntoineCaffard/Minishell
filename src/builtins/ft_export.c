@@ -6,12 +6,11 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/25 13:47:18 by elvondir         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:07:29 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
-
 
 static bool	check_validity(char *string)
 {

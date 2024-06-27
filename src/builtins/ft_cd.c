@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:45:23 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 13:30:46 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:39:17 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@ static int	update_pwds(t_list **envp, char *old_pwd, char *new_pwd)
 
 	error = 0;
 	buffer = ft_strjoin("PWD=", new_pwd);
+	free(new_pwd);
 	if (!buffer)
 		return (MALLOC_ERROR);
 	error += update_env_var(envp, buffer);
 	free(buffer);
-	buffer = ft_strjoin("OLD_PWD=", old_pwd);
+	buffer = ft_strjoin("OLDPWD=", old_pwd);
+	free(old_pwd);
 	if (!buffer)
 		return (MALLOC_ERROR);
 	error += update_env_var(envp, buffer);
@@ -43,14 +45,14 @@ static int	update_pwds(t_list **envp, char *old_pwd, char *new_pwd)
 	return (0);
 }
 
-int switch_directory(char *path, t_list **envp)
+int	switch_directory(char *path, t_list **envp)
 {
 	int		status;
 	char	*old_pwd;
 	char	*new_pwd;
 
-    old_pwd = NULL;
-    new_pwd = NULL;
+	old_pwd = NULL;
+	new_pwd = NULL;
 	if (path[0] == '~' && !path[1])
 		return (manage_no_args(envp));
 	old_pwd = getcwd(old_pwd, 0);

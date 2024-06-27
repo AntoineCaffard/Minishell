@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:47:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 16:09:11 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:41:25 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_error
 	TOO_MUCH_ARG_ERROR,
 	PATH_ERROR,
 	MISSING_HOME_ERROR,
-} t_error;
+}	t_error;
 
 size_t	print_error(int error_type);
 

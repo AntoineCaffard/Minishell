@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:30:03 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 15:42:24 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:07:16 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_unset(t_list **envp, char **arguments)
 	t_list	*to_unset;
 
 	iterator = 0;
-	while(arguments[iterator])
+	while (arguments[iterator])
 	{
 		var_len = ft_env_var_len(arguments[iterator]);
 		to_unset = ft_get_env_node(*envp, arguments[iterator], var_len);

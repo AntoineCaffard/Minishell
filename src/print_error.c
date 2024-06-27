@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:50:13 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 16:10:25 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:40:09 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 size_t	print_error(int error_type)
 {
 	if (error_type == MALLOC_ERROR)
-		perror("Error : Allocation Error\n");
+		ft_putstr_fd("Error : Allocation Error\n", 2);
 	else if (error_type == EXPORT_ERROR)
-		perror("export : Not a valid identifier\n");
+		ft_putstr_fd("export : Not a valid identifier\n", 2);
 	else if (error_type == TOO_MUCH_ARG_ERROR)
-		perror("Error :Too Many Arguments\n");
+		ft_putstr_fd("Error : Too Many Arguments\n", 2);
 	else if (error_type == PATH_ERROR)
-		perror("Error ;Not a Directory\n");
-		else if (error_type == MISSING_HOME_ERROR)
-		perror("Error :Can't find HOME\n");
+		ft_putstr_fd("Error : Not a Directory\n", 2);
+	else if (error_type == MISSING_HOME_ERROR)
+		ft_putstr_fd("Error : Can't find HOME\n", 2);
 	return (1);
 }

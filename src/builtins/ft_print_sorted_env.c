@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:12:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 14:10:05 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:33:22 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	print_sorted(t_list **list)
 	while (ft_lstsize(*list) != 0)
 	{
 		min = find_min(*list);
-		content = min->content;\
+		content = min->content;
 		e_index = ft_env_var_len((char *) content);
 		if (content[0] == '_' && content[1] == '=')
 			;
@@ -52,16 +52,15 @@ static void	print_sorted(t_list **list)
 	}
 }
 
-
 static	t_list	*copy_list(t_list *to_copy)
 {
 	t_list	*new_list;
-	int	error;
+	int		error;
 
 	new_list = NULL;
-	while(to_copy)
+	while (to_copy)
 	{
-		error = ft_add_new_node(&new_list ,(char *) to_copy->content);
+		error = ft_add_new_node(&new_list, (char *) to_copy->content);
 		if (error == MALLOC_ERROR)
 		{
 			ft_lstclear(&new_list, free);

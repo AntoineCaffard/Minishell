@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:12:25 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 13:56:44 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:33:39 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_list	*ft_get_env_node(t_list *envp, char *var_name, int var_len)
 {
-	if(!envp || !var_name)
+	if (!envp || !var_name)
 		return (NULL);
 	while (envp)
 	{

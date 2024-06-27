@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 09:01:15 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 13:52:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:07:56 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static char	*remove_plus_env_var(char *env_var)
 
 static int	create_node_append(t_list **envp, char *argument)
 {
-	int error;
+	int	error;
 
 	argument = remove_plus_env_var(argument);
 	if (!argument)
-		return(print_error(MALLOC_ERROR));
+		return (print_error(MALLOC_ERROR));
 	error = ft_add_new_node(envp, argument);
 	free(argument);
 	return (error);
