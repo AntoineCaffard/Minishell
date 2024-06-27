@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 13:57:39 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:30:28 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static t_list *create_env_list(char **envp)
 {
 	int		i;
-	t_list	*new = NULL;
+	t_list  *new = NULL;
 
 	i = 0;
 	while (envp[i])
@@ -32,8 +32,11 @@ int	main(int ac, char **av, char **envp)
 {
 	(void) ac;
 	t_list	*env = create_env_list(envp);
-	ft_export(&env, &(av[1]));
+	//ft_export(&env, &(av[1]));
+    ft_pwd();
+    ft_cd(&env, &(av[1]));
 	ft_export(&env, NULL);
+    ft_pwd();
 	ft_lstclear(&env, free);
 	return (0);
 }

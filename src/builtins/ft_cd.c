@@ -6,13 +6,13 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:45:23 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/24 16:38:51 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:30:46 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	*manage_no_args(t_list **envp)
+static int	manage_no_args(t_list **envp)
 {
 	t_list	*node;
 
@@ -43,15 +43,17 @@ static int	update_pwds(t_list **envp, char *old_pwd, char *new_pwd)
 	return (0);
 }
 
-static int switch_directory(char *path, t_list **envp)
+int switch_directory(char *path, t_list **envp)
 {
 	int		status;
 	char	*old_pwd;
 	char	*new_pwd;
 
+    old_pwd = NULL;
+    new_pwd = NULL;
 	if (path[0] == '~' && !path[1])
 		return (manage_no_args(envp));
-	getcwd(old_pwd, 0);
+	old_pwd = getcwd(old_pwd, 0);
 	if (!old_pwd)
 		return (print_error(MALLOC_ERROR));
 	status = chdir(path);
@@ -60,8 +62,8 @@ static int switch_directory(char *path, t_list **envp)
 		free(old_pwd);
 		return (print_error(PATH_ERROR));
 	}
-	getcwd(new_pwd, 0);
-	if (!old_pwd)
+	new_pwd = getcwd(new_pwd, 0);
+	if (!new_pwd)
 	{
 		free(old_pwd);
 		return (print_error(MALLOC_ERROR));

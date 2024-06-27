@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:21:43 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 12:22:06 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/27 13:19:34 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,4 @@ void	ft_int_lstclear(t_int_list **lst)
 	if (((*lst)->next) != NULL)
 		ft_int_lstclear(&((*lst)->next));
 	free(lst);
-	*lst = NULL;
 }

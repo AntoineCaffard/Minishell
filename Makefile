@@ -34,7 +34,9 @@ INT_LIST =	$(INT_LIST_DIR)/ft_int_lstnew.c $(INT_LIST_DIR)/ft_int_lstlast.c $(IN
 
 BUILTINS_DIR =	$(SRC_PATH)/builtins
 BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(BUILTINS_DIR)/ft_env_var_len.c \
-			$(BUILTINS_DIR)/ft_export.c $(BUILTINS_DIR)/ft_get_env_node.c $(BUILTINS_DIR)/ft_print_sorted_env.c
+			$(BUILTINS_DIR)/ft_export.c $(BUILTINS_DIR)/ft_get_env_node.c $(BUILTINS_DIR)/ft_print_sorted_env.c \
+			$(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c $(BUILTINS_DIR)/ft_unset.c \
+			$(BUILTINS_DIR)/update_env_var.c
 
 SRC_PATH = src
 SRCS = 	$(INT_LIST) \
