@@ -41,6 +41,15 @@ static int	ft_change_infile(char *link)
 	return (0);
 }
 
+int	error_infile(char *link)
+{
+	write(2, "Minishell: ", 12);
+	if (link)
+		write(2, link, ft_strlen(link));
+	write(2, ": No such file or directory\n", 29);
+	return (0);
+}
+
 int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 {
 	t_command	*cmd;
@@ -56,10 +65,6 @@ int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 	while (current && !cmd_line->error_code)
 	{
 		next = current->next;
-		if (current->type == REDIRECTION_APPEND || current->type == REDIRECTION_OUTFILE)
-			i = 1;
-		if (current->type == REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC)
-			y = 2;
 		if (current->type == REDIRECTION_OUTFILE)
 			cmd_line->error_code = ft_change_outfile(current->link, 1);
 		else if (current->type == REDIRECTION_APPEND)
@@ -68,6 +73,12 @@ int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 			cmd_line->error_code = ft_change_infile(current->link);
 		else if (current->type == REDIRECTION_HEREDOC)
 			ft_manage_heredoc(current->link, save_io, env);
+		if (current->type == REDIRECTION_APPEND || current->type == REDIRECTION_OUTFILE)
+			i = 1;
+		if (cmd_line->error_code == 0 && (current->type == REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC))
+			y = 2;
+		else
+			y = error_infile(current->link);
 		current = next;
 	}
 	return (i + y);

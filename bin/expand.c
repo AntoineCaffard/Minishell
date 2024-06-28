@@ -40,12 +40,10 @@ char	*init_res(char *line, int i, t_list *envp, t_command_line *cmd_line)
 	char	*res;
 	int		j;
 	char	*save_first_part;
-	char	*save_end_part;
 	char	*tmp;
 
 	save_first_part = ft_strndup(line, i);
 	j = i + 1;
-	save_end_part = NULL;
 	tmp = NULL;
 	while (line[j])
 	{

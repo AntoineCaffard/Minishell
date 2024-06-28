@@ -106,6 +106,22 @@ void	gestion_pipe(t_pipe *fds, t_redir *redirs)
 	}
 } // more 25 line
 
+void	parent(t_pipe *fds, t_command_line *cmd_line, pid_t *pid)
+{
+	waitpid(pid[fds->index], &cmd_line->return_value, 0);
+	if (cmd_line->return_value == 126 || cmd_line->return_value == 127);
+	else if (WIFSIGNALED(cmd_line->return_value))
+		cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
+	else if (WIFEXITED(cmd_line->return_value))
+		cmd_line ->return_value = WEXITSTATUS(cmd_line->return_value);
+	fds->index--;
+	while (fds->index >= 0)
+	{
+		waitpid(pid[fds->index], &cmd_line->return_value, 0);
+		fds->index--;
+	}
+}
+
 void	close_pipe(t_pipe *fds)
 {
 	int	i;
@@ -124,40 +140,60 @@ void	close_pipe(t_pipe *fds)
 	free(fds->pipe);
 }
 
+void	child(t_command_line *cmd_line, t_pipe *fds, t_list **envp)
+{
+	int	error;
+
+	error = 0;
+	main_redirection(cmd_line, fds->std_fd, *envp);
+	gestion_pipe(fds, cmd_line->commands->redirs);
+	close_pipe(fds);
+	if (!cmd_line->error_code)
+	{
+		error = main_execution(cmd_line->commands, *envp, fds, 1);
+		exit(error);
+	}
+	exit(cmd_line->error_code);
+}
+
 void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
+	int		error;
 
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	while (fds->index < fds->nmb_max_cmd)
 	{
 		pid[fds->index] = fork();
 		if (pid[fds->index] == 0)
-		{
-			gestion_pipe(fds, cmd_line->commands->redirs);
-			main_redirection(cmd_line, fds->std_fd, *envp);
-			close_pipe(fds);
-			main_execution(cmd_line->commands, *envp, fds, 1);
-			exit(1);
-		}
+			child(cmd_line, fds, envp);
 		fds->index++;
 		cmd_line->commands = cmd_line->commands->next;
 	}
 	close_pipe(fds);
 	fds->index--;
-	while (fds->index >= 0)
+	parent(fds, cmd_line, pid);
+}
+
+int	single_cmd(t_command_line *cmd_line, t_pipe save_fd, t_list **envp)
+{
+	int	i;
+
+	i = 0;
+	main_redirection(cmd_line, save_fd.std_fd, *envp);
+	if (!cmd_line->error_code)
 	{
-		waitpid(pid[fds->index], &cmd_line->return_value, 0);
-//		check_error(&cmd_line->return_value);
-		if (cmd_line->return_value == 126 || cmd_line->return_value == 127)
-			continue ;
-		else if (WIFSIGNALED(cmd_line->return_value))
-			cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
-		else if (WIFEXITED(cmd_line->return_value))
-			cmd_line ->return_value = WEXITSTATUS(cmd_line->return_value);
-		fds->index--;
+		i = main_execution(cmd_line->commands, *envp, &save_fd, 0);
+		cmd_line->return_value = i;
 	}
-} // more 25 line and save error of the last command
+	else
+		cmd_line->return_value = cmd_line->error_code;
+	dup2(save_fd.std_fd[0], STDIN_FILENO);
+	close(save_fd.std_fd[0]);
+	close(save_fd.std_fd[1]);
+	signal(SIGINT, _sigint);
+	return (i);
+}
 
 int	main_pipe(t_command_line *cmd_line, t_list **envp)
 {
@@ -171,15 +207,7 @@ int	main_pipe(t_command_line *cmd_line, t_list **envp)
 	save_fd.std_fd[0] = dup(STDOUT_FILENO);
 	i = init_pipe(&save_fd, cmd_line->commands);
 	if (i == 1)
-	{
-		main_redirection(cmd_line, save_fd.std_fd, *envp);
-		i = main_execution(cmd_line->commands, *envp, &save_fd, 0);
-		cmd_line->return_value = i;
-		close(save_fd.std_fd[0]);
-		close(save_fd.std_fd[1]);
-		signal(SIGINT, _sigint);
-		return (i);
-	}
+		return (single_cmd(cmd_line, save_fd, envp));
 	else if (i == -1)
 		return (-1);
 	else
@@ -188,4 +216,4 @@ int	main_pipe(t_command_line *cmd_line, t_list **envp)
 	dup2(save_fd.std_fd[1], STDOUT_FILENO);
 	signal(SIGINT, _sigint);
 	return (1);
-} // more 25 line and create pipe_utils
+}

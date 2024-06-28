@@ -100,7 +100,11 @@ static t_argument	*fill_r(t_command_line *l, t_command *c, t_argument *buf)
 	t_redir		*new_redir;
 
 	if (!buf->next || is_redir(buf->next))
+	{
 		l->error_code = 1;
+		write(2, "Minishell: syntax error near unexpected token `newline'\n", 57);
+		return (NULL);
+	}
 	new_redir = create_redir(get_type(buf), buf->next->value);
 	if (!new_redir)
 		l->error_code = 1;
