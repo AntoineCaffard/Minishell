@@ -3,6 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
+/*   Updated: 2024/06/28 13:40:29 by trebours         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
@@ -36,75 +48,12 @@ int	init_pipe(t_pipe *save_fd, t_command *cmd)
 	i = 0;
 	while (i < n)
 	{
-		save_fd->pipe [i] = ft_calloc(2, sizeof(int));
+		save_fd->pipe[i] = ft_calloc(2, sizeof(int));
 		pipe(save_fd->pipe[i]);
 		i++;
 	}
 	return (0);
 }
-
-void	gestion_pipe(t_pipe *fds, t_redir *redirs)
-{
-	if (fds->index == 0)
-	{
-		if (!redirs || (redirs->type != REDIRECTION_APPEND
-				&& redirs->type != REDIRECTION_OUTFILE))
-		{
-			dup2(fds->pipe[fds->index][1], STDOUT_FILENO);
-			close(fds->pipe[fds->index][1]);
-			fds->pipe[fds->index][1] = -1;
-		}
-		else
-		{
-			close(fds->pipe[fds->index][1]);
-			fds->pipe[fds->index][1] = -1;
-		}
-		close(fds->pipe[fds->index][0]);
-		fds->pipe[fds->index][0] = -1;
-	}
-	else if (fds->index == fds->nmb_max_cmd - 1)
-	{
-		if (!redirs || (redirs->type != REDIRECTION_INFILE
-				&& redirs->type != REDIRECTION_HEREDOC))
-		{
-			dup2(fds->pipe[fds->index - 1][0], STDIN_FILENO);
-			close(fds->pipe[fds->index - 1][0]);
-			fds->pipe[fds->index - 1][0] = -1;
-		}
-		else
-		{
-			close (fds->pipe[fds->index - 1][0]);
-			fds->pipe[fds->index - 1][0] = -1;
-		}
-	}
-	else if (fds->index < fds->nmb_max_cmd - 1)
-	{
-		if (!redirs || (redirs->type != REDIRECTION_APPEND
-				&& redirs->type != REDIRECTION_OUTFILE))
-		{
-			dup2(fds->pipe[fds->index][1], STDOUT_FILENO);
-			close(fds->pipe[fds->index][1]);
-			fds->pipe[fds->index][1] = -1;
-		}
-		else
-		{
-			close(fds->pipe[fds->index][1]);
-			fds->pipe[fds->index][1] = -1;
-		}
-		if (!redirs || (redirs->type != REDIRECTION_INFILE
-				&& redirs->type != REDIRECTION_HEREDOC))
-		{
-			dup2(fds->pipe[fds->index - 1][0], STDIN_FILENO);
-			close(fds->pipe[fds->index -1][0]);
-			fds->pipe[fds->index - 1][0] = -1;
-		}
-		else
-		{
-			close(fds->pipe[fds->index -1][0]);
-			fds->pipe[fds->index - 1][0] = -1;
-		}
-	}
-} // more 25 line
 
 void	parent(t_pipe *fds, t_command_line *cmd_line, pid_t *pid)
 {
@@ -133,6 +82,7 @@ void	close_pipe(t_pipe *fds)
 			close(fds->pipe[i][0]);
 		if (fds->pipe[i][1] != -1)
 			close(fds->pipe[i][1]);
+		free(fds->pipe[i]);
 		i++;
 	}
 	close(fds->std_fd[0]);
@@ -140,39 +90,45 @@ void	close_pipe(t_pipe *fds)
 	free(fds->pipe);
 }
 
-void	child(t_command_line *cmd_line, t_pipe *fds, t_list **envp)
+void	child(t_command_line *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 {
 	int	error;
 
 	error = 0;
+	free(pid);
 	main_redirection(cmd_line, fds->std_fd, *envp);
 	gestion_pipe(fds, cmd_line->commands->redirs);
 	close_pipe(fds);
 	if (!cmd_line->error_code)
 	{
 		error = main_execution(cmd_line->commands, *envp, fds, 1);
+		free_struct(cmd_line);
+		ft_lstclear(envp, free);
+		clear_history();
 		exit(error);
 	}
+	clear_history();
+	free_struct(cmd_line);
 	exit(cmd_line->error_code);
 }
 
 void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
-	int		error;
 
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	while (fds->index < fds->nmb_max_cmd)
 	{
 		pid[fds->index] = fork();
 		if (pid[fds->index] == 0)
-			child(cmd_line, fds, envp);
+			child(cmd_line, fds, envp, pid);
 		fds->index++;
 		cmd_line->commands = cmd_line->commands->next;
 	}
 	close_pipe(fds);
 	fds->index--;
 	parent(fds, cmd_line, pid);
+	free(pid);
 }
 
 int	single_cmd(t_command_line *cmd_line, t_pipe save_fd, t_list **envp)

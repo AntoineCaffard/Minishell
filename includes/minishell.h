@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 10:57:27 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/05 13:17:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/06/28 12:39:20 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int			verif_stat(char **line);
 char		*get_return_value(char **line, int j, char *first, t_command_line *cmd_line);
 char		*get_env_var(char **line, int j, char *first, char *var);
 void		check_error(int *error);
+void	    gestion_pipe(t_pipe *fds, t_redir *redirs);
 
 #endif
