@@ -15,7 +15,8 @@
 void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid)
 {
 	waitpid(pid[fds->index], &cmd_line->return_value, 0);
-	if (cmd_line->return_value == 126 || cmd_line->return_value == 127);
+	if (cmd_line->return_value == 126 || cmd_line->return_value == 127)
+		;
 	else if (WIFSIGNALED(cmd_line->return_value))
 		cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
 	else if (WIFEXITED(cmd_line->return_value))
@@ -50,4 +51,3 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	free_struct(cmd_line);
 	exit(cmd_line->error_code);
 }
-
