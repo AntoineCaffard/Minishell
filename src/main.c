@@ -6,24 +6,24 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 11:30:31 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:24:15 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 #include <stdio.h>
 
-int	loop_main(t_cmdline *command_line, t_list *env, char *line) {
-
-	//t_cmdline	cmd_buffer;
+int	loop_main(t_cmdline *command_line, t_list *env, char *line)
+{
+	t_cmdline	cmd_buffer;
 	int				i;
 
 	(void) env;
 	while (1)
 	{
 		line = readline("Minishell V-2.0 : ");
-		//if (!line)
-			//minishell_exit(command_line, NULL, env);
+		if (!line)
+			minishell_exit(command_line, NULL, env);
 		if (line && line[0] != '\0')
 		{
 			command_line->error_code = 0;
@@ -57,7 +57,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line) {
 
 int	main(int ac, char **av, char **envp)
 {
-	t_cmdline	command_line;
+	t_cmdline		command_line;
 	t_list			*env;
 	char			*line;
 	int				i;
