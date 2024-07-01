@@ -69,6 +69,7 @@ typedef struct s_pipe
 	int	index;
 	int	nmb_max_cmd;
 	int	std_fd[2];
+	t_command	*save;
 }	t_pipe;
 
 t_redirection_type	get_type(t_argument *arg);

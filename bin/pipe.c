@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/15 12:39:27 by utilisateur       #+#    #+#             */
-/*   Updated: 2024/06/05 13:26:42 by acaffard         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../includes/minishell.h"
 
 int	ft_lst_command_size(t_command *lst)
@@ -102,6 +90,7 @@ void	child(t_command_line *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	if (!cmd_line->error_code)
 	{
 		error = main_execution(cmd_line->commands, *envp, fds, 1);
+		cmd_line->commands = fds->save;
 		free_struct(cmd_line);
 		ft_lstclear(envp, free);
 		clear_history();
@@ -117,6 +106,7 @@ void	multi_pipe(t_pipe *fds, t_command_line *cmd_line, t_list **envp)
 	pid_t	*pid;
 
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
+	fds->save = cmd_line->commands;
 	while (fds->index < fds->nmb_max_cmd)
 	{
 		pid[fds->index] = fork();

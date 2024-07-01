@@ -50,6 +50,19 @@ int	error_infile(char *link)
 	return (0);
 }
 
+void	loop_redirs(t_command_line *cmd_line, t_redir *current,
+		int save_io[2], t_list *env)
+{
+	if (current->type == REDIRECTION_OUTFILE)
+		cmd_line->error_code = ft_change_outfile(current->link, 1);
+	else if (current->type == REDIRECTION_APPEND)
+		cmd_line->error_code = ft_change_outfile(current->link, 2);
+	else if (current->type == REDIRECTION_INFILE)
+		cmd_line->error_code = ft_change_infile(current->link);
+	else if (current->type == REDIRECTION_HEREDOC)
+		ft_manage_heredoc(current->link, save_io, env);
+}
+
 int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 {
 	t_command	*cmd;
@@ -65,17 +78,12 @@ int	main_redirection(t_command_line *cmd_line, int save_io[2], t_list *env)
 	while (current && !cmd_line->error_code)
 	{
 		next = current->next;
-		if (current->type == REDIRECTION_OUTFILE)
-			cmd_line->error_code = ft_change_outfile(current->link, 1);
-		else if (current->type == REDIRECTION_APPEND)
-			cmd_line->error_code = ft_change_outfile(current->link, 2);
-		else if (current->type == REDIRECTION_INFILE)
-			cmd_line->error_code = ft_change_infile(current->link);
-		else if (current->type == REDIRECTION_HEREDOC)
-			ft_manage_heredoc(current->link, save_io, env);
-		if (current->type == REDIRECTION_APPEND || current->type == REDIRECTION_OUTFILE)
+		loop_redirs(cmd_line, current, save_io, env);
+		if (current->type == REDIRECTION_APPEND
+			|| current->type == REDIRECTION_OUTFILE)
 			i = 1;
-		if (cmd_line->error_code == 0 && (current->type == REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC))
+		if (cmd_line->error_code == 0 && (current->type == REDIRECTION_INFILE
+				|| current->type == REDIRECTION_HEREDOC))
 			y = 2;
 		else
 			y = error_infile(current->link);

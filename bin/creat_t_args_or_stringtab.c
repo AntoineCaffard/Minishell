@@ -23,21 +23,23 @@ static int	ft_t_argssize(t_argument *lst)
 
 char	**init_t_args_in_stringtab(t_argument *args)
 {
-	char	**res;
-	int		size;
-	int		i;
+	char		**res;
+	int			size;
+	int			i;
+	t_argument	*tmp;
 
-	if (!args || !args->value)
+	tmp = args;
+	if (!tmp || !tmp->value)
 		return (NULL);
-	size = ft_t_argssize(args);
+	size = ft_t_argssize(tmp);
 	res = ft_calloc(size + 1, sizeof(char *));
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (args)
+	while (tmp)
 	{
-		res[i] = ft_strdup(args->value);
-		args = args->next;
+		res[i] = ft_strdup(tmp->value);
+		tmp = tmp->next;
 		i++;
 	}
 	return (res);
