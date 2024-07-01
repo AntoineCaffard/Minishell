@@ -32,4 +32,6 @@
 # include "parsing.h"
 # include "execution.h"
 
+int	return_value = 0;
+
 #endif

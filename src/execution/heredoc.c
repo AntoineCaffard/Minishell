@@ -92,6 +92,14 @@ int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
 	while (test)
 	{
 		new_line = readline("\033[1;33mheredoc: \033[0;m");
+		if (return_value == 130)
+			return (return_value);
+		if (!new_line)
+		{
+			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file (wanted `cat')\n", 86);
+			signal(SIGINT, _sigint);
+			return (0);
+		}
 		test = ft_strcmp(new_line, limiter);
 		dup2(pipe_fds[1], STDOUT_FILENO);
 		if (test)
