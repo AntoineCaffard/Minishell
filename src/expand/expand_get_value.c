@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_get_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:38:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 15:38:31 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:01:41 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ char	*get_value(t_list *list, char *param)
 	while (list)
 	{
 		if (ft_strncmp(((char *)(list->content)), param,
-			ft_strlen_until_equal(param)) == 0)
+			ft_env_var_len(param)) == 0)
 		{
-			if (((char *)(list->content))[ft_strlen_until_equal(param)] == '=')
+			if (((char *)(list->content))[ft_env_var_len(param)] == '=')
 				return (list->content);
 		}
 		list = list->next;

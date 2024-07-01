@@ -6,7 +6,7 @@
 #    By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/06/17 09:46:26 by acaffard          #+#    #+#              #
-#    Updated: 2024/06/24 11:06:08 by acaffard         ###   ########.fr        #
+#    Updated: 2024/07/01 16:56:45 by acaffard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ LIBFT = $(LIBFT_DIR)/libft.a
 BUILTINS_DIR =	$(SRC_PATH)/builtins
 BUILTINS =	$(BUILTINS_DIR)/ft_add_new_node.c $(BUILTINS_DIR)/ft_append_node.c $(BUILTINS_DIR)/ft_env_var_len.c \
 			$(BUILTINS_DIR)/ft_export.c $(BUILTINS_DIR)/ft_get_env_node.c $(BUILTINS_DIR)/ft_print_sorted_env.c \
-			$(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c $(BUILTINS_DIR)/ft_unset.c \
-			$(BUILTINS_DIR)/update_env_var.c
+			$(BUILTINS_DIR)/ft_cd.c $(BUILTINS_DIR)/ft_exit.c $(BUILTINS_DIR)/ft_env.c $(BUILTINS_DIR)/ft_pwd.c $(BUILTINS_DIR)/ft_unset.c \
+			$(BUILTINS_DIR)/update_env_var.c $(BUILTINS_DIR)/ft_echo.c
 
 ARGLIST_DIR = $(SRC_PATH)/t_arglist
 ARGLIST =	$(ARGLIST_DIR)/ft_argclear.c $(ARGLIST_DIR)/ft_argdelone.c $(ARGLIST_DIR)/ft_arglast.c $(ARGLIST_DIR)/ft_argnew.c \
@@ -48,10 +48,17 @@ CMDLIST =	$(CMDLIST_DIR)/ft_cmd_delone.c $(CMDLIST_DIR)/ft_cmd_size.c $(CMDLIST_
 
 UTILS_DIR = $(SRC_PATH)/utils
 UTILS = $(UTILS_DIR)/print_error.c $(UTILS_DIR)/skip_quotes.c $(UTILS_DIR)/ft_prompt.c $(UTILS_DIR)/is_space.c \
-		$(UTILS_DIR)/list_to_array.c $(UTILS_DIR)/skip_spaces.c
+		$(UTILS_DIR)/list_to_array.c $(UTILS_DIR)/skip_spaces.c $(UTILS_DIR)/arg_tabs.c $(UTILS_DIR)/main_utils.c
 
 PARSING_DIR = $(SRC_PATH)/parsing
 PARSING = $(PARSING_DIR)/fill_command.c $(PARSING_DIR)/fill_redlist.c $(PARSING_DIR)/ft_fill_cmdline.c $(PARSING_DIR)/lexer.c
+
+EXPAND_DIR = $(SRC_PATH)/expand
+EXPAND = $(EXPAND_DIR)/delete_cote.c $(EXPAND_DIR)/expand_get_value.c $(EXPAND_DIR)/main_expand.c
+
+EXEC_DIR = $(SRC_PATH)/execution
+EXEC =	$(EXEC_DIR)/child_and_parent.c $(EXEC_DIR)/execute_multi.c $(EXEC_DIR)/execute_single.c $(EXEC_DIR)/heredoc.c \
+		$(EXEC_DIR)/main_pipe.c $(EXEC_DIR)/redirect_pipe.c $(EXEC_DIR)/signaux.c $(SRC_PATH)/redirection/main_redirection.c
 
 SRC_PATH = src
 SRCS = 	$(ARGLIST) \
@@ -60,6 +67,8 @@ SRCS = 	$(ARGLIST) \
 		$(UTILS) \
 		$(BUILTINS) \
 		$(PARSING) \
+		$(EXPAND) \
+		$(EXEC) \
 		$(SRC_PATH)/main.c
 
 OBJS = $(SRCS:.c=.o)

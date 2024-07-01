@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main_expand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:32:03 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 15:32:10 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:11:32 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_node(t_list *list, char *param)
+static char	*get_node(t_list *list, char *param)
 {
 	char	*tmp;
 	char	*res;
@@ -35,7 +35,7 @@ char	*get_node(t_list *list, char *param)
 	return (res);
 }
 
-char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
+static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 {
 	char	*res;
 	int		j;
@@ -62,7 +62,7 @@ char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	}
 }
 
-char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
+static char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
 {
 	int		i;
 	char	c;

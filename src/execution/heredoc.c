@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 15:59:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:05:07 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	print_node_content(char *string, t_list *env)
 	if (!*string)
 		return ;
 	i = 0;
-	node = get_node_by_value(env, string);
+	node = ft_get_env_node(env, string, ft_strlen(string));
 	if (!node)
 		return ;
 	while (((char *) node->content)[i] && ((char *) node->content)[i] != '=')
@@ -55,11 +55,11 @@ static void expand_and_print(char *string, t_list *env)
 
 	while (string[i])
 	{
-		if (string[i] == '$' && (ft_isalnum(string[i + 1]) || string[i + 1] == '_'))
+		if (string[i] == '$' && (ft_isalpha(string[i + 1]) || string[i + 1] == '_'))
 		{
 			i++;
 			j = 0;
-			while (string[i + j] && (ft_isalnum(string[i + j]) || string[i + j] == '_'))
+			while (string[i + j] && (ft_isalpha(string[i + j]) || string[i + j] == '_'))
 				j++;
 			tmp = ft_strndup(&(string[i]), j);
 			if (!tmp)

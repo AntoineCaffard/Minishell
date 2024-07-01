@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_multi.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:14:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 15:14:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:47:47 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*init_link(char *src, char **path, int *error)
 		free(verif_link);
 	}
 	free(save);
-	display_error("command not found", src);
+	write(2, "command not found\n", 19);
 	*error = 127;
 	free(src);
 	return (NULL);
@@ -95,7 +95,7 @@ int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
 			ft_free_stringtab(path);
 		return (1);
 	}
-	envp = init_t_list_in_stringtab(t_envp);
+	envp = tabify_list(t_envp);
 	error = multi_command(line, envp, pipe_fds);
 	ft_free_stringtab(path);
 	return (error);

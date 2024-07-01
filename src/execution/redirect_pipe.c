@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_pipe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:48:06 by trebours          #+#    #+#             */
-/*   Updated: 2024/06/28 12:35:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:20:43 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	first(t_pipe *fds, t_redlist *redirs)
+static void	first(t_pipe *fds, t_redlist *redirs)
 {
 	if (!redirs || (redirs->type != REDIRECTION_APPEND
 			&& redirs->type != REDIRECTION_OUTFILE))
@@ -30,7 +30,7 @@ void	first(t_pipe *fds, t_redlist *redirs)
 	fds->pipe[fds->index][0] = -1;
 }
 
-void	middle(t_pipe *fds, t_redlist *redirs)
+static void	middle(t_pipe *fds, t_redlist *redirs)
 {
 	if (!redirs || (redirs->type != REDIRECTION_APPEND
 			&& redirs->type != REDIRECTION_OUTFILE))
