@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   child_and_parent.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 13:36:53 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:43:28 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include "../../includes/s_cmdlist.h"
 
 void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid)
 {
@@ -50,4 +51,57 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	clear_history();
 	free_struct(cmd_line);
 	exit(cmd_line->error_code);
+}
+
+int	main_execution(const t_cmdlist *cmd_l, t_list *envp,
+					t_pipe *pipe_fds, const int i)
+{
+	char	**cmd;
+	int		error;
+
+	cmd = init_t_args_in_stringtab(cmd_l->args);
+	if (cmd == NULL)
+		return (1);
+	error = 0;
+	if (!ft_strncmp(cmd[0], "echo", 5))
+		error = ft_echo(&cmd[1]);
+	else if (!ft_strncmp(cmd[0], "env", 4))
+		error = ft_env(&cmd[1], envp);
+	else if (!ft_strncmp(cmd[0], "cd", 3))
+		error = ft_cd(&envp, &cmd[1]);
+	else if (!ft_strncmp(cmd[0], "pwd", 4))
+		ft_pwd();
+	else if (!ft_strncmp(cmd[0], "export", 7))
+		error = ft_export(&envp, &cmd[1]);
+	else if (!ft_strncmp(cmd[0], "unset", 6))
+		ft_unset(&envp, &cmd[1]);
+	else if (i == 0)
+		error = execute_command(cmd, envp, pipe_fds);
+	else
+		error = execute_multi(cmd, envp, pipe_fds);
+	ft_free_stringtab(cmd);
+	return (error);
+}
+
+int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
+{
+	char	**cmd;
+
+	if ((int) ft_cmdsize(command_line->cmds) > 1)
+		return (1);
+	cmd = init_t_args_in_stringtab(command_line->cmds->args);
+	if (!cmd)
+		command_line->return_value = 1;
+	else if (!ft_strncmp(cmd[0], "exit", 5))
+	{
+		command_line->return_value = ft_exit(cmd);
+		if (!command_line->return_value)
+			minishell_exit(command_line, &cmd, *envp);
+	}
+	else
+	{
+		ft_free_stringtab(cmd);
+		return (1);
+	}
+	return (0);
 }

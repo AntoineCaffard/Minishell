@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:35:43 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 17:47:01 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:44:38 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ t_cmdlist	*ft_cmdlast(t_cmdlist *lst);
 void		ft_cmdpush(t_cmdlist **lst, t_cmdlist *to_push);
 void		ft_cmd_delone(t_cmdlist **list, void (*del)(void*));
 void		ft_cmdclear(t_cmdlist **list, void (*del)(void*));
+void		free_struct(t_cmdline	*line);
+int			ft_cmdsize(t_cmdlist *lst);
 
 #endif

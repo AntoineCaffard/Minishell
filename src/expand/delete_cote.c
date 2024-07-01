@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_quote.c                                     :+:      :+:    :+:   */
+/*   delete_cote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:46:54 by Trebours          #+#    #+#             */
-/*   Updated: 2024/06/05 13:58:58 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:01:13 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	ft_charchr(const char *s, unsigned int y)
+static int	ft_charchr(const char *s, unsigned int y)
 {
 	char	*str;
 	int		i;
@@ -28,6 +28,31 @@ int	ft_charchr(const char *s, unsigned int y)
 		i++;
 	}
 	if (str[i] == '\"' % 256 || str[i] == '\'' % 256)
+		return (i);
+	return (-1);
+}
+
+static int	ft_charrchr(const char *s, unsigned int y)
+{
+	char	*str;
+	char	c;
+	int		i;
+
+	if (!s)
+		return (-1);
+	str = (char *) s;
+	i = ft_charchr(s, y);
+	if (i == -1)
+		return (-1);
+	c = s[i];
+	i++;
+	while (str[i])
+	{
+		if (str[i] == c % 256)
+			return (i);
+		i++;
+	}
+	if (str[i] == c % 256)
 		return (i);
 	return (-1);
 }
@@ -75,7 +100,7 @@ static char	*recreate_args_and_redir(char *args)
 		return (args);
 	res = loop_recreate(first_quote, second_quote, args);
 	while (res[second_quote - 1]
-		&& verif_quote(&res[second_quote - 1]))
+		&& has_quotes(&res[second_quote - 1]))
 	{
 		first_quote = ft_charchr(res, second_quote - 1);
 		second_quote = ft_charrchr(res, second_quote - 1);

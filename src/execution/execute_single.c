@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_single.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 15:11:19 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:50:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	check_error(int *error)
+static void	check_error(int *error)
 {
 	if (*error == 127 || *error == 126)
 		return ;
@@ -22,7 +22,7 @@ void	check_error(int *error)
 		*error = WEXITSTATUS(*error);
 }
 
-static int	parent(char **envp, t_pipe *fds, pid_t pid)
+static int	single_parent(char **envp, t_pipe *fds, pid_t pid)
 {
 	int	error;
 
@@ -36,7 +36,7 @@ static int	parent(char **envp, t_pipe *fds, pid_t pid)
 	return (WEXITSTATUS(error));
 }
 
-int	command_n(char **cmd, char **envp, t_pipe *pipe_fds)
+static int	command_n(char **cmd, char **envp, t_pipe *pipe_fds)
 {
 	pid_t	tfork;
 	int		error;
@@ -57,7 +57,7 @@ int	command_n(char **cmd, char **envp, t_pipe *pipe_fds)
 		}
 	}
 	else
-		return (parent(envp, pipe_fds, tfork));
+		return (single_parent(envp, pipe_fds, tfork));
 	return (error);
 }
 
@@ -67,17 +67,17 @@ int	verif_stat(char **line)
 
 	if (stat(line[0], &buf))
 	{
-		display_error("No such file or directory", line[0]);
+		write(2, "No such file or directory\n", 26);
 		return (127);
 	}
 	if (S_ISDIR(buf.st_mode))
 	{
-		display_error("Is a directory", line[0]);
+		write(2, "Is a directory\n", 15);
 		return (126);
 	}
 	if ((buf.st_mode != S_IXUSR))
 	{
-		display_error("Permission denied", line[0]);
+		write(2, "Permission denied\n", 18);
 		return (126);
 	}
 	return (0);
@@ -105,7 +105,7 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 			ft_free_stringtab(path);
 		return (error);
 	}
-	envp = init_t_list_in_stringtab(t_envp);
+	envp = tabify_list(t_envp);
 	error = command_n(line, envp, pipe_fds);
 	ft_free_stringtab(path);
 	check_error(&error);

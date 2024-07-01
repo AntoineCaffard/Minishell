@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signaux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 11:28:30 by trebours          #+#    #+#             */
-/*   Updated: 2024/05/14 11:28:34 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:21:21 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	_sigint_exec(int signaux)
 {
 	(void)signaux;
 	printf("\n");
+<<<<<<< HEAD
 	return_value = 130;
+=======
+>>>>>>> 2889b98172994de569ce681f08df9b77febf7095
 }
 
 void	_sigintheredoc(int signaux)

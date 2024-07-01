@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 08:51:19 by acaffard          #+#    #+#             */
-/*   Updated: 2023/11/06 09:25:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 15:38:00 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	total_length;
 	size_t	i;
 	size_t	j;
-	char	*res;	
+	char	*res;
 
 	if (!s1 || !s2)
 		return (NULL);

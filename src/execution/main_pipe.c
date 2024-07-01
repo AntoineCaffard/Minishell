@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   main_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/06/28 13:40:29 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:20:10 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	init_pipe(t_pipe *save_fd, t_cmdlist *cmd)
+static int	init_pipe(t_pipe *save_fd, t_cmdlist *cmd)
 {
 	int	n;
 	int	i;
@@ -53,7 +53,7 @@ void	close_pipe(t_pipe *fds)
 	free(fds->pipe);
 }
 
-void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
+static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
 
@@ -73,7 +73,7 @@ void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 	free(pid);
 }
 
-int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
+static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 {
 	int	i;
 

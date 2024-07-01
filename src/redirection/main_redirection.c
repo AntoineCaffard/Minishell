@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_redirection.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trebours <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:01:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:02:00 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/01 16:13:20 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	ft_change_infile(char *link)
 	return (0);
 }
 
-int	error_infile(char *link)
+static int	error_infile(char *link)
 {
 	write(2, "Minishell: ", 12);
 	if (link)
@@ -50,7 +50,7 @@ int	error_infile(char *link)
 	return (0);
 }
 
-void	loop_redirs(t_cmdline *cmd_line, t_redlist *current,
+static void	loop_redirs(t_cmdline *cmd_line, t_redlist *current,
 		int save_io[2], t_list *env)
 {
 	if (current->type == REDIRECTION_OUTFILE)
