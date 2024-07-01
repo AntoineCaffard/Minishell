@@ -26,10 +26,7 @@ void	_sigint_exec(int signaux)
 {
 	(void)signaux;
 	printf("\n");
-<<<<<<< HEAD
 	return_value = 130;
-=======
->>>>>>> 2889b98172994de569ce681f08df9b77febf7095
 }
 
 void	_sigintheredoc(int signaux)
