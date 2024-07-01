@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:16:33 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/17 15:29:23 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 10:33:07 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@ void	ft_argdelone(t_arglist **args, void (*del)(void*))
 		return ;
 	del((*args)->value);
 	free(*args);
+	*args = NULL;
 }

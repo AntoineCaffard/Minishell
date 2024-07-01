@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 15:29:32 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 18:04:22 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 10:20:39 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static t_cmdlist	*manage_creation(t_cmdline *res)
 {
 	t_cmdlist	*command;
 
-	command = NULL;
 	command = ft_cmdnew();
 	if (!command)
 		res->error_code = 1;
