@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:34:10 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 17:43:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 11:44:01 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ static t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf)
 	t_redlist		*new_redir;
 
 	if (!buf->next || is_redir(buf->next))
+	{
 		l->error_code = 1;
+		write(2, "Minishell: syntax error\n", 25);
+		return (NULL);
+	}
 	new_redir = ft_rednew(ft_redget_type(buf), buf->next->value);
 	if (!new_redir)
 		l->error_code = 1;

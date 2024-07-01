@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 10:50:06 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/01 11:30:31 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line) {
 			if (command_line->error_code)
 			{
 				command_line->return_value = command_line->error_code;
-				ft_cmdclear(&(command_line->cmds), free);
+				free_struct(command_line);
 				continue ;
 			}
-			ft_cmdclear(&(command_line->cmds), free);
+			free_struct(command_line);
 		}
 		else
 			free(line);
