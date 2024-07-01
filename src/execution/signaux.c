@@ -17,7 +17,7 @@ void	_sigint(int signaux)
 	(void)signaux;
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 1);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
