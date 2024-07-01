@@ -12,21 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-int	ft_lst_cmdlist_size(t_cmdlist *lst)
-{
-	if (lst == NULL)
-		return (0);
-	if (lst->next == NULL)
-		return (1);
-	return (1 + ft_lst_cmdlist_size(lst->next));
-}
-
 int	init_pipe(t_pipe *save_fd, t_cmdlist *cmd)
 {
 	int	n;
 	int	i;
 
-	save_fd->nmb_max_cmd = ft_lst_cmdlist_size(cmd);
+	save_fd->nmb_max_cmd = ft_cmdsize(cmd);
 	n = save_fd->nmb_max_cmd -1;
 	if (n == 0)
 		return (1);
