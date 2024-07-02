@@ -19,19 +19,19 @@ void	_sigint(int signaux)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	return_value = 130;
+	RETURN_VALUE = 130;
 }
 
 void	_sigint_exec(int signaux)
 {
 	(void)signaux;
 	printf("\n");
-	return_value = 130;
+	RETURN_VALUE = 130;
 }
 
 void	_sigintheredoc(int signaux)
 {
 	(void)signaux;
 	printf("\n");
-	return_value = 130;
+	RETURN_VALUE = 130;
 }

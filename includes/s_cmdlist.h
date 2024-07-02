@@ -26,7 +26,7 @@ typedef struct s_cmdlist
 typedef struct s_cmdline
 {
 	int			error_code;
-	int			return_value;
+	int			return_code;
 	t_cmdlist	*cmds;
 }	t_cmdline;
 

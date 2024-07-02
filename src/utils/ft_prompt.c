@@ -26,7 +26,7 @@ char	*ft_prompt(t_cmdline *cmdline)
 		link = ft_split_str(prompt, "/");
 	free(prompt);
 	prompt = NULL;
-	if (!cmdline->return_value)
+	if (!cmdline->return_code)
 		prompt = ft_strjoin("\033[1;32m > minishell\033[0;m", ": (");
 	else
 		prompt = ft_strjoin("\033[1;31m > minishell\033[0;m", ": (");

@@ -32,7 +32,9 @@
 # include "parsing.h"
 # include "execution.h"
 
-int		return_value;
+//# ifndef RETURN_VALUE
+	extern int 	RETURN_VALUE;
+//# endif
 char	*manage_line(t_cmdline *command_line, t_list *env);
 void	parse_minishell(t_cmdline *command_line, char *line);
 int 	lexer_handler(t_cmdline *command_line, char *line, int lex_value);

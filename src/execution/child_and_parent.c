@@ -15,17 +15,17 @@
 
 void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid)
 {
-	waitpid(pid[fds->index], &cmd_line->return_value, 0);
-	if (cmd_line->return_value == 126 || cmd_line->return_value == 127)
+	waitpid(pid[fds->index], &cmd_line->return_code, 0);
+	if (cmd_line->return_code == 126 || cmd_line->return_code == 127)
 		;
-	else if (WIFSIGNALED(cmd_line->return_value))
-		cmd_line->return_value = WTERMSIG(cmd_line->return_value) + 128;
-	else if (WIFEXITED(cmd_line->return_value))
-		cmd_line ->return_value = WEXITSTATUS(cmd_line->return_value);
+	else if (WIFSIGNALED(cmd_line->return_code))
+		cmd_line->return_code = WTERMSIG(cmd_line->return_code) + 128;
+	else if (WIFEXITED(cmd_line->return_code))
+		cmd_line ->return_code = WEXITSTATUS(cmd_line->return_code);
 	fds->index--;
 	while (fds->index >= 0)
 	{
-		waitpid(pid[fds->index], &cmd_line->return_value, 0);
+		waitpid(pid[fds->index], &cmd_line->return_code, 0);
 		fds->index--;
 	}
 }
@@ -91,11 +91,11 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 		return (1);
 	cmd = init_t_args_in_stringtab(command_line->cmds->args);
 	if (!cmd)
-		command_line->return_value = 1;
+		command_line->return_code = 1;
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
-		command_line->return_value = ft_exit(cmd);
-		if (!command_line->return_value)
+		command_line->return_code = ft_exit(cmd);
+		if (!command_line->return_code)
 			minishell_exit(command_line, &cmd, *envp);
 	}
 	else
