@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:50:39 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 16:13:18 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:11:32 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@ int	skip_quotes(char *line, int i)
 	j = 1;
 	while (line[i + j] && line [i + j] != line[i])
 		j++;
+	if (!line[i + j])
+		return (j);
 	return (j + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 14:07:29 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:07:15 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static bool	check_validity(char *string)
 	if (!string)
 		return (false);
 	iterator = 0;
-	while (string[iterator] && ft_isalpha(string[iterator]))
+	while (string[iterator]
+		&& (ft_isalnum(string[iterator]) || string[iterator] == '_'))
 		iterator++;
 	if (string[iterator] && string[iterator] == '+' && string[iterator + 1])
 		iterator++;

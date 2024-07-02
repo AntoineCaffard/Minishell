@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:02:00 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 16:53:38 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:00:55 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char	*manage_line(t_cmdline *command_line, t_list *env)
 	prompt = ft_prompt(command_line);
 	if (!prompt)
 	{
-		print_error(MALLOC_ERROR);
-		minishell_exit(command_line, NULL, env);
+		chdir("..");
+		return (manage_line(command_line, env));
 	}
 	line = readline(prompt);
 	free(prompt);

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:07:48 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 14:02:05 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 11:22:36 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@ static int	minishell_echo(char **params)
 
 int	ft_echo(char **params)
 {
-	if (!params || !ft_stringtab_len(params))
-		print_error(MALLOC_ERROR);
+	if (!params)
+		return (print_error(MALLOC_ERROR));
+	if (!*params)
+	{
+		printf("\n");
+		return (0);
+	}
 	else if (params && ft_stringtab_len(params) > 1 && check_option(params))
 		return (minishell_echo(params));
 	else if (params && ft_stringtab_len(params) && check_option(params) == 0)

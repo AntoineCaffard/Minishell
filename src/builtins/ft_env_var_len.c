@@ -6,7 +6,7 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 13:37:59 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 14:08:37 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:08:49 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_env_var_len(char *env_var)
 
 	var_len = 0;
 	while (env_var[var_len]
-		&& (ft_isalpha(env_var[var_len]) || env_var[var_len] == '_'))
+		&& (ft_isalnum(env_var[var_len]) || env_var[var_len] == '_'))
 		var_len++;
 	return (var_len);
 }
