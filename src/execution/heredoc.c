@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 17:05:07 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 09:56:04 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
 			return (return_value);
 		if (!new_line)
 		{
-			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file (wanted `cat')\n", 86);
+			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);
 			signal(SIGINT, _sigint);
 			return (0);
 		}
