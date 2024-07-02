@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 17:14:35 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 11:37:04 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			command_line->return_code = command_line->error_code;
 		else
 			minishell_exec(command_line, env);
+		RETURN_VALUE = 0;
 	}
 	if (command_line->return_code == -1)
 		return (1);

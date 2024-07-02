@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 15:42:33 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 16:34:46 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:34:17 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int	minishell_env(t_list *envp)
 {
 	while (envp)
 	{
-		printf("%s\n", (char *) envp->content);
+		if (ft_strchr(envp->content, '='))
+			printf("%s\n", (char *) envp->content);
 		envp = envp->next;
 	}
 	return (0);

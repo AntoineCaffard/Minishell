@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 12:43:29 by antoine           #+#    #+#             */
-/*   Updated: 2024/06/24 11:09:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:47:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*s1_search;
 	unsigned char	*s2_search;
 
+	if (!s1 && !s2)
+		return (0);
+	if (!s1)
+		return ((int) *s2);
+	if (!s2)
+		return ((int) *s1);
 	s1_search = (unsigned char *) s1;
 	s2_search = (unsigned char *) s2;
 	while (*s1_search && *s1_search == *s2_search && n > 0)
