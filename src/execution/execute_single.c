@@ -75,7 +75,7 @@ int	verif_stat(char **line)
 		write(2, "Is a directory\n", 15);
 		return (126);
 	}
-	if ((buf.st_mode != S_IXUSR))
+	if (access(line[0], X_OK))
 	{
 		write(2, "Permission denied\n", 18);
 		return (126);

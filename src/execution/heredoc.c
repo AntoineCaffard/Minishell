@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/02 09:56:04 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/02 11:08:30 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
 	while (test)
 	{
 		new_line = readline("\033[1;33mheredoc: \033[0;m");
-		if (return_value == 130)
-			return (return_value);
+		if (RETURN_VALUE == 130)
+			return (RETURN_VALUE);
 		if (!new_line)
 		{
 			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);

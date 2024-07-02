@@ -20,7 +20,7 @@ char	*get_return_value(char **line, int j,
 	char	*res;
 
 	end = ft_strdup(&line[0][j + 1]);
-	tmp = ft_itoa(cmd_line->return_value);
+	tmp = ft_itoa(cmd_line->return_code);
 	res = ft_strjoin(first, tmp);
 	free(first);
 	free(tmp);

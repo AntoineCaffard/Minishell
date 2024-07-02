@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+int 	RETURN_VALUE = 0;
+
 void	minishell_exec(t_cmdline *command_line, t_list *envp)
 {
 	t_cmdline	cmd_buffer;
@@ -21,7 +23,7 @@ void	minishell_exec(t_cmdline *command_line, t_list *envp)
 	cmd_buffer = *command_line;
 	if (ft_verif_exit(&cmd_buffer, &envp))
 		main_pipe(&cmd_buffer, &envp);
-	command_line->return_value = cmd_buffer.return_value;
+	command_line->return_code = cmd_buffer.return_code;
 }
 
 int	loop_main(t_cmdline *command_line, t_list *env, char *line)
@@ -41,11 +43,11 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			continue ;
 		parse_minishell(command_line, line);
 		if (command_line->error_code)
-			command_line->return_value = command_line->error_code;
+			command_line->return_code = command_line->error_code;
 		else
 			minishell_exec(command_line, env);
 	}
-	if (command_line->return_value == -1)
+	if (command_line->return_code == -1)
 		return (1);
 	return (0);
 }
@@ -68,7 +70,7 @@ int	main(int ac, char **av, char **envp)
 		env = NULL;
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
-	command_line.return_value = 0;
+	command_line.return_code = 0;
 	line = NULL;
 	i = loop_main(&command_line, env, line);
 	free_struct(&command_line);

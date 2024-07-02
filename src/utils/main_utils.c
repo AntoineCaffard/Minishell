@@ -47,7 +47,7 @@ int lexer_handler(t_cmdline *command_line, char *line, int lex_value)
 {
 	if (lex_value)
 		{
-			command_line->return_value = lex_value;
+			command_line->return_code = lex_value;
 			free(line);
 		}
 	return (lex_value);

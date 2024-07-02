@@ -82,10 +82,10 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 	if (!cmd_line->error_code)
 	{
 		i = main_execution(cmd_line->cmds, *envp, &save_fd, 0);
-		cmd_line->return_value = i;
+		cmd_line->return_code = i;
 	}
 	else
-		cmd_line->return_value = cmd_line->error_code;
+		cmd_line->return_code = cmd_line->error_code;
 	dup2(save_fd.std_fd[0], STDIN_FILENO);
 	close(save_fd.std_fd[0]);
 	close(save_fd.std_fd[1]);
