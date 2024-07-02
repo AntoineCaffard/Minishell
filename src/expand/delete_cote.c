@@ -99,11 +99,15 @@ static char	*recreate_args_and_redir(char *args)
 	if (first_quote == second_quote)
 		return (args);
 	res = loop_recreate(first_quote, second_quote, args);
-	while (res[second_quote - 1]
-		&& has_quotes(&res[second_quote - 1]))
+	if (second_quote < 0)
+		second_quote = ft_strlen(args) - 1;
+	if (second_quote > first_quote)
+		second_quote--;
+	while (res[second_quote]
+		&& has_quotes(&res[second_quote]))
 	{
-		first_quote = ft_charchr(res, second_quote - 1);
-		second_quote = ft_charrchr(res, second_quote - 1);
+		first_quote = ft_charchr(res, second_quote);
+		second_quote = ft_charrchr(res, second_quote);
 		res = loop_recreate(first_quote, second_quote, res);
 	}
 	return (res);

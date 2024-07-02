@@ -57,7 +57,7 @@ char	**init_path(t_list *envp)
 	}
 	if (!path)
 		return (NULL);
-	res = ft_split_str(path, ":");
+	res = ft_split_str(&path[5], ":");
 	return (res);
 }
 
