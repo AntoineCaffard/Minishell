@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:34:10 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 11:44:01 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 09:55:39 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	is_redir(t_arglist *arg)
 	return (FALSE);
 }
 
-static t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf)
+t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf, t_list *e)
 {
 	t_redlist		*new_redir;
 
@@ -35,11 +35,13 @@ static t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf)
 	buf = ft_argpop_two(&(c->args), buf);
 	if (!buf)
 		l->error_code = 1;
+	if (new_redir && new_redir->type == REDIRECTION_HEREDOC)
+		l->error_code += ft_manage_heredoc(new_redir, e);
 	ft_redpush(&(c->redirs), new_redir);
 	return (buf);
 }
 
-void	fill_redirection(t_cmdline *line)
+void	fill_redirection(t_cmdline *line, t_list *envp)
 {
 	t_arglist	*buffer;
 	t_cmdlist	*cmd;
@@ -53,7 +55,7 @@ void	fill_redirection(t_cmdline *line)
 		while (buffer && line->error_code == 0)
 		{
 			if (is_redir(buffer))
-				buffer = fill_r(line, cmd, buffer);
+				buffer = fill_r(line, cmd, buffer, envp);
 			else
 				buffer = buffer->next;
 		}

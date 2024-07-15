@@ -5,6 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/15 09:35:40 by acaffard          #+#    #+#             */
+/*   Updated: 2024/07/15 09:35:40 by acaffard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   delete_cote.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:46:54 by Trebours          #+#    #+#             */
 /*   Updated: 2024/07/01 17:01:13 by acaffard         ###   ########.fr       */
 /*                                                                            */
@@ -86,7 +98,7 @@ static char	*loop_recreate(int first_quote, int second_quote, char *args)
 	return (res);
 }
 
-static char	*recreate_args_and_redir(char *args)
+char	*recreate_args_and_redir(char *args)
 {
 	int		first_quote;
 	int		second_quote;
