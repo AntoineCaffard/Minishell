@@ -148,7 +148,6 @@ int	ft_manage_heredoc(t_redlist *redir, t_list *env)
 	else
 		return_value = heredoc_loop(redir, save_output);
 	close(redir->heredoc_pipe[1]);
-	dup2(redir->heredoc_pipe[0], STDIN_FILENO);
 	dup2(save_output, STDOUT_FILENO);
 	close(save_output);
 	signal(SIGINT, _sigint);

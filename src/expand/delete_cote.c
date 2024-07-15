@@ -3,22 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_cote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 09:35:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 09:35:40 by acaffard         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   delete_cote.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 10:46:54 by Trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:13 by acaffard         ###   ########.fr       */
+/*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
+/*   Updated: 2024/07/15 10:09:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +73,7 @@ static char	*loop_recreate(int first_quote, int second_quote, char *args)
 	tmp_2 = ft_strjoin(tmp, res);
 	free(tmp);
 	free(res);
-	if (args[second_quote + 1] == '\0')
+	if (!args[second_quote] || !args[second_quote + 1])
 	{
 		free(args);
 		return (tmp_2);
@@ -110,12 +98,12 @@ char	*recreate_args_and_redir(char *args)
 	second_quote = ft_charrchr(args, 0);
 	if (first_quote == second_quote)
 		return (args);
-	res = loop_recreate(first_quote, second_quote, args);
 	if (second_quote < 0)
-		second_quote = ft_strlen(args) - 1;
+		second_quote = ft_strlen(args);
+	res = loop_recreate(first_quote, second_quote, args);
 	if (second_quote > first_quote)
 		second_quote--;
-	while (res[second_quote]
+	while (second_quote <= (int)ft_strlen(res)
 		&& has_quotes(&res[second_quote]))
 	{
 		first_quote = ft_charchr(res, second_quote);

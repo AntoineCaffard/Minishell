@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:02:00 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/02 14:00:55 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:11:45 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ char	*manage_line(t_cmdline *command_line, t_list *env)
 	return (line);
 }
 
-void	parse_minishell(t_cmdline *command_line, char *line)
+void	parse_minishell(t_cmdline *command_line, char *line, t_list *env)
 {
 	ft_fill_cmdline(command_line, line);
 		if (!command_line->error_code)
-			fill_redirection(command_line);
+			fill_redirection(command_line, env);
 	free (line);
 }
 

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:43:28 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:12:40 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 
 	error = 0;
 	free(pid);
-	main_redirection(cmd_line, fds->std_fd, *envp);
+	main_redirection(cmd_line);
 	gestion_pipe(fds, cmd_line->cmds->redirs);
 	close_pipe(fds);
 	if (!cmd_line->error_code)
@@ -95,7 +95,7 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
 		command_line->return_code = ft_exit(cmd);
-		if (!command_line->return_code)
+		if (!command_line->return_code || command_line->return_code == 2)
 			minishell_exit(command_line, &cmd, *envp);
 	}
 	else

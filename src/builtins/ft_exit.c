@@ -23,23 +23,24 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 	{
 		save = ft_atoi(cmd[0][1]);
 		ft_free_stringtab(cmd[0]);
-		exit(save);
+		exit(save % 256);
 	}
 	if (cmd)
 		ft_free_stringtab(cmd[0]);
+	if (command->return_code == 2)
+		exit(2);
 	exit(0);
 }
 
 int	ft_exit(char **params)
 {
 	printf("exit\n");
-	if (params && ft_stringtab_len(params) > 2)
-		return (print_error(TOO_MUCH_ARG_ERROR));
-	else if (params && ft_stringtab_len(params) > 1
-		&& !ft_string_isdigit(params[1]))
+	if (params && ft_stringtab_len(params) > 1) // verif les num avec - et +
 	{
-		//display_error_cmd(4, "not a digit", params[1]);
+		write(2, "not a digit\n", 12);
 		return (2);
 	}
+	else if (params && ft_stringtab_len(params) > 2)
+		return (print_error(TOO_MUCH_ARG_ERROR));
 	return (0);
 }
