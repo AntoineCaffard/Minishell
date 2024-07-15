@@ -95,7 +95,7 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
 		command_line->return_code = ft_exit(cmd);
-		if (!command_line->return_code)
+		if (!command_line->return_code || command_line->return_code == 2)
 			minishell_exit(command_line, &cmd, *envp);
 	}
 	else
