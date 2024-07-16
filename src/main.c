@@ -91,7 +91,7 @@ static t_list	*init_env(char **envp)
 	env = init_env_if_null();
 	if (!env)
 		return (NULL);
-	return(env);
+	return (env);
 }
 
 int	main(int ac, char **av, char **envp)
