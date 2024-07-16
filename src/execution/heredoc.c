@@ -83,8 +83,8 @@ static int	heredoc_loop_expand(t_redlist *redir, t_list *env, int save_io)
 	while (test)
 	{
 		new_line = readline("\033[1;33mheredoc: \033[0;m");
-		if (RETURN_VALUE == 130)
-			return (RETURN_VALUE);
+		if (g_return_value == 130)
+			return (g_return_value);
 		if (!new_line)
 		{
 			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);
@@ -111,8 +111,8 @@ static int	heredoc_loop(t_redlist *redir, int save_io)
 	while (test)
 	{
 		new_line = readline("\033[1;33mheredoc: \033[0;m");
-		if (RETURN_VALUE == 130)
-			return (RETURN_VALUE);
+		if (g_return_value == 130)
+			return (g_return_value);
 		if (!new_line)
 		{
 			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 14:12:40 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 10:11:53 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/16 06:02:10 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
 # include "parsing.h"
 # include "execution.h"
 
-extern int 	RETURN_VALUE;
+extern int	g_return_value;
 
 char	*manage_line(t_cmdline *command_line, t_list *env);
 void	parse_minishell(t_cmdline *command_line, char *line, t_list *emv);
-int 	lexer_handler(t_cmdline *command_line, char *line, int lex_value);
+int		lexer_handler(t_cmdline *command_line, char *line, int lex_value);
 
 #endif

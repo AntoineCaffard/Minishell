@@ -6,11 +6,38 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:38:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 17:01:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/16 05:55:36 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+char	*add_cote(char *src)
+{
+	char	*tmp;
+	char	*res;
+	char	*c;
+	int		i;
+
+	if (!src)
+		return (NULL);
+	if (ft_charchr(src, 0) > -1)
+	{
+		i = ft_charchr(src, 0);
+		if (src[i] == '"')
+			c = ft_strdup("\'\0");
+		else
+			c = ft_strdup("\"\0");
+	}
+	else
+		return (src);
+	tmp = ft_strjoin(c, src);
+	free(src);
+	res = ft_strjoin(tmp, c);
+	free(tmp);
+	free(c);
+	return (res);
+}
 
 char	*get_return_value(char **line, int j,
 						char *first, t_cmdline *cmd_line)

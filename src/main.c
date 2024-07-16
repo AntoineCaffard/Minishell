@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int 	RETURN_VALUE = 0;
+int 	g_return_value = 0;
 
 void	minishell_exec(t_cmdline *command_line, t_list *envp)
 {
@@ -48,7 +48,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			command_line->return_code = command_line->error_code;
 		else
 			minishell_exec(command_line, env);
-		RETURN_VALUE = 0;
+		g_return_value = 0;
 	}
 	if (command_line->return_code == -1)
 		return (1);
