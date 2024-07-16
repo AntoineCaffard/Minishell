@@ -69,6 +69,31 @@ static t_list	*init_env_if_null(void)
 	return (res);
 }
 
+static t_list	*init_env(char **envp)
+{
+	t_list	*env;
+	t_list	*tmp;
+
+	if (envp[0] != NULL)
+	{
+		env = listify_str_array(envp);
+		if (!env)
+			return (NULL);
+		tmp = init_env_if_null();
+		if (!tmp)
+		{
+			ft_lstclear(&env, free);
+			return (NULL);
+		}
+		ft_lstadd_front(&env, tmp);
+		return (env);
+	}
+	env = init_env_if_null();
+	if (!env)
+		return (NULL);
+	return(env);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_cmdline		command_line;
@@ -81,13 +106,9 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
-	if (envp[0] != NULL)
-	{
-		env = listify_str_array(envp);
-		ft_lstadd_front(&env, ft_lstnew(init_env_if_null()));
-	}
-	else
-		env = init_env_if_null();
+	env = init_env(envp);
+	if (!env)
+		return (print_error(MALLOC_ERROR));
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
 	command_line.return_code = 0;
