@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:13:58 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 10:12:09 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:26:17 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	is_digit(char *src)
 {
 	int	i;
 
+	if (!src)
+		return (0);
 	i = 0;
 	while (src[i])
 	{
