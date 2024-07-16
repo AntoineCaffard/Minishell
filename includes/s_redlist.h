@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:38:26 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 17:55:12 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 08:06:41 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_redlist
 {
 	t_redirection_type		type;
 	char					*link;
+	int 					heredoc_pipe[2];
 	struct s_redlist		*next;
 }	t_redlist;
 

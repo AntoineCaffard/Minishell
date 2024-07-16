@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:01:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:13:20 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:04:41 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ static int	error_infile(char *link)
 	return (0);
 }
 
-static void	loop_redirs(t_cmdline *cmd_line, t_redlist *current,
-		int save_io[2], t_list *env)
+static void	loop_redirs(t_cmdline *cmd_line, t_redlist *current)
 {
 	if (current->type == REDIRECTION_OUTFILE)
 		cmd_line->error_code = ft_change_outfile(current->link, 1);
@@ -60,10 +59,13 @@ static void	loop_redirs(t_cmdline *cmd_line, t_redlist *current,
 	else if (current->type == REDIRECTION_INFILE)
 		cmd_line->error_code = ft_change_infile(current->link);
 	else if (current->type == REDIRECTION_HEREDOC)
-		ft_manage_heredoc(current->link, save_io, env);
+	{
+		dup2(current->heredoc_pipe[0], STDIN_FILENO);
+		close(current->heredoc_pipe[0]);
+	}
 }
 
-int	main_redirection(t_cmdline *cmd_line, int save_io[2], t_list *env)
+int	main_redirection(t_cmdline *cmd_line)
 {
 	t_cmdlist	*cmd;
 	t_redlist	*current;
@@ -78,7 +80,7 @@ int	main_redirection(t_cmdline *cmd_line, int save_io[2], t_list *env)
 	while (current && !cmd_line->error_code)
 	{
 		next = current->next;
-		loop_redirs(cmd_line, current, save_io, env);
+		loop_redirs(cmd_line, current);
 		if (current->type == REDIRECTION_APPEND
 			|| current->type == REDIRECTION_OUTFILE)
 			i = 1;

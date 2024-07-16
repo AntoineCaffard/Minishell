@@ -6,7 +6,7 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/02 14:07:15 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 09:15:02 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static bool	check_validity(char *string)
 	size_t	iterator;
 
 	if (!string)
+		return (false);
+	if (ft_isdigit(string[0]))
 		return (false);
 	iterator = 0;
 	while (string[iterator]

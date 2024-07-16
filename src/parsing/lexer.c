@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:51:18 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 17:51:04 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:21:21 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	lexer(char *string)
 	int	res;
 
 	res = skip_spaces(string);
-	if (string[res] == '|')
+	if (string[res] == '|' || !string[res])
 		return (res);
 	res = ft_strlen(string) - 1;
 	while (res >= 0 && is_space(string[res]))

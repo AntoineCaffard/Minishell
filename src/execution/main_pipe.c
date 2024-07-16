@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:20:10 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:13:01 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 	int	i;
 
 	i = 0;
-	main_redirection(cmd_line, save_fd.std_fd, *envp);
+	main_redirection(cmd_line);
 	if (!cmd_line->error_code)
 	{
 		i = main_execution(cmd_line->cmds, *envp, &save_fd, 0);

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 09:47:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:09:48 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static char	*loop_recreate(int first_quote, int second_quote, char *args)
 	return (res);
 }
 
-static char	*recreate_args_and_redir(char *args)
+char	*recreate_args_and_redir(char *args)
 {
 	int		first_quote;
 	int		second_quote;

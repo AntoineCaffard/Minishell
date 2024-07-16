@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/02 11:08:30 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:02:05 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,53 +42,44 @@ static void	print_node_content(char *string, t_list *env)
 	if (!((char *) node->content)[i])
 		return ;
 	printf("%s", &((char *) node->content)[i]);
-
 }
 
-static void expand_and_print(char *string, t_list *env)
+static void	expand_and_print(char *string, t_list *env)
 {
 	int		i;
 	int		j;
-	char 	*tmp;
+	char	*tmp;
 
 	i = 0;
-
 	while (string[i])
 	{
-		if (string[i] == '$' && (ft_isalpha(string[i + 1]) || string[i + 1] == '_'))
+		if (string[i] == '$' && (ft_isalnum(string[i + 1]) || string[i + 1] == '_'))
 		{
 			i++;
 			j = 0;
-			while (string[i + j] && (ft_isalpha(string[i + j]) || string[i + j] == '_'))
+			while (string[i + j] && (ft_isalnum(string[i + j]) || string[i + j] == '_'))
 				j++;
 			tmp = ft_strndup(&(string[i]), j);
 			if (!tmp)
 				return ;
 			print_node_content(tmp, env);
-			i += ft_strlen(tmp);
+			i += ft_strlen(tmp) - 1;
 			free(tmp);
 		}
 		else
-		{
 			printf("%c", string[i]);
-			i++;
-		}
+		i++;
 	}
 	printf("\n");
 }
 
-int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
+static int	heredoc_loop_expand(t_redlist *redir, t_list *env, int save_io)
 {
-	char	*new_line;
 	int		test;
-	int		pipe_fds[2];
-	int		save_output;
+	char	*new_line;
 
-	signal(SIGINT, _sigintheredoc);
 	test = 1;
-	pipe(pipe_fds);
-	save_output = dup(STDOUT_FILENO);
-	dup2(save_io[1], STDOUT_FILENO);
+	dup2(save_io, STDOUT_FILENO);
 	while (test)
 	{
 		new_line = readline("\033[1;33mheredoc: \033[0;m");
@@ -100,18 +91,65 @@ int	ft_manage_heredoc(char *limiter, int save_io[2], t_list *env)
 			signal(SIGINT, _sigint);
 			return (0);
 		}
-		test = ft_strcmp(new_line, limiter);
-		dup2(pipe_fds[1], STDOUT_FILENO);
+		test = ft_strcmp(new_line, redir->link);
+		dup2(redir->heredoc_pipe[1], STDOUT_FILENO);
 		if (test)
 			expand_and_print(new_line, env);
-		dup2(save_io[1], STDOUT_FILENO);
+		dup2(save_io, STDOUT_FILENO);
 		free(new_line);
 	}
-	close(pipe_fds[1]);
-	dup2(pipe_fds[0], STDIN_FILENO);
+	return (0);
+}
+
+static int	heredoc_loop(t_redlist *redir, int save_io)
+{
+	int		test;
+	char	*new_line;
+
+	test = 1;
+	dup2(save_io, STDOUT_FILENO);
+	while (test)
+	{
+		new_line = readline("\033[1;33mheredoc: \033[0;m");
+		if (RETURN_VALUE == 130)
+			return (RETURN_VALUE);
+		if (!new_line)
+		{
+			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);
+			signal(SIGINT, _sigint);
+			return (0);
+		}
+		test = ft_strcmp(new_line, redir->link);
+		dup2(redir->heredoc_pipe[1], STDOUT_FILENO);
+		if (test)
+			ft_printf("%s\n", new_line);
+		dup2(save_io, STDOUT_FILENO);
+		free(new_line);
+	}
+	return (0);
+}
+
+int	ft_manage_heredoc(t_redlist *redir, t_list *env)
+{
+	int	save_output;
+	int	quotes_test;
+	int	return_value;
+
+	return_value = 0;
+	quotes_test = has_quotes(redir->link);
+	redir->link = recreate_args_and_redir(redir->link);
+	if (!(redir->link))
+		return (print_error(MALLOC_ERROR));
+	signal(SIGINT, _sigintheredoc);
+	pipe(redir->heredoc_pipe);
+	save_output = dup(STDOUT_FILENO);
+	if (quotes_test != 0)
+		return_value = heredoc_loop_expand(redir, env, save_output);
+	else
+		return_value = heredoc_loop(redir, save_output);
+	close(redir->heredoc_pipe[1]);
 	dup2(save_output, STDOUT_FILENO);
-	close(pipe_fds[0]);
 	close(save_output);
 	signal(SIGINT, _sigint);
-	return (0);
+	return (return_value);
 }

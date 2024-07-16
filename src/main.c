@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/02 11:37:04 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 10:44:46 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 {
 	int	i;
 
+	if (!env)
+		return (1);
 	while (1)
 	{
 		free_struct(command_line);
@@ -41,7 +43,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		i = lexer_handler(command_line,line, lexer(line));
 		if (i)
 			continue ;
-		parse_minishell(command_line, line);
+		parse_minishell(command_line, line, env);
 		if (command_line->error_code)
 			command_line->return_code = command_line->error_code;
 		else
@@ -51,6 +53,24 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 	if (command_line->return_code == -1)
 		return (1);
 	return (0);
+}
+
+static t_list *init_env_if_null(void)
+{
+	t_list *res;
+	char 	*pwd;
+
+	pwd= NULL;
+	pwd = getcwd(pwd, 0);
+	if (!pwd)
+		return (NULL);
+	pwd = ft_strjoin("PWD=", pwd);
+	if (!pwd)
+		return (NULL);
+	res = ft_lstnew(pwd);
+	if (!res)
+		return (NULL);
+	return (res);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -65,10 +85,10 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
-	if (envp)
+	if (envp[0] != NULL)
 		env = listify_str_array(envp);
 	else
-		env = NULL;
+		env = init_env_if_null();
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
 	command_line.return_code = 0;
