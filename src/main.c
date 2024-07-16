@@ -43,7 +43,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		i = lexer_handler(command_line, line, lexer(line));
 		if (i)
 		{
-			command_line->return_code = all_heredoc(line);
+			command_line->return_code = all_heredoc(line, i);
 			continue ;
 		}
 		parse_minishell(command_line, line, env);

@@ -80,12 +80,13 @@ static char	**init_heredoc(char *line)
 	return (res);
 }
 
-int	all_heredoc(char *line)
+int	all_heredoc(char *line, int error_index)
 {
 	char	**res;
 	char	*new_line;
 	int		i;
 
+	line[error_index] = '\0';
 	res = init_heredoc(line);
 	i = 0;
 	signal(SIGINT, _sigintheredoc);
