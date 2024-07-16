@@ -38,7 +38,7 @@ static void	print_sorted(t_list **list)
 		min = find_min(*list);
 		content = min->content;
 		e_index = ft_env_var_len((char *) content);
-		if (content[0] == '_' && content[1] == '=')
+		if (ft_isdigit(content[0]) || (content[0] == '_' && content[1] == '='))
 			;
 		else if (!content[e_index])
 			printf("declare -x %s\n", content);

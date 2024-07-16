@@ -60,11 +60,7 @@ static t_list	*init_env_if_null(void)
 	t_list	*res;
 	char	*pwd;
 
-	pwd = NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
-		return (NULL);
-	pwd = ft_strjoin("PWD=", pwd);
+	pwd = ft_strdup("42");
 	if (!pwd)
 		return (NULL);
 	res = ft_lstnew(pwd);
@@ -86,7 +82,10 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
 	if (envp[0] != NULL)
+	{
 		env = listify_str_array(envp);
+		ft_lstadd_front(&env, ft_lstnew(init_env_if_null()));
+	}
 	else
 		env = init_env_if_null();
 	command_line.cmds = NULL;
