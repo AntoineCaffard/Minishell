@@ -53,11 +53,13 @@ static void	expand_and_print(char *string, t_list *env)
 	i = 0;
 	while (string[i])
 	{
-		if (string[i] == '$' && (ft_isalnum(string[i + 1]) || string[i + 1] == '_'))
+		if (string[i] == '$' && (ft_isalnum(string[i + 1])
+				|| string[i + 1] == '_'))
 		{
 			i++;
 			j = 0;
-			while (string[i + j] && (ft_isalnum(string[i + j]) || string[i + j] == '_'))
+			while (string[i + j] && (ft_isalnum(string[i + j])
+					|| string[i + j] == '_'))
 				j++;
 			tmp = ft_strndup(&(string[i]), j);
 			if (!tmp)

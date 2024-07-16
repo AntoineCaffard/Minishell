@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int 	g_return_value = 0;
+int		g_return_value = 0;
 
 void	minishell_exec(t_cmdline *command_line, t_list *envp)
 {
@@ -37,10 +37,10 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		free_struct(command_line);
 		line = manage_line(command_line, env);
 		if (!line)
-			continue;
+			continue ;
 		command_line->error_code = 0;
 		add_history(line);
-		i = lexer_handler(command_line,line, lexer(line));
+		i = lexer_handler(command_line, line, lexer(line));
 		if (i)
 			continue ;
 		parse_minishell(command_line, line, env);
@@ -55,12 +55,12 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 	return (0);
 }
 
-static t_list *init_env_if_null(void)
+static t_list	*init_env_if_null(void)
 {
-	t_list *res;
-	char 	*pwd;
+	t_list	*res;
+	char	*pwd;
 
-	pwd= NULL;
+	pwd = NULL;
 	pwd = getcwd(pwd, 0);
 	if (!pwd)
 		return (NULL);
