@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:02:00 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 10:11:45 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/16 07:05:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,8 @@ void	parse_minishell(t_cmdline *command_line, char *line, t_list *env)
 
 int	lexer_handler(t_cmdline *command_line, char *line, int lex_value)
 {
+	(void)line;
 	if (lex_value)
-	{
 		command_line->return_code = lex_value;
-		free(line);
-	}
 	return (lex_value);
 }

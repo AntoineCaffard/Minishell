@@ -42,7 +42,10 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		add_history(line);
 		i = lexer_handler(command_line, line, lexer(line));
 		if (i)
+		{
+			command_line->return_code = all_heredoc(line);
 			continue ;
+		}
 		parse_minishell(command_line, line, env);
 		if (command_line->error_code)
 			command_line->return_code = command_line->error_code;
@@ -50,9 +53,6 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			minishell_exec(command_line, env);
 		g_return_value = 0;
 	}
-	if (command_line->return_code == -1)
-		return (1);
-	return (0);
 }
 
 static t_list	*init_env_if_null(void)
