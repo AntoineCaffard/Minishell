@@ -32,7 +32,8 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 {
 	int	save;
 
-	ft_lstclear(&envp, free);
+	if (envp)
+		ft_lstclear(&envp, free);
 	free_struct(command);
 	clear_history();
 	if (cmd && cmd[0][1] != NULL && !is_digit(cmd[0][1]))
