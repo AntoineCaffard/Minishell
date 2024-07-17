@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 11:16:21 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/17 13:08:27 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 		error = verif_stat(line);
 		if (error)
 		{
-			ft_free_stringtab(path);
+			ft_free_stringtab(path); // ajouter un utils pour reduire les lignes
 			return (error);
 		}
 	}
