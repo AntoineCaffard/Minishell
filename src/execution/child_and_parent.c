@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:12:40 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:47:18 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main_execution(const t_cmdlist *cmd_l, t_list *envp,
 
 	cmd = init_t_args_in_stringtab(cmd_l->args);
 	if (cmd == NULL)
-		return (1);
+		return (0);
 	error = 0;
 	if (!ft_strncmp(cmd[0], "echo", 5))
 		error = ft_echo(&cmd[1]);
@@ -90,8 +90,10 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 	if ((int) ft_cmdsize(command_line->cmds) > 1)
 		return (1);
 	cmd = init_t_args_in_stringtab(command_line->cmds->args);
-	if (!cmd)
+	if (!cmd && command_line->cmds->args)
 		command_line->return_code = 1;
+	else if (!cmd)
+		return (1);
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
 		command_line->return_code = ft_exit(cmd);

@@ -95,7 +95,10 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	{
 		error = verif_stat(line);
 		if (error)
+		{
+			ft_free_stringtab(path);
 			return (error);
+		}
 	}
 	else
 		line[0] = init_link(line[0], path, &error);

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 10:44:46 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:44:05 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	minishell_exec(t_cmdline *command_line, t_list *envp)
 	cmd_buffer = *command_line;
 	main_expand(&cmd_buffer, &envp);
 	cmd_buffer = *command_line;
+	printf("%d\n", 5);
 	if (ft_verif_exit(&cmd_buffer, &envp))
 		main_pipe(&cmd_buffer, &envp);
 	command_line->return_code = cmd_buffer.return_code;

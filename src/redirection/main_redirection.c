@@ -84,7 +84,7 @@ int	main_redirection(t_cmdline *cmd_line)
 		if (current->type == REDIRECTION_APPEND
 			|| current->type == REDIRECTION_OUTFILE)
 			i = 1;
-		if (cmd_line->error_code == 0 && (current->type == REDIRECTION_INFILE
+		else if (cmd_line->error_code == 0 && (current->type == REDIRECTION_INFILE
 				|| current->type == REDIRECTION_HEREDOC))
 			y = 2;
 		else

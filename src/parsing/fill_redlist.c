@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:34:10 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 09:55:39 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:29:33 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf, t_list *e)
 	if (!new_redir)
 		l->error_code = 1;
 	buf = ft_argpop_two(&(c->args), buf);
-	if (!buf)
-		l->error_code = 1;
 	if (new_redir && new_redir->type == REDIRECTION_HEREDOC)
 		l->error_code += ft_manage_heredoc(new_redir, e);
 	ft_redpush(&(c->redirs), new_redir);
@@ -49,8 +47,6 @@ void	fill_redirection(t_cmdline *line, t_list *envp)
 	cmd = line->cmds;
 	while (cmd)
 	{
-		if (!cmd->args)
-			line->error_code = 1;
 		buffer = cmd->args;
 		while (buffer && line->error_code == 0)
 		{

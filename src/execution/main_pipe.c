@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 12:11:52 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:57:20 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ void	close_pipe(t_pipe *fds)
 static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
-//	int 	len;
 
-//	len = ft_cmdsize(cmd_line);
-//	if (len < fds->nmb_max_cmd)
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	fds->save = cmd_line->cmds;
 	while (fds->index < fds->nmb_max_cmd)
@@ -82,7 +79,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 
 	i = 0;
 	main_redirection(cmd_line);
-	if (!cmd_line->error_code)
+	if (!cmd_line->error_code && cmd_line->cmds->args)
 	{
 		i = main_execution(cmd_line->cmds, *envp, &save_fd, 0);
 		cmd_line->return_code = i;
@@ -90,6 +87,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 	else
 		cmd_line->return_code = cmd_line->error_code;
 	dup2(save_fd.std_fd[0], STDIN_FILENO);
+	dup2(save_fd.std_fd[1], STDOUT_FILENO);
 	close(save_fd.std_fd[0]);
 	close(save_fd.std_fd[1]);
 	signal(SIGINT, _sigint);
