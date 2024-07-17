@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 10:44:46 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/15 11:11:08 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 {
 	int	i;
 
-	if (!env)
-		return (1);
 	while (1)
 	{
 		free_struct(command_line);
@@ -55,24 +53,6 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 	return (0);
 }
 
-static t_list *init_env_if_null(void)
-{
-	t_list *res;
-	char 	*pwd;
-
-	pwd= NULL;
-	pwd = getcwd(pwd, 0);
-	if (!pwd)
-		return (NULL);
-	pwd = ft_strjoin("PWD=", pwd);
-	if (!pwd)
-		return (NULL);
-	res = ft_lstnew(pwd);
-	if (!res)
-		return (NULL);
-	return (res);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_cmdline		command_line;
@@ -88,7 +68,7 @@ int	main(int ac, char **av, char **envp)
 	if (envp[0] != NULL)
 		env = listify_str_array(envp);
 	else
-		env = init_env_if_null();
+		env = NULL;
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
 	command_line.return_code = 0;
