@@ -53,8 +53,6 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 	}
 }
 
-<<<<<<< HEAD
-=======
 static t_list	*init_env_if_null(void)
 {
 	t_list	*res;
@@ -94,7 +92,6 @@ static t_list	*init_env(char **envp)
 	return (env);
 }
 
->>>>>>> a1817aa11efeac93638c8fa3bb630d61ad34ba2a
 int	main(int ac, char **av, char **envp)
 {
 	t_cmdline		command_line;
@@ -107,16 +104,9 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
-<<<<<<< HEAD
-	if (envp[0] != NULL)
-		env = listify_str_array(envp);
-	else
-		env = NULL;
-=======
 	env = init_env(envp);
 	if (!env)
 		return (print_error(MALLOC_ERROR));
->>>>>>> a1817aa11efeac93638c8fa3bb630d61ad34ba2a
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
 	command_line.return_code = 0;

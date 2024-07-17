@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:02:05 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:44:04 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ int	has_quotes(char *string)
 			return (1);
 		string++;
 	}
+	return (0);
+}
+
+static int	is_alnum(char c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	if (c >= '0' && c <= '9')
+		return (1);
+	if (c == '_')
+		return (1);
 	return (0);
 }
 
@@ -53,13 +64,11 @@ static void	expand_and_print(char *string, t_list *env)
 	i = 0;
 	while (string[i])
 	{
-		if (string[i] == '$' && (ft_isalnum(string[i + 1])
-				|| string[i + 1] == '_'))
+		if (string[i] == '$' && is_alnum(string[i + 1]))
 		{
 			i++;
 			j = 0;
-			while (string[i + j] && (ft_isalnum(string[i + j])
-					|| string[i + j] == '_'))
+			while (string[i + j] && is_alnum(string[i + j]))
 				j++;
 			tmp = ft_strndup(&(string[i]), j);
 			if (!tmp)
@@ -89,9 +98,9 @@ static int	heredoc_loop_expand(t_redlist *redir, t_list *env, int save_io)
 			return (g_return_value);
 		if (!new_line)
 		{
-			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);
+			ft_putstr_fd(H_ERROR, 2);
 			signal(SIGINT, _sigint);
-			return (0);
+			return (1);
 		}
 		test = ft_strcmp(new_line, redir->link);
 		dup2(redir->heredoc_pipe[1], STDOUT_FILENO);
@@ -117,9 +126,9 @@ static int	heredoc_loop(t_redlist *redir, int save_io)
 			return (g_return_value);
 		if (!new_line)
 		{
-			write(2, "minishell: warning: here-document at line 1 delimited by end-of-file\n", 70);
+			ft_putstr_fd(H_ERROR, 2);
 			signal(SIGINT, _sigint);
-			return (0);
+			return (1);
 		}
 		test = ft_strcmp(new_line, redir->link);
 		dup2(redir->heredoc_pipe[1], STDOUT_FILENO);
@@ -135,9 +144,7 @@ int	ft_manage_heredoc(t_redlist *redir, t_list *env)
 {
 	int	save_output;
 	int	quotes_test;
-	int	return_value;
 
-	return_value = 0;
 	quotes_test = has_quotes(redir->link);
 	redir->link = recreate_args_and_redir(redir->link);
 	if (!(redir->link))
@@ -145,13 +152,13 @@ int	ft_manage_heredoc(t_redlist *redir, t_list *env)
 	signal(SIGINT, _sigintheredoc);
 	pipe(redir->heredoc_pipe);
 	save_output = dup(STDOUT_FILENO);
-	if (quotes_test != 0)
-		return_value = heredoc_loop_expand(redir, env, save_output);
+	if (quotes_test == 0)
+		heredoc_loop_expand(redir, env, save_output);
 	else
-		return_value = heredoc_loop(redir, save_output);
+		heredoc_loop(redir, save_output);
 	close(redir->heredoc_pipe[1]);
 	dup2(save_output, STDOUT_FILENO);
 	close(save_output);
 	signal(SIGINT, _sigint);
-	return (return_value);
+	return (0);
 }
