@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:13:01 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:11:52 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	close_pipe(t_pipe *fds)
 static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
+//	int 	len;
 
+//	len = ft_cmdsize(cmd_line);
+//	if (len < fds->nmb_max_cmd)
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	fds->save = cmd_line->cmds;
 	while (fds->index < fds->nmb_max_cmd)

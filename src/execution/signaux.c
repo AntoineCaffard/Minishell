@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 11:28:30 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:21:21 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:02:07 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	_sigint_exec(int signaux)
 void	_sigintheredoc(int signaux)
 {
 	(void)signaux;
-	printf("\n");
+	printf("%c", 0);
 	g_return_value = 130;
 }

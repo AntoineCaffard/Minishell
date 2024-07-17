@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:09:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 12:04:03 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ char	*recreate_args_and_redir(char *args)
 	{
 		first_quote = ft_charchr(res, second_quote);
 		second_quote = ft_charrchr(res, second_quote);
+		if (second_quote < 0)
+			second_quote = ft_strlen(res);
 		res = loop_recreate(first_quote, second_quote, res);
+		second_quote--;
 	}
 	return (res);
 }
