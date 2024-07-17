@@ -6,11 +6,31 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:13:58 by acaffard          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/15 11:03:36 by acaffard         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/15 10:26:17 by trebours         ###   ########.fr       */
+>>>>>>> a1817aa11efeac93638c8fa3bb630d61ad34ba2a
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	is_digit(char *src)
+{
+	int	i;
+
+	if (!src)
+		return (0);
+	i = 0;
+	while (src[i])
+	{
+		if (!ft_isdigit(src[i]) && src[i] != '-' && src[i] != '+')
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 {
@@ -20,7 +40,7 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 		ft_lstclear(&envp, free);
 	free_struct(command);
 	clear_history();
-	if (cmd && cmd[0][1] != NULL && ft_string_isdigit(cmd[0][1]))
+	if (cmd && cmd[0][1] != NULL && !is_digit(cmd[0][1]))
 	{
 		save = ft_atoi(cmd[0][1]);
 		ft_free_stringtab(cmd[0]);
@@ -36,7 +56,7 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 int	ft_exit(char **params)
 {
 	printf("exit\n");
-	if (params && ft_stringtab_len(params) > 1) // verif les num avec - et +
+	if (params && is_digit(params[1]))
 	{
 		write(2, "not a digit\n", 12);
 		return (2);

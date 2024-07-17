@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:32:03 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 17:11:32 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/16 05:56:03 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	{
 		tmp = ft_strndup(&line[i + 1], j - i - 1);
 		res = get_node(envp, tmp);
+		res = add_cote(res);
 		free(tmp);
 		return (get_env_var(&line, j, save_first_part, res));
 	}
@@ -85,8 +86,7 @@ static char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
 		else if (c && line[i] == c)
 			c = 0;
 		else if (c != '\'' && line[i] == '$' && (line[i + 1]
-				&& verif_char_expand(line[i + 1], c)))// (ft_isalnum(line[i + 1]) refaire la fonction is_alnum pour qu'elle prenne les ' ou " ou ? et ne pas enlever les cote des var
-					// || line[i + 1] == '?')))
+				&& verif_char_expand(line[i + 1], c)))
 		{
 			line = init_res(line, i, envp, cmd_line);
 			i = -1;

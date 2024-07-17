@@ -22,6 +22,11 @@ int	ft_unset(t_list **envp, char **arguments)
 	iterator = 0;
 	while (arguments[iterator])
 	{
+		if (ft_isdigit(arguments[iterator][0]))
+		{
+			iterator++;
+			continue ;
+		}
 		var_len = ft_env_var_len(arguments[iterator]);
 		to_unset = ft_get_env_node(*envp, arguments[iterator], var_len);
 		if (to_unset != NULL)

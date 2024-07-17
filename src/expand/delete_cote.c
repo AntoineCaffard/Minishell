@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-static int	ft_charchr(const char *s, unsigned int y)
+int	ft_charchr(const char *s, unsigned int y)
 {
 	char	*str;
 	int		i;

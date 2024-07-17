@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-int 	RETURN_VALUE = 0;
+int		g_return_value = 0;
 
 void	minishell_exec(t_cmdline *command_line, t_list *envp)
 {
@@ -35,24 +35,66 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		free_struct(command_line);
 		line = manage_line(command_line, env);
 		if (!line)
-			continue;
+			continue ;
 		command_line->error_code = 0;
 		add_history(line);
-		i = lexer_handler(command_line,line, lexer(line));
+		i = lexer_handler(command_line, line, lexer(line));
 		if (i)
+		{
+			command_line->return_code = all_heredoc(line, i);
 			continue ;
+		}
 		parse_minishell(command_line, line, env);
 		if (command_line->error_code)
 			command_line->return_code = command_line->error_code;
 		else
 			minishell_exec(command_line, env);
-		RETURN_VALUE = 0;
+		g_return_value = 0;
 	}
-	if (command_line->return_code == -1)
-		return (1);
-	return (0);
 }
 
+<<<<<<< HEAD
+=======
+static t_list	*init_env_if_null(void)
+{
+	t_list	*res;
+	char	*pwd;
+
+	pwd = ft_strdup("42");
+	if (!pwd)
+		return (NULL);
+	res = ft_lstnew(pwd);
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
+static t_list	*init_env(char **envp)
+{
+	t_list	*env;
+	t_list	*tmp;
+
+	if (envp[0] != NULL)
+	{
+		env = listify_str_array(envp);
+		if (!env)
+			return (NULL);
+		tmp = init_env_if_null();
+		if (!tmp)
+		{
+			ft_lstclear(&env, free);
+			return (NULL);
+		}
+		ft_lstadd_front(&env, tmp);
+		return (env);
+	}
+	env = init_env_if_null();
+	if (!env)
+		return (NULL);
+	return (env);
+}
+
+>>>>>>> a1817aa11efeac93638c8fa3bb630d61ad34ba2a
 int	main(int ac, char **av, char **envp)
 {
 	t_cmdline		command_line;
@@ -65,10 +107,16 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
+<<<<<<< HEAD
 	if (envp[0] != NULL)
 		env = listify_str_array(envp);
 	else
 		env = NULL;
+=======
+	env = init_env(envp);
+	if (!env)
+		return (print_error(MALLOC_ERROR));
+>>>>>>> a1817aa11efeac93638c8fa3bb630d61ad34ba2a
 	command_line.cmds = NULL;
 	command_line.error_code = 0;
 	command_line.return_code = 0;

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:21:52 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:04:50 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/16 05:59:25 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 typedef struct s_pipe
 {
-	int	**pipe;
-	int	redirs;
-	int	index;
-	int	nmb_max_cmd;
-	int	std_fd[2];
+	int			**pipe;
+	int			redirs;
+	int			index;
+	int			nmb_max_cmd;
+	int			std_fd[2];
 	t_cmdlist	*save;
 }	t_pipe;
 
@@ -33,7 +33,7 @@ void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid);
 void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid);
 void	delete_quote(t_cmdlist *cmd);
 char	*get_return_value(char **line, int j,
-						char *first, t_cmdline *cmd_line);
+			char *first, t_cmdline *cmd_line);
 void	main_expand(t_cmdline *cmd_line, t_list **envp);
 int		main_redirection(t_cmdline *cmd_line);
 char	*init_link(char *src, char **path, int *error);
@@ -46,11 +46,13 @@ int		ft_manage_heredoc(t_redlist *redir, t_list *env);
 void	close_pipe(t_pipe *fds);
 void	gestion_pipe(t_pipe *fds, t_redlist *redirs);
 int		main_execution(const t_cmdlist *cmd_l, t_list *envp,
-					t_pipe *pipe_fds, const int i);
+			t_pipe *pipe_fds, const int i);
 int		ft_verif_exit(t_cmdline *command_line, t_list **envp);
 int		has_quotes(char *string);
 char	*get_value(t_list *list, char *param);
 char	*get_env_var(char **line, int j, char *first, char *var);
 char	*recreate_args_and_redir(char *args);
+int		ft_charchr(const char *s, unsigned int y);
+char	*add_cote(char *src);
 
-# endif
+#endif
