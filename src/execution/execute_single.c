@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:50:02 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 11:16:21 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	check_error(int *error)
 {
 	if (*error == 127 || *error == 126)
 		return ;
-	else if (WIFSIGNALED(*error))
-		*error = WTERMSIG(*error) + 128;
 	else if (WIFEXITED(*error))
 		*error = WEXITSTATUS(*error);
+	else if (WIFSIGNALED(*error))
+		*error = WTERMSIG(*error);
 }
 
 static int	single_parent(char **envp, t_pipe *fds, pid_t pid)

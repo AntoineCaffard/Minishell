@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 12:47:47 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 14:41:25 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/17 09:49:14 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define ERRORS_H
 # include <stdio.h>
 # include "LIBFT/libft.h"
+
+# define H_ERROR "minishell: warning: heredoc at line 1 delimited by EOF\n"
 
 typedef enum e_error
 {
