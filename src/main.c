@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 15:10:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:52:10 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		i = lexer_handler(command_line, line, lexer(line));
 		if (i)
 		{
-			command_line->return_code = all_heredoc(line, i);
+			if (!line[i])
+				command_line->return_code = 0;
+			else
+				command_line->return_code = all_heredoc(line, i);
 			continue ;
 		}
 		parse_minishell(command_line, line, env);

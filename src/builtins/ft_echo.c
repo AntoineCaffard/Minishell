@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:07:48 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 15:20:48 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:11:14 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_option(char **params)
 	size_t	i;
 
 	i = 1;
-	if (params[0][0] == '-')
+	if (params[0] && params[0][0] == '-')
 	{
 		while (params[0][i])
 		{
@@ -25,6 +25,8 @@ static int	check_option(char **params)
 				return (0);
 			i++;
 		}
+		if (i == 1)
+			return (0);
 		return (1);
 	}
 	else
