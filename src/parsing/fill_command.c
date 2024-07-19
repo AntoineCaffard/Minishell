@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:15:13 by acaffard          #+#    #+#             */
-/*   Updated: 2024/06/27 18:21:15 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 14:12:10 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	minishell_is_separator(char c)
 {
 	if (is_space(c))
 		return (true);
-	if (c == '<' || c == '>' || c == '$')
+	if (c == '<' || c == '>')
 		return (true);
 	return (false);
 }

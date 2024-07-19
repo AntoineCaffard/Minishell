@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/17 13:06:08 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:10:34 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,6 @@ int	main(int ac, char **av, char **envp)
 	i = loop_main(&command_line, env, line);
 	free_struct(&command_line);
 	ft_lstclear(&env, free);
-	clear_history();
+	rl_clear_history();
 	return (i);
 }
