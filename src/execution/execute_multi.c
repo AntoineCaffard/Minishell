@@ -38,7 +38,7 @@ char	*init_link(char *src, char **path, int *error)
 	write(2, "command not found\n", 19);
 	*error = 127;
 	free(src);
-	return (NULL);
+	return (ft_strdup("fail"));
 }
 
 char	**init_path(t_list *envp)
