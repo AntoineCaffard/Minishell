@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:21:52 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/16 05:59:25 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:19:51 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*init_link(char *src, char **path, int *error);
 char	**init_path(t_list *envp);
 int		multi_command(char **cmd, char **envp, t_pipe *pipe_fds);
 int		execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds);
-int		verif_stat(char **line);
+int		verif_stat(char **line, char **path);
 int		execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds);
 int		ft_manage_heredoc(t_redlist *redir, t_list *env);
 void	close_pipe(t_pipe *fds);
@@ -54,5 +54,8 @@ char	*get_env_var(char **line, int j, char *first, char *var);
 char	*recreate_args_and_redir(char *args);
 int		ft_charchr(const char *s, unsigned int y);
 char	*add_cote(char *src);
+int		all_heredoc(char *line, int error_index);
+char	**init_heredoc(char *line);
+char	*creat_limiteur(char *line, int y);
 
 #endif

@@ -37,6 +37,5 @@ extern int	g_return_value;
 char	*manage_line(t_cmdline *command_line, t_list *env);
 void	parse_minishell(t_cmdline *command_line, char *line, t_list *emv);
 int		lexer_handler(t_cmdline *command_line, char *line, int lex_value);
-int		all_heredoc(char *line, int error_index);
 
 #endif

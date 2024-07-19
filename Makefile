@@ -59,7 +59,7 @@ EXPAND = $(EXPAND_DIR)/delete_cote.c $(EXPAND_DIR)/expand_get_value.c $(EXPAND_D
 EXEC_DIR = $(SRC_PATH)/execution
 EXEC =	$(EXEC_DIR)/child_and_parent.c $(EXEC_DIR)/execute_multi.c $(EXEC_DIR)/execute_single.c $(EXEC_DIR)/heredoc.c \
 		$(EXEC_DIR)/main_pipe.c $(EXEC_DIR)/redirect_pipe.c $(EXEC_DIR)/signaux.c $(SRC_PATH)/redirection/main_redirection.c\
-		$(SRC_PATH)/redirection/all_heredoc.c
+		$(SRC_PATH)/redirection/all_heredoc.c $(SRC_PATH)/redirection/init_heredoc.c
 
 SRC_PATH = src
 SRCS = 	$(ARGLIST) \

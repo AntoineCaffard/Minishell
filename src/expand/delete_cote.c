@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 12:04:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:05:10 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,7 @@ char	*recreate_args_and_redir(char *args)
 	if (second_quote < 0)
 		second_quote = ft_strlen(args);
 	res = loop_recreate(first_quote, second_quote, args);
-	if (second_quote > first_quote)
-		second_quote--;
-	while (second_quote <= (int)ft_strlen(res)
+	while (second_quote-- <= (int)ft_strlen(res)
 		&& has_quotes(&res[second_quote]))
 	{
 		first_quote = ft_charchr(res, second_quote);
@@ -111,7 +109,6 @@ char	*recreate_args_and_redir(char *args)
 		if (second_quote < 0)
 			second_quote = ft_strlen(res);
 		res = loop_recreate(first_quote, second_quote, res);
-		second_quote--;
 	}
 	return (res);
 }

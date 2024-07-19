@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 13:08:27 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/19 10:41:30 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,26 @@ static int	command_n(char **cmd, char **envp, t_pipe *pipe_fds)
 	return (error);
 }
 
-int	verif_stat(char **line)
+int	verif_stat(char **line, char **path)
 {
 	struct stat	buf;
 
 	if (stat(line[0], &buf))
 	{
 		write(2, "No such file or directory\n", 26);
+		ft_free_stringtab(path);
 		return (127);
 	}
 	if (S_ISDIR(buf.st_mode))
 	{
 		write(2, "Is a directory\n", 15);
+		ft_free_stringtab(path);
 		return (126);
 	}
 	if (access(line[0], X_OK))
 	{
 		write(2, "Permission denied\n", 18);
+		ft_free_stringtab(path);
 		return (126);
 	}
 	return (0);
@@ -93,12 +96,9 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	error = 0;
 	if (ft_strchr(line[0], '/'))
 	{
-		error = verif_stat(line);
+		error = verif_stat(line, path);
 		if (error)
-		{
-			ft_free_stringtab(path); // ajouter un utils pour reduire les lignes
 			return (error);
-		}
 	}
 	else
 		line[0] = init_link(line[0], path, &error);

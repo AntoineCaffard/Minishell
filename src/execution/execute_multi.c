@@ -83,7 +83,7 @@ int	execute_multi(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	error = 0;
 	if (ft_strchr(line[0], '/'))
 	{
-		error = verif_stat(line);
+		error = verif_stat(line, path);
 		if (error)
 			return (error);
 	}
