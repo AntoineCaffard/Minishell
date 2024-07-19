@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:13:58 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 15:25:23 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 15:25:56 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	is_digit(char *src)
 int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 {
 	int	save;
-
 	if (envp)
 		ft_lstclear(&envp, free);
 	free_struct(command);
