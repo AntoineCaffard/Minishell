@@ -6,33 +6,11 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:58:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 12:44:04 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:14:09 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	has_quotes(char *string)
-{
-	while (*string)
-	{
-		if ((*string == '\'') | (*string == '\"'))
-			return (1);
-		string++;
-	}
-	return (0);
-}
-
-static int	is_alnum(char c)
-{
-	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-		return (1);
-	if (c >= '0' && c <= '9')
-		return (1);
-	if (c == '_')
-		return (1);
-	return (0);
-}
 
 static void	print_node_content(char *string, t_list *env)
 {
