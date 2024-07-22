@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:21:52 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 10:19:51 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/19 11:57:47 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ char	*add_cote(char *src);
 int		all_heredoc(char *line, int error_index);
 char	**init_heredoc(char *line);
 char	*creat_limiteur(char *line, int y);
+int 	is_alnum();
 
 #endif

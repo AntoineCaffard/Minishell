@@ -50,6 +50,7 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	}
 	clear_history();
 	free_struct(cmd_line);
+	ft_lstclear(envp, free);
 	exit(cmd_line->error_code);
 }
 
