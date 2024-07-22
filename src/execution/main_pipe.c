@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 06:08:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:08:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 static int	init_pipe(t_pipe *save_fd, t_cmdlist *cmd)
 {
-	int	n;
 	int	i;
 
 	save_fd->nmb_max_cmd = ft_cmdsize(cmd);
-	n = save_fd->nmb_max_cmd -1;
-	if (n == 0)
+	if (save_fd->nmb_max_cmd == 1)
 		return (1);
-	save_fd->pipe = ft_calloc(n + 1, sizeof(int *));
+	save_fd->pipe = ft_calloc(3, sizeof(int *));
 	if (!save_fd->pipe)
 		return (-1);
 	i = 0;
-	while (i < n)
+	while (i < 2)
 	{
 		save_fd->pipe[i] = ft_calloc(2, sizeof(int));
 		pipe(save_fd->pipe[i]);
@@ -53,6 +51,37 @@ void	close_pipe(t_pipe *fds)
 	free(fds->pipe);
 }
 
+void	verif_pipe(t_pipe *fds)
+{
+	int	index;
+
+	if (!fds->index)
+	{
+		if (fds->pipe[0][1] != -1)
+			close(fds->pipe[0][1]);
+		fds->pipe[0][1] = -1;
+		return ;
+	}
+	if (fds->index % 2)
+		index = 1;
+	else
+		index = 0;
+	if (fds->pipe[index][1] != -1)
+		close(fds->pipe[index][1]);
+	fds->pipe[index][1] = -1;
+	if (index == 0)
+		index++;
+	else
+		index--;
+	if (fds->pipe[index][0] != -1)
+		close(fds->pipe[index][0]);
+	fds->pipe[index][0] = -1;
+	if (fds->pipe[0][0] == -1 && fds->pipe[0][1] == -1)
+		pipe(fds->pipe[0]);
+	if (fds->pipe[1][0] == -1 && fds->pipe[1][1] == -1)
+		pipe(fds->pipe[1]);
+}
+
 static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 {
 	pid_t	*pid;
@@ -64,6 +93,7 @@ static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 		pid[fds->index] = fork();
 		if (pid[fds->index] == 0)
 			child(cmd_line, fds, envp, pid);
+		verif_pipe(fds);
 		fds->index++;
 		cmd_line->cmds = cmd_line->cmds->next;
 	}

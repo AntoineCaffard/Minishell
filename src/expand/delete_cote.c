@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 05:24:17 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 10:07:44 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	*recreate_args_and_redir(char *args)
 
 int	verif_quote(char *value)
 {
-	int len;
+	int	len;
 
 	if (!value)
 		return (0);
@@ -145,7 +145,7 @@ void	delete_quote(t_cmdlist *cmd)
 			if (verif_quote(args->value))
 			{
 				free(args->value);
-				args->value = ft_strdup(" ");
+				args->value = ft_strdup(" "); // a modif pour la commande seulement
 			}
 			else
 				args->value = recreate_args_and_redir(args->value);
