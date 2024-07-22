@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:32:03 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/16 05:56:03 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 06:13:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,23 @@ void	main_expand(t_cmdline *cmd_line, t_list **envp)
 	t_cmdlist	*cmd;
 	t_cmdlist	*cmd_next;
 	t_arglist	*current;
+	t_redlist	*redirs;
 
 	cmd = cmd_line->cmds;
 	while (cmd)
 	{
 		cmd_next = cmd->next;
 		current = cmd->args;
+		redirs = cmd->redirs;
 		while (current)
 		{
 			current->value = expand(current->value, (*envp), cmd_line);
 			current = current->next;
+		}
+		while (redirs)
+		{
+			redirs->link = expand(redirs->link, (*envp), cmd_line);
+			redirs = redirs->next;
 		}
 		cmd = cmd_next;
 	}

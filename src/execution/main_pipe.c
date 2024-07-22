@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/17 12:57:20 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 06:08:32 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 
 	(void)envp;
 	signal(SIGINT, _sigint_exec);
+//	signal(SIGQUIT,SIG_DFL);
 	save_fd.index = 0;
 	save_fd.std_fd[1] = dup(STDIN_FILENO);
 	save_fd.std_fd[0] = dup(STDOUT_FILENO);
@@ -114,5 +115,6 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 	dup2(save_fd.std_fd[0], STDIN_FILENO);
 	dup2(save_fd.std_fd[1], STDOUT_FILENO);
 	signal(SIGINT, _sigint);
+//	signal(SIGQUIT, SIG_IGN);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 10:05:10 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 05:24:17 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,22 @@ char	*recreate_args_and_redir(char *args)
 	return (res);
 }
 
+int	verif_quote(char *value)
+{
+	int len;
+
+	if (!value)
+		return (0);
+	len = ft_strlen(value);
+	if ((value[0] == '\"' || value[0] == '\'') && len == 1)
+		return (1);
+	else if (len == 2 && value[0] == '\"' && value[1] == '\"')
+		return (1);
+	else if (len == 2 && value[0] == '\'' && value[1] == '\'')
+		return (1);
+	return (0);
+}
+
 void	delete_quote(t_cmdlist *cmd)
 {
 	t_cmdlist	*cmd_next;
@@ -126,7 +142,13 @@ void	delete_quote(t_cmdlist *cmd)
 		redir = cmd->redirs;
 		while (args)
 		{
-			args->value = recreate_args_and_redir(args->value);
+			if (verif_quote(args->value))
+			{
+				free(args->value);
+				args->value = ft_strdup(" ");
+			}
+			else
+				args->value = recreate_args_and_redir(args->value);
 			args = args->next;
 		}
 		while (redir)

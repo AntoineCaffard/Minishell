@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 15:52:10 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/22 05:51:32 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 	{
 		free_struct(command_line);
 		line = manage_line(command_line, env);
+		if (g_return_value)
+			command_line->return_code = g_return_value;
 		if (!line)
 			continue ;
 		command_line->error_code = 0;

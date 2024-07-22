@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 05:00:47 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/22 05:36:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,8 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 		return (1);
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
-		command_line->return_code = ft_exit(cmd);
-		if (!command_line->return_code || command_line->return_code == 2)
-			minishell_exit(command_line, &cmd, *envp);
+		command_line->return_code = ft_exit(cmd, command_line);
+		minishell_exit(command_line, &cmd, *envp);
 	}
 	else
 	{

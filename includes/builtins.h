@@ -25,7 +25,7 @@ int		switch_directory(char *path, t_list **envp);
 int		ft_cd(t_list **envp, char **arguments);
 int		minishell_exit(t_cmdline *command, char ***cmd, t_list *envp);
 int		ft_pwd(void);
-int		ft_exit(char **params);
+int		ft_exit(char **params, t_cmdline *cmd);
 size_t	ft_env_var_len(char *env_var);
 t_list	*ft_get_env_node(t_list *envp, char *var_name, int var_len);
 int		ft_echo(char **params);

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:13:58 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 15:42:31 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/22 05:39:04 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 	}
 	if (cmd)
 		ft_free_stringtab(cmd[0]);
-	if (command->return_code == 2)
-		exit(2);
-	exit(0);
+	exit(command->return_code);
 }
 
-int	ft_exit(char **params)
+int	ft_exit(char **params, t_cmdline *cmd)
 {
 	printf("exit\n");
 	if (params && is_digit(params[1]))
@@ -59,5 +57,5 @@ int	ft_exit(char **params)
 	}
 	else if (params && ft_stringtab_len(params) > 2)
 		return (print_error(TOO_MUCH_ARG_ERROR));
-	return (0);
+	return (cmd->return_code);
 }
