@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 15:25:09 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/22 05:00:47 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	rl_clear_history();
 	ft_lstclear(envp, free);
 	free_struct(cmd_line);
-	ft_lstclear(envp, free);
 	exit(cmd_line->error_code);
 }
 
