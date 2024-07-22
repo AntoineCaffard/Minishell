@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:07:48 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/02 11:22:36 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/19 16:11:14 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,42 @@
 
 static int	check_option(char **params)
 {
-	if (ft_strnstr(params[0], "-n", ft_strlen(params[0])))
-		return (42);
+	size_t	i;
+
+	i = 1;
+	if (params[0] && params[0][0] == '-')
+	{
+		while (params[0][i])
+		{
+			if (params[0][i] != 'n')
+				return (0);
+			i++;
+		}
+		if (i == 1)
+			return (0);
+		return (1);
+	}
 	else
 		return (0);
 }
 
 static int	minishell_echo(char **params)
 {
-	int	i;
+	size_t	i;
+	int		check;
 
-	if (check_option(params) == 1)
+	if (params != NULL && !*params)
 	{
-		if (!*params && params != NULL)
-			free(params);
-		return (0);
+		free(params);
+		return (print_error((MALLOC_ERROR)));
 	}
 	i = 0;
-	if (check_option(params) == 42)
+	check = check_option(params);
+	while (params[i] && check_option(&params[i]) == 1)
+	{
 		i++;
+		check += check_option(&params[i]);
+	}
 	while (params[i])
 	{
 		ft_putstr_fd(params[i], STDOUT_FILENO);
@@ -40,7 +57,7 @@ static int	minishell_echo(char **params)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
-	if (check_option(params) != 42)
+	if (check == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
@@ -54,9 +71,5 @@ int	ft_echo(char **params)
 		printf("\n");
 		return (0);
 	}
-	else if (params && ft_stringtab_len(params) > 1 && check_option(params))
-		return (minishell_echo(params));
-	else if (params && ft_stringtab_len(params) && check_option(params) == 0)
-		return (minishell_echo(params));
-	return (0);
+	return (minishell_echo(params));
 }
