@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 05:44:53 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:04:39 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	close_pipe(fds);
 	if (!cmd_line->error_code)
 	{
-		error = main_execution(cmd_line->cmds, *envp, fds, 1);
+		if (ft_verif_exit(cmd_line, envp))
+			error = main_execution(cmd_line->cmds, *envp, fds, 1);
 		cmd_line->cmds = fds->save;
 		free_struct(cmd_line);
 		ft_lstclear(envp, free);
@@ -88,8 +89,6 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 {
 	char	**cmd;
 
-	if ((int) ft_cmdsize(command_line->cmds) > 1)
-		return (1);
 	cmd = init_t_args_in_stringtab(command_line->cmds->args);
 	if (!cmd && command_line->cmds->args)
 		command_line->return_code = 1;

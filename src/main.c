@@ -21,7 +21,7 @@ void	minishell_exec(t_cmdline *command_line, t_list *envp)
 	cmd_buffer = *command_line;
 	main_expand(&cmd_buffer, &envp);
 	cmd_buffer = *command_line;
-	if (ft_verif_exit(&cmd_buffer, &envp))
+//	if (ft_verif_exit(&cmd_buffer, &envp))
 		main_pipe(&cmd_buffer, &envp);
 	command_line->return_code = cmd_buffer.return_code;
 }
