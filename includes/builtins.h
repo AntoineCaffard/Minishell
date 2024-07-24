@@ -24,7 +24,7 @@ int		update_env_var(t_list **envp, char *argument);
 int		switch_directory(char *path, t_list **envp);
 int		ft_cd(t_list **envp, char **arguments);
 int		minishell_exit(t_cmdline *command, char ***cmd,
-				t_list *envp, t_cmdline first);
+			t_list *envp, t_cmdline first);
 int		ft_pwd(void);
 int		ft_exit(char **params, t_cmdline *cmd);
 size_t	ft_env_var_len(char *env_var);

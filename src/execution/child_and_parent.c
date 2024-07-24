@@ -85,7 +85,7 @@ int	main_execution(const t_cmdlist *cmd_l, t_list *envp,
 	return (error);
 }
 
-static void dup_free_exit(t_pipe *fds)
+static void	dup_free_exit(t_pipe *fds)
 {
 	dup2(fds->std_fd[0], STDIN_FILENO);
 	dup2(fds->std_fd[1], STDOUT_FILENO);

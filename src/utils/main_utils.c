@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:02:00 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/24 08:17:01 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:27:23 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ char	*manage_line(t_cmdline *command_line, t_list *env)
 	line = readline(prompt);
 	free(prompt);
 	if (!line)
+	{
+		printf("exit\n");
 		minishell_exit(command_line, NULL, env, *command_line);
+	}
 	if (!(line[0]))
 	{
 		free(line);
