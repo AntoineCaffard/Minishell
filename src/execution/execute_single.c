@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 10:41:30 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 05:19:20 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	check_error(int *error)
 	else if (WIFEXITED(*error))
 		*error = WEXITSTATUS(*error);
 	else if (WIFSIGNALED(*error))
-		*error = WTERMSIG(*error);
+		*error = WTERMSIG(*error) + 128;
 }
 
 static int	single_parent(char **envp, t_pipe *fds, pid_t pid)
@@ -92,8 +92,8 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	char		**envp;
 	int			error;
 
-	path = init_path(t_envp);
 	error = 0;
+	path = init_path(t_envp);
 	if (ft_strchr(line[0], '/'))
 	{
 		error = verif_stat(line, path);

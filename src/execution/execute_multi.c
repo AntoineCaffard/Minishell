@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:14:29 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/01 16:47:47 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/24 05:23:13 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ char	**init_path(t_list *envp)
 		envp = envp->next;
 	}
 	if (!path)
-		return (NULL);
+	{
+		res = ft_calloc(2, sizeof(char *));
+		res[0] = ft_strdup(".");
+		return (res);
+	}
 	res = ft_split_str(&path[5], ":");
 	return (res);
 }

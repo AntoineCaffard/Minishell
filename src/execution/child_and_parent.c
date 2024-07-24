@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 05:36:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 05:44:53 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid)
 	else if (WIFSIGNALED(cmd_line->return_code))
 		cmd_line->return_code = WTERMSIG(cmd_line->return_code) + 128;
 	else if (WIFEXITED(cmd_line->return_code))
-		cmd_line ->return_code = WEXITSTATUS(cmd_line->return_code);
+		cmd_line->return_code = WEXITSTATUS(cmd_line->return_code);
 	fds->index--;
 	while (fds->index >= 0)
 	{
-		waitpid(pid[fds->index], &cmd_line->return_code, 0);
+		waitpid(pid[fds->index], NULL, 0);
 		fds->index--;
 	}
 }
