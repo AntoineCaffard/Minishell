@@ -104,7 +104,7 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 
 	(void)envp;
 	signal(SIGINT, _sigint_exec);
-	signal(SIGQUIT,_signquit);
+	signal(SIGQUIT, _signquit);
 	save_fd.index = 0;
 	save_fd.std_fd[1] = dup(STDIN_FILENO);
 	save_fd.std_fd[0] = dup(STDOUT_FILENO);
