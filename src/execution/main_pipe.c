@@ -51,37 +51,6 @@ void	close_pipe(t_pipe *fds)
 	free(fds->pipe);
 }
 
-void	verif_pipe(t_pipe *fds)
-{
-	int	index;
-
-	if (!fds->index)
-	{
-		if (fds->pipe[0][1] != -1)
-			close(fds->pipe[0][1]);
-		fds->pipe[0][1] = -1;
-		return ;
-	}
-	if (fds->index % 2)
-		index = 1;
-	else
-		index = 0;
-	if (fds->pipe[index][1] != -1)
-		close(fds->pipe[index][1]);
-	fds->pipe[index][1] = -1;
-	if (index == 0)
-		index++;
-	else
-		index--;
-	if (fds->pipe[index][0] != -1)
-		close(fds->pipe[index][0]);
-	fds->pipe[index][0] = -1;
-	if (fds->pipe[0][0] == -1 && fds->pipe[0][1] == -1)
-		pipe(fds->pipe[0]);
-	if (fds->pipe[1][0] == -1 && fds->pipe[1][1] == -1)
-		pipe(fds->pipe[1]);
-}
-
 static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 {
 	pid_t	*pid;

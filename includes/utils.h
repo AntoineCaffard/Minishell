@@ -13,6 +13,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 # include "minishell.h"
+# include "execution.h"
 
 int			skip_quotes(char *line, int i);
 char		*ft_prompt(t_cmdline *cmdline);
@@ -24,5 +25,6 @@ char		**init_t_args_in_stringtab(t_arglist *args);
 int			verif_lexer(char *line, t_cmdline *command_line);
 void		del_cote(t_arglist **args);
 int			verif_quote(char *value);
+void		verif_pipe(t_pipe *fds);
 
 #endif

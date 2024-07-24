@@ -49,7 +49,7 @@ CMDLIST =	$(CMDLIST_DIR)/ft_cmd_delone.c $(CMDLIST_DIR)/ft_cmd_size.c $(CMDLIST_
 UTILS_DIR = $(SRC_PATH)/utils
 UTILS = $(UTILS_DIR)/print_error.c $(UTILS_DIR)/skip_quotes.c $(UTILS_DIR)/ft_prompt.c $(UTILS_DIR)/is_space.c \
 		$(UTILS_DIR)/list_to_array.c $(UTILS_DIR)/skip_spaces.c $(UTILS_DIR)/arg_tabs.c $(UTILS_DIR)/main_utils.c \
-		$(UTILS_DIR)/delete_cote_utils.c
+		$(UTILS_DIR)/delete_cote_utils.c $(UTILS_DIR)/pipe_utils.c
 
 PARSING_DIR = $(SRC_PATH)/parsing
 PARSING = $(PARSING_DIR)/fill_command.c $(PARSING_DIR)/fill_redlist.c $(PARSING_DIR)/ft_fill_cmdline.c $(PARSING_DIR)/lexer.c
