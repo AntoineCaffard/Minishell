@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 11:48:06 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 09:59:06 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 06:19:16 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,8 @@ static void	first(t_pipe *fds, t_redlist *redirs)
 	fds->pipe[0][0] = -1;
 }
 
-static void	middle(t_pipe *fds, t_redlist *redirs)
+static void	middle_input(t_redlist *redirs, t_pipe *fds, int index)
 {
-	int	index;
-
-	if (fds->index % 2)
-		index = 1;
-	else
-		index = 0;
 	if (!redirs || (redirs->type != REDIRECTION_APPEND
 			&& redirs->type != REDIRECTION_OUTFILE))
 	{
@@ -50,6 +44,17 @@ static void	middle(t_pipe *fds, t_redlist *redirs)
 		close(fds->pipe[index][1]);
 		fds->pipe[index][1] = -1;
 	}
+}
+
+static void	middle(t_pipe *fds, t_redlist *redirs)
+{
+	int	index;
+
+	if (fds->index % 2)
+		index = 1;
+	else
+		index = 0;
+	middle_input(redirs, fds, index);
 	if (!index)
 		index++;
 	else

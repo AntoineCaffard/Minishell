@@ -44,22 +44,3 @@ char	**init_t_args_in_stringtab(t_arglist *args)
 	}
 	return (res);
 }
-
-t_arglist	*init_stringtab_in_t_args(char **args)
-{
-	t_arglist	*res;
-	int			i;
-
-	if (!args)
-		return (NULL);
-	i = 0;
-	res = ft_calloc(1, sizeof(t_list));
-	res->value = ft_strdup(args[i]);
-	i++;
-	while (args[i])
-	{
-		ft_argpush(&res, ft_argnew(ft_strdup(args[i])));
-		i++;
-	}
-	return (res);
-}

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/22 05:51:32 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 06:09:34 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	minishell_exec(t_cmdline *command_line, t_list *envp)
 
 int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 {
-	int	i;
-
 	if (!env)
 		return (1);
 	while (1)
@@ -42,15 +40,8 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			continue ;
 		command_line->error_code = 0;
 		add_history(line);
-		i = lexer_handler(command_line, line, lexer(line));
-		if (i)
-		{
-			if (!line[i])
-				command_line->return_code = 0;
-			else
-				command_line->return_code = all_heredoc(line, i);
+		if (verif_lexer(line, command_line))
 			continue ;
-		}
 		parse_minishell(command_line, line, env);
 		if (command_line->error_code)
 			command_line->return_code = command_line->error_code;
