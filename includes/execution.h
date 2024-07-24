@@ -28,6 +28,7 @@ typedef struct s_pipe
 void	_sigint(int signaux);
 void	_sigint_exec(int signaux);
 void	_sigintheredoc(int signaux);
+void	_signquit(int signaux);
 int		main_pipe(t_cmdline *cmd_line, t_list **envp);
 void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid);
 void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid);

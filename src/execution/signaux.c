@@ -35,3 +35,9 @@ void	_sigintheredoc(int signaux)
 	printf("%c", 0);
 	g_return_value = 130;
 }
+
+void	_signquit(int signaux)
+{
+	(void)signaux;
+	printf("Quit\n");
+}

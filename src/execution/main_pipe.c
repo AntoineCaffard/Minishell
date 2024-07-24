@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 10:08:43 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 07:02:06 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static int	init_pipe(t_pipe *save_fd, t_cmdlist *cmd)
 		return (1);
 	save_fd->pipe = ft_calloc(3, sizeof(int *));
 	if (!save_fd->pipe)
+	{
+		signal(SIGQUIT, SIG_IGN);
 		return (-1);
+	}
 	i = 0;
 	while (i < 2)
 	{
@@ -90,6 +93,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 	close(save_fd.std_fd[0]);
 	close(save_fd.std_fd[1]);
 	signal(SIGINT, _sigint);
+	signal(SIGQUIT, SIG_IGN);
 	return (i);
 }
 
@@ -100,7 +104,7 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 
 	(void)envp;
 	signal(SIGINT, _sigint_exec);
-//	signal(SIGQUIT,SIG_DFL);
+	signal(SIGQUIT,_signquit);
 	save_fd.index = 0;
 	save_fd.std_fd[1] = dup(STDIN_FILENO);
 	save_fd.std_fd[0] = dup(STDOUT_FILENO);
@@ -114,6 +118,6 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 	dup2(save_fd.std_fd[0], STDIN_FILENO);
 	dup2(save_fd.std_fd[1], STDOUT_FILENO);
 	signal(SIGINT, _sigint);
-//	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	return (1);
 }
