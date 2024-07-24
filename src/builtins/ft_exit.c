@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:13:58 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/22 05:39:04 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 10:39:18 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ static int	is_digit(char *src)
 	return (0);
 }
 
-int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
+int	minishell_exit(t_cmdline *command, char ***cmd,
+					t_list *envp, t_cmdline first)
 {
 	int	save;
 
 	if (envp)
 		ft_lstclear(&envp, free);
-	free_struct(command);
+	free_struct(&first);
 	rl_clear_history();
 	if (cmd && cmd[0][1] != NULL && !is_digit(cmd[0][1]))
 	{
@@ -49,7 +50,6 @@ int	minishell_exit(t_cmdline *command, char ***cmd, t_list *envp)
 
 int	ft_exit(char **params, t_cmdline *cmd)
 {
-	printf("exit\n");
 	if (params && is_digit(params[1]))
 	{
 		write(2, "not a digit\n", 12);

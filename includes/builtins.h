@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:56:45 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 16:40:34 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:12:54 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int		ft_export(t_list **envp, char **arguments);
 int		update_env_var(t_list **envp, char *argument);
 int		switch_directory(char *path, t_list **envp);
 int		ft_cd(t_list **envp, char **arguments);
-int		minishell_exit(t_cmdline *command, char ***cmd, t_list *envp);
+int		minishell_exit(t_cmdline *command, char ***cmd,
+				t_list *envp, t_cmdline first);
 int		ft_pwd(void);
 int		ft_exit(char **params, t_cmdline *cmd);
 size_t	ft_env_var_len(char *env_var);

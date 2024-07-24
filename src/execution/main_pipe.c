@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 10:05:23 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 08:03:08 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 08:15:56 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	multi_pipe(t_pipe *fds, t_cmdline *cmd_line, t_list **envp)
 
 	pid = ft_calloc(fds->nmb_max_cmd, sizeof(pid_t));
 	fds->save = cmd_line->cmds;
+	fds->first = *cmd_line;
 	while (fds->index < fds->nmb_max_cmd)
 	{
 		pid[fds->index] = fork();
@@ -83,7 +84,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 	main_redirection(cmd_line);
 	if (!cmd_line->error_code && cmd_line->cmds->args)
 	{
-		if (ft_verif_exit(cmd_line, envp))
+		if (ft_verif_exit(cmd_line, envp, &save_fd))
 			i = main_execution(cmd_line->cmds, *envp, &save_fd, 0);
 		cmd_line->return_code = i;
 	}
@@ -109,6 +110,7 @@ int	main_pipe(t_cmdline *cmd_line, t_list **envp)
 	save_fd.index = 0;
 	save_fd.std_fd[1] = dup(STDIN_FILENO);
 	save_fd.std_fd[0] = dup(STDOUT_FILENO);
+	save_fd.first = *cmd_line;
 	i = init_pipe(&save_fd, cmd_line->cmds);
 	if (i == 1)
 		return (single_cmd(cmd_line, save_fd, envp));

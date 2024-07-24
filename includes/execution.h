@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:21:52 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 11:14:27 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:01:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_pipe
 	int			index;
 	int			nmb_max_cmd;
 	int			std_fd[2];
+	t_cmdline	first;
 	t_cmdlist	*save;
 }	t_pipe;
 
@@ -48,7 +49,7 @@ void	close_pipe(t_pipe *fds);
 void	gestion_pipe(t_pipe *fds, t_redlist *redirs);
 int		main_execution(const t_cmdlist *cmd_l, t_list *envp,
 			t_pipe *pipe_fds, const int i);
-int		ft_verif_exit(t_cmdline *command_line, t_list **envp);
+int		ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds);
 int		has_quotes(char *string);
 char	*get_value(t_list *list, char *param);
 char	*get_env_var(char **line, int j, char *first, char *var);

@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 08:04:39 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 11:05:59 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	close_pipe(fds);
 	if (!cmd_line->error_code)
 	{
-		if (ft_verif_exit(cmd_line, envp))
+		if (ft_verif_exit(cmd_line, envp, fds))
 			error = main_execution(cmd_line->cmds, *envp, fds, 1);
 		cmd_line->cmds = fds->save;
 		free_struct(cmd_line);
@@ -85,7 +85,7 @@ int	main_execution(const t_cmdlist *cmd_l, t_list *envp,
 	return (error);
 }
 
-int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
+int	ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds)
 {
 	char	**cmd;
 
@@ -96,8 +96,16 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp)
 		return (1);
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
+		if (fds->nmb_max_cmd == 1)
+		{
+			dup2(fds->std_fd[0], STDIN_FILENO);
+			dup2(fds->std_fd[1], STDOUT_FILENO);
+			close(fds->std_fd[0]);
+			close(fds->std_fd[1]);
+			printf("exit\n");
+		}
 		command_line->return_code = ft_exit(cmd, command_line);
-		minishell_exit(command_line, &cmd, *envp);
+		minishell_exit(command_line, &cmd, *envp, fds->first);
 	}
 	else
 	{
