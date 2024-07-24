@@ -85,6 +85,15 @@ int	main_execution(const t_cmdlist *cmd_l, t_list *envp,
 	return (error);
 }
 
+static void dup_free_exit(t_pipe *fds)
+{
+	dup2(fds->std_fd[0], STDIN_FILENO);
+	dup2(fds->std_fd[1], STDOUT_FILENO);
+	close(fds->std_fd[0]);
+	close(fds->std_fd[1]);
+	printf("exit\n");
+}
+
 int	ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds)
 {
 	char	**cmd;
@@ -97,13 +106,7 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds)
 	else if (!ft_strncmp(cmd[0], "exit", 5))
 	{
 		if (fds->nmb_max_cmd == 1)
-		{
-			dup2(fds->std_fd[0], STDIN_FILENO);
-			dup2(fds->std_fd[1], STDOUT_FILENO);
-			close(fds->std_fd[0]);
-			close(fds->std_fd[1]);
-			printf("exit\n");
-		}
+			dup_free_exit(fds);
 		command_line->return_code = ft_exit(cmd, command_line);
 		minishell_exit(command_line, &cmd, *envp, fds->first);
 	}
