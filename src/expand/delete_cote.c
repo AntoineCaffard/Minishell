@@ -113,22 +113,6 @@ char	*recreate_args_and_redir(char *args)
 	return (res);
 }
 
-int	verif_quote(char *value)
-{
-	int	len;
-
-	if (!value)
-		return (0);
-	len = ft_strlen(value);
-	if ((value[0] == '\"' || value[0] == '\'') && len == 1)
-		return (1);
-	else if (len == 2 && value[0] == '\"' && value[1] == '\"')
-		return (1);
-	else if (len == 2 && value[0] == '\'' && value[1] == '\'')
-		return (1);
-	return (0);
-}
-
 void	delete_quote(t_cmdlist *cmd)
 {
 	t_cmdlist	*cmd_next;
@@ -143,10 +127,7 @@ void	delete_quote(t_cmdlist *cmd)
 		while (args)
 		{
 			if (verif_quote(args->value))
-			{
-				free(args->value);
-				args->value = ft_strdup(" "); // a modif pour la commande seulement
-			}
+				del_cote(&args);
 			else
 				args->value = recreate_args_and_redir(args->value);
 			args = args->next;

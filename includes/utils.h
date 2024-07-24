@@ -22,5 +22,7 @@ bool		is_space(char c);
 int			skip_spaces(char *s);
 char		**init_t_args_in_stringtab(t_arglist *args);
 int			verif_lexer(char *line, t_cmdline *command_line);
+void		del_cote(t_arglist **args);
+int			verif_quote(char *value);
 
 #endif
