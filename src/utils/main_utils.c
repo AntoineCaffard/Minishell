@@ -20,7 +20,7 @@ char	*manage_line(t_cmdline *command_line, t_list *env)
 	prompt = ft_prompt(command_line);
 	if (!prompt)
 	{
-		chdir("..");
+		chdir("/home");
 		return (manage_line(command_line, env));
 	}
 	line = readline(prompt);
