@@ -6,11 +6,24 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:07:48 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/19 16:11:14 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:13:54 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static void	print_if_ascii(char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] != 1)
+			ft_putchar_fd(string[i], STDOUT_FILENO);
+		i++;
+	}
+}
 
 static int	check_option(char **params)
 {
@@ -52,7 +65,7 @@ static int	minishell_echo(char **params)
 	}
 	while (params[i])
 	{
-		ft_putstr_fd(params[i], STDOUT_FILENO);
+		print_if_ascii(params[i]);
 		if (params[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;

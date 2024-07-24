@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 06:33:07 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 12:11:56 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	verif_quote(char *value)
 void	del_cote(t_arglist **args)
 {
 	free(args[0]->value);
-	args[0]->value = ft_strdup("\u200B");
+	args[0]->value = ft_strdup(" ");
+	args[0]->value[0] = 1;
 }
