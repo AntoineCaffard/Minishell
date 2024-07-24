@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 10:03:52 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/24 08:22:45 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/24 13:24:46 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 		line = manage_line(command_line, env);
 		if (g_return_value)
 			command_line->return_code = g_return_value;
+		g_return_value = 0;
 		if (!line)
 			continue ;
 		command_line->error_code = 0;
@@ -46,7 +47,8 @@ int	loop_main(t_cmdline *command_line, t_list *env, char *line)
 			command_line->return_code = command_line->error_code;
 		else
 			minishell_exec(command_line, env);
-		g_return_value = 0;
+		if (g_return_value)
+			command_line->return_code = g_return_value;
 	}
 }
 
