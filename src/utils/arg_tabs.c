@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:36:54 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/01 16:37:50 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:06:35 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ char	**init_t_args_in_stringtab(t_arglist *args)
 	i = 0;
 	while (tmp)
 	{
-		res[i] = ft_strdup(tmp->value);
+		if (tmp->value)
+			res[i] = ft_strdup(tmp->value);
+		else
+				res[i] = ft_strdup("\0");
 		tmp = tmp->next;
 		i++;
 	}

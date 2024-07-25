@@ -47,7 +47,7 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	tmp = NULL;
 	while (line[j])
 	{
-		if (!ft_isalnum(line[j]) || (line[j - 1] == '$' && line[j] == '?'))
+		if ((!ft_isalnum(line[j]) && line[j] != '_') || (line[j - 1] == '$' && line[j] == '?'))
 			break ;
 		j++;
 	}
@@ -69,7 +69,7 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 
 static int	verif_char_expand(char c, char verif)
 {
-	if (ft_isalnum(c) || (!verif && (c == '\"' || c == '\'')) || c == '?')
+	if ((ft_isalnum(c) && c != '_') || (!verif && (c == '\"' || c == '\'')) || c == '?')
 		return (1);
 	return (0);
 }
