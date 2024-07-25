@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:32:03 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/22 06:13:56 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/25 13:43:45 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,18 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	}
 	if (line[j] == '?')
 		return (get_return_value(&line, j, save_first_part, cmd_line));
-	else
+	tmp = ft_strndup(&line[i + 1], j - i - 1);
+	res = get_node(envp, tmp);
+	if (!res)
 	{
-		tmp = ft_strndup(&line[i + 1], j - i - 1);
-		res = get_node(envp, tmp);
-		res = add_cote(res);
 		free(tmp);
-		return (get_env_var(&line, j, save_first_part, res));
+		free(save_first_part);
+		free(line);
+		return (NULL);
 	}
+	res = add_cote(res);
+	free(tmp);
+	return (get_env_var(&line, j, save_first_part, res));
 }
 
 static int	verif_char_expand(char c, char verif)
@@ -89,6 +93,8 @@ static char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
 				&& verif_char_expand(line[i + 1], c)))
 		{
 			line = init_res(line, i, envp, cmd_line);
+			if (!line)
+				return (NULL);
 			i = -1;
 		}
 		i++;
@@ -117,6 +123,12 @@ void	main_expand(t_cmdline *cmd_line, t_list **envp)
 		while (redirs)
 		{
 			redirs->link = expand(redirs->link, (*envp), cmd_line);
+			if (!redirs->link)
+			{
+				cmd_line->error_code = 2;
+				write(2, "ambiguous redirect\n", 19);
+				return ;
+			}
 			redirs = redirs->next;
 		}
 		cmd = cmd_next;

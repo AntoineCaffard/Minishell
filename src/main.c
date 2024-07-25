@@ -20,6 +20,11 @@ void	minishell_exec(t_cmdline *command_line, t_list *envp)
 
 	cmd_buffer = *command_line;
 	main_expand(&cmd_buffer, &envp);
+	if (cmd_buffer.error_code)
+	{
+		command_line->return_code = cmd_buffer.error_code;
+		return ;
+	}
 	cmd_buffer = *command_line;
 	main_pipe(&cmd_buffer, &envp);
 	command_line->return_code = cmd_buffer.return_code;
