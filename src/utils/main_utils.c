@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:02:00 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/24 11:27:23 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:46:25 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int	verif_lexer(char *line, t_cmdline *command_line)
 	if (i)
 	{
 		if (!line[i])
+		{
 			command_line->return_code = 0;
+			free(line);
+		}
 		else
 			command_line->return_code = all_heredoc(line, i);
 		return (1);
