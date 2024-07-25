@@ -58,7 +58,7 @@ char	*creat_limiteur(char *line, int y)
 			&& (line[i + 1] && (line[i + 2] != '<' && line[i + 2] != '>')))
 		{
 			i += 2;
-			while (line[i] == ' ')
+			if (line[i] == ' ')
 				i++;
 			if (!line[i])
 				return (NULL);
