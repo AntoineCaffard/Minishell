@@ -57,7 +57,6 @@ int	all_heredoc(char *line, int error_index)
 	line[error_index] = '\0';
 	res = init_heredoc(line);
 	i = 0;
-	y = 0;
 	while (res[i])
 	{
 		signal(SIGINT, _sigintheredoc);

@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/19 10:09:30 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/25 14:51:36 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ char	*creat_limiteur(char *line, int y)
 			&& (line[i + 1] && (line[i + 2] != '<' && line[i + 2] != '>')))
 		{
 			i += 2;
-			if (line[i] == ' ')
+			while (line[i] == ' ')
 				i++;
+			if (!line[i])
+				return (NULL);
 			res = ft_strndup(&line[i], len(&line[i]));
+			if (!res)
+				return (NULL);
 			return (res);
 		}
 		i++;

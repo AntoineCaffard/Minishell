@@ -25,7 +25,7 @@ t_arglist	*fill_r(t_cmdline *l, t_cmdlist *c, t_arglist *buf, t_list *e)
 
 	if (!buf->next || is_redir(buf->next))
 	{
-		l->error_code = 1;
+		l->error_code = 2;
 		write(2, "Minishell: syntax error\n", 25);
 		return (NULL);
 	}
