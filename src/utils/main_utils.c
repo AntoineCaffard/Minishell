@@ -67,7 +67,10 @@ int	verif_lexer(char *line, t_cmdline *command_line)
 			free(line);
 		}
 		else
+		{
+			write(2, "Minishell: Syntax error\n", 24);
 			command_line->return_code = all_heredoc(line, i);
+		}
 		return (1);
 	}
 	return (0);
