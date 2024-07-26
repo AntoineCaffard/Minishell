@@ -12,31 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-char	*add_cote(char *src)
+void	*init_res_free(char *tmp, char *save_first_part, char *line)
 {
-	char	*tmp;
-	char	*res;
-	char	*c;
-	int		i;
-
-	if (!src)
-		return (NULL);
-	if (ft_charchr(src, 0) > -1)
-	{
-		i = ft_charchr(src, 0);
-		if (src[i] == '"')
-			c = ft_strdup("\'\0");
-		else
-			c = ft_strdup("\"\0");
-	}
-	else
-		return (src);
-	tmp = ft_strjoin(c, src);
-	free(src);
-	res = ft_strjoin(tmp, c);
 	free(tmp);
-	free(c);
-	return (res);
+	free(save_first_part);
+	free(line);
+	return (NULL);
 }
 
 char	*get_return_value(char **line, int j,
@@ -103,4 +84,20 @@ char	*get_value(t_list *list, char *param)
 		list = list->next;
 	}
 	return ("\0");
+}
+
+int	redir_loop(t_redlist *redirs, t_cmdline *cmd_line, t_list **envp)
+{
+	while (redirs && !cmd_line->error_code)
+	{
+		redirs->link = expand(redirs->link, (*envp), cmd_line);
+		if (!redirs->link)
+		{
+			cmd_line->error_code = 2;
+			write(2, "ambiguous redirect\n", 19);
+			return (1);
+		}
+		redirs = redirs->next;
+	}
+	return (0);
 }

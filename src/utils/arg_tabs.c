@@ -41,7 +41,7 @@ char	**init_t_args_in_stringtab(t_arglist *args)
 		if (tmp->value)
 			res[i] = ft_strdup(tmp->value);
 		else
-				res[i] = ft_strdup("\0");
+			res[i] = ft_strdup("\0");
 		tmp = tmp->next;
 		i++;
 	}

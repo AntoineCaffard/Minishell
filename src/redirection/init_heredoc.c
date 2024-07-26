@@ -6,7 +6,7 @@
 /*   By: trebours <trebours@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 01:00:00 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/25 14:51:36 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/26 08:27:18 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ static int	count_heredoc(char *line)
 	while (line[i])
 	{
 		if (line[i] == '<' && line[i + 1] == '<'
-			&& (line[i + 1] && line[i + 2] != '<'))
+			&& (line[i + 1] && line[i + 2] != '>' && line[i + 2] != '<'))
 		{
 			i++;
 			j++;
 		}
+		else if (line[i] == '<' && line[i + 1] == '<')
+			i += 2;
 		i++;
 	}
 	return (j);
@@ -42,10 +44,25 @@ static int	len(char *line)
 	return (i);
 }
 
+char	*creat_utils(char *line, int *i)
+{
+	char	*res;
+
+	i[0] += 2;
+	while (line[i[0]] == ' ')
+		i[0]++;
+	if (!line[i[0]])
+		return (NULL);
+	res = ft_strndup(&line[i[0]], len(&line[i[0]]));
+	i += len(&line[i[0]]);
+	if (!res)
+		return (NULL);
+	return (res);
+}
+
 char	*creat_limiteur(char *line, int y)
 {
-	static int	i = 0;
-	char		*res;
+	static int	i;
 
 	if (y)
 	{
@@ -56,17 +73,7 @@ char	*creat_limiteur(char *line, int y)
 	{
 		if (line[i] == '<' && line[i + 1] == '<'
 			&& (line[i + 1] && (line[i + 2] != '<' && line[i + 2] != '>')))
-		{
-			i += 2;
-			if (line[i] == ' ')
-				i++;
-			if (!line[i])
-				return (NULL);
-			res = ft_strndup(&line[i], len(&line[i]));
-			if (!res)
-				return (NULL);
-			return (res);
-		}
+			return (creat_utils(line, &i));
 		i++;
 	}
 	return (NULL);

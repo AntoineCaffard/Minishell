@@ -47,7 +47,8 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	tmp = NULL;
 	while (line[j])
 	{
-		if ((!ft_isalnum(line[j]) && line[j] != '_') || (line[j - 1] == '$' && line[j] == '?'))
+		if ((!ft_isalnum(line[j]) && line[j] != '_')
+			|| (line[j - 1] == '$' && line[j] == '?'))
 			break ;
 		j++;
 	}
@@ -56,12 +57,7 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 	tmp = ft_strndup(&line[i + 1], j - i - 1);
 	res = get_node(envp, tmp);
 	if (!res)
-	{
-		free(tmp);
-		free(save_first_part);
-		free(line);
-		return (NULL);
-	}
+		return (init_res_free(tmp, save_first_part, line));
 	res = add_cote(res);
 	free(tmp);
 	return (get_env_var(&line, j, save_first_part, res));
@@ -69,12 +65,13 @@ static char	*init_res(char *line, int i, t_list *envp, t_cmdline *cmd_line)
 
 static int	verif_char_expand(char c, char verif)
 {
-	if ((ft_isalnum(c) && c != '_') || (!verif && (c == '\"' || c == '\'')) || c == '?')
+	if ((ft_isalnum(c) && c != '_') || (!verif && (c == '\"' || c == '\''))
+		|| c == '?')
 		return (1);
 	return (0);
 }
 
-static char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
+char	*expand(char *line, t_list *envp, t_cmdline *cmd_line)
 {
 	int		i;
 	char	c;
@@ -120,17 +117,8 @@ void	main_expand(t_cmdline *cmd_line, t_list **envp)
 			current->value = expand(current->value, (*envp), cmd_line);
 			current = current->next;
 		}
-		while (redirs)
-		{
-			redirs->link = expand(redirs->link, (*envp), cmd_line);
-			if (!redirs->link)
-			{
-				cmd_line->error_code = 2;
-				write(2, "ambiguous redirect\n", 19);
-				return ;
-			}
-			redirs = redirs->next;
-		}
+		if (redir_loop(redirs, cmd_line, envp))
+			return ;
 		cmd = cmd_next;
 	}
 	delete_quote(cmd_line->cmds);

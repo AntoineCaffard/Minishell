@@ -54,7 +54,7 @@ int	all_heredoc(char *line, int error_index)
 	int		i;
 	int		y;
 
-	line[error_index] = '\0';
+	line[error_index + 1] = '\0';
 	res = init_heredoc(line);
 	i = 0;
 	while (res[i])

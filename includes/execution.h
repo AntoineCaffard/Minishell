@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:21:52 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 11:01:59 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:02:31 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ char	**init_heredoc(char *line);
 char	*creat_limiteur(char *line, int y);
 int		is_alnum(char c);
 int		has_quotes(char *string);
+void	*init_res_free(char *tmp, char *save_first_part, char *line);
+char	*expand(char *line, t_list *envp, t_cmdline *cmd_line);
+int		redir_loop(t_redlist *redirs, t_cmdline *cmd_line, t_list **envp);
 
 #endif
