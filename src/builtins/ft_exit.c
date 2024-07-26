@@ -56,6 +56,6 @@ int	ft_exit(char **params, t_cmdline *cmd)
 		return (1);
 	}
 	else if (params && ft_stringtab_len(params) > 2)
-		return (print_error(TOO_MUCH_ARG_ERROR) + 1);
+		return (print_error(TOO_MUCH_ARG_ERROR) + 2);
 	return (cmd->return_code);
 }

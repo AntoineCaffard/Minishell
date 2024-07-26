@@ -87,7 +87,7 @@ static int	single_cmd(t_cmdline *cmd_line, t_pipe save_fd, t_list **envp)
 		if (ft_verif_exit(cmd_line, envp, &save_fd))
 			i = main_execution(cmd_line->cmds, *envp, &save_fd, 0);
 		else
-			i = cmd_line->error_code;
+			i = cmd_line->error_code--;
 		cmd_line->return_code = i;
 	}
 	else

@@ -51,7 +51,7 @@ char	*creat_utils(char *line, int *i)
 	i[0] += 2;
 	while (line[i[0]] == ' ')
 		i[0]++;
-	if (!line[i[0]])
+	if (!line[i[0]] || line[i[0]] == '|')
 		return (NULL);
 	res = ft_strndup(&line[i[0]], len(&line[i[0]]));
 	i += len(&line[i[0]]);

@@ -110,7 +110,7 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds)
 		if (fds->nmb_max_cmd == 1)
 			dup_free_exit(fds);
 		command_line->error_code = ft_exit(cmd, command_line);
-		if (command_line->error_code != 2)
+		if (command_line->error_code != 3)
 			minishell_exit(command_line, &cmd, *envp, fds->first);
 		else
 			ft_free_stringtab(cmd);
