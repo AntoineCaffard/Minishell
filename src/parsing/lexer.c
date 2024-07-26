@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:51:18 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/25 16:01:47 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/26 09:43:02 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_redirs(char *string)
 				i++;
 			while (string[i] && is_space(string[i]))
 				i++;
-			if (string[i] == '<' || string[i] == '>')
+			if (string[i] == '<' || string[i] == '>' || string[i] == '|')
 				return (i);
 		}
 		else

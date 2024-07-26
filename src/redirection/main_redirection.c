@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:01:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/15 10:04:41 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:24:35 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,13 @@ static int	ft_change_outfile(char *link, int i)
 	else if (i == 2)
 		fd = open(link, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	if (fd < 0)
+	{
+		write(2, "Minishell: ", 12);
+		if (link)
+			write(2, link, ft_strlen(link));
+		write(2, ": Permission denied\n", 20);
 		return (1);
+	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	return (0);

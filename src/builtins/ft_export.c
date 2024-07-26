@@ -6,7 +6,7 @@
 /*   By: elvondir <elvondir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 10:57:14 by acaffard          #+#    #+#             */
-/*   Updated: 2024/07/15 09:15:02 by acaffard         ###   ########.fr       */
+/*   Updated: 2024/07/26 14:56:57 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static bool	check_validity(char *string)
 	if (string[iterator] && string[iterator] == '+' && string[iterator + 1])
 		iterator++;
 	if (string[iterator] && string[iterator] != '=')
+		return (false);
+	if (string[iterator] && string[iterator] == '=' && iterator == 0)
 		return (false);
 	return (true);
 }

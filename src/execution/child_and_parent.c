@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 13:36:46 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 11:05:59 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/26 15:14:43 by trebours         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 	{
 		if (ft_verif_exit(cmd_line, envp, fds))
 			error = main_execution(cmd_line->cmds, *envp, fds, 1);
+		else
+			error = cmd_line->error_code;
 		cmd_line->cmds = fds->save;
-		free_struct(cmd_line);
+		free_struct(&fds->first);
 		ft_lstclear(envp, free);
 		rl_clear_history();
 		exit(error);
 	}
 	rl_clear_history();
 	ft_lstclear(envp, free);
-	free_struct(cmd_line);
+	free_struct(&fds->first);
 	exit(cmd_line->error_code);
 }
 
@@ -107,8 +109,11 @@ int	ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds)
 	{
 		if (fds->nmb_max_cmd == 1)
 			dup_free_exit(fds);
-		command_line->return_code = ft_exit(cmd, command_line);
-		minishell_exit(command_line, &cmd, *envp, fds->first);
+		command_line->error_code = ft_exit(cmd, command_line);
+		if (command_line->error_code != 2)
+			minishell_exit(command_line, &cmd, *envp, fds->first);
+		else
+			ft_free_stringtab(cmd);
 	}
 	else
 	{
