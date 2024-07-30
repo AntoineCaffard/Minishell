@@ -23,6 +23,7 @@ void	parent(t_pipe *fds, t_cmdline *cmd_line, pid_t *pid)
 	else if (WIFEXITED(cmd_line->return_code))
 		cmd_line->return_code = WEXITSTATUS(cmd_line->return_code);
 	fds->index--;
+	signal(SIGINT, _sigint_exec_middle);
 	while (fds->index >= 0)
 	{
 		waitpid(pid[fds->index], NULL, 0);

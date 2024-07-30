@@ -64,5 +64,6 @@ int		has_quotes(char *string);
 void	*init_res_free(char *tmp, char *save_first_part, char *line);
 char	*expand(char *line, t_list *envp, t_cmdline *cmd_line);
 int		redir_loop(t_redlist *redirs, t_cmdline *cmd_line, t_list **envp);
+void	_sigint_exec_middle(int signaux);
 
 #endif

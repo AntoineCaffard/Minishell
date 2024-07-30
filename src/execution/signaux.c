@@ -19,21 +19,28 @@ void	_sigint(int signaux)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_return_value = 130;
+		g_return_value = 130;
 }
 
 void	_sigint_exec(int signaux)
 {
 	(void)signaux;
 	printf("\n");
-	g_return_value = 130;
+		g_return_value = 130;
+}
+
+void	_sigint_exec_middle(int signaux)
+{
+	(void)signaux;
+	printf("\nPUTE");
 }
 
 void	_sigintheredoc(int signaux)
 {
 	(void)signaux;
 	printf("%c", '\n');
-	g_return_value = 130;
+	if (g_return_value != 0)
+		g_return_value = 130;
 }
 
 void	_signquit(int signaux)
