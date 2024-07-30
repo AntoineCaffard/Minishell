@@ -6,7 +6,7 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:01:59 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/26 15:24:35 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:23:52 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ static int	ft_change_infile(char *link)
 		fd = open(link, O_RDONLY);
 	else
 		return (1);
-    if (fd < 0)
-    {
-        write(2, "Minishell: ", 12);
-        if (link)
-            write(2, link, ft_strlen(link));
-        write(2, ": Permission denied\n", 20);
-        return (1);
-    }
+	if (fd < 0)
+	{
+		write(2, "Minishell: ", 12);
+		if (link)
+			write(2, link, ft_strlen(link));
+		write(2, ": Permission denied\n", 20);
+		return (1);
+	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (0);
@@ -82,28 +82,27 @@ static void	loop_redirs(t_cmdline *cmd_line, t_redlist *current)
 int	main_redirection(t_cmdline *cmd_line)
 {
 	t_cmdlist	*cmd;
-	t_redlist	*current;
-	t_redlist	*next;
+	t_redlist	*cur;
 	int			i;
 	int			y;
 
 	cmd = cmd_line->cmds;
-	current = cmd->redirs;
+	cur = cmd->redirs;
 	i = 0;
 	y = 0;
-	while (current && !cmd_line->error_code)
+	while (cur && !cmd_line->error_code)
 	{
-		next = current->next;
-		loop_redirs(cmd_line, current);
-		if (!i && (current->type == REDIRECTION_APPEND
-			|| current->type == REDIRECTION_OUTFILE))
+		loop_redirs(cmd_line, cur);
+		if (!i && (cur->type == REDIRECTION_APPEND
+				|| cur->type == REDIRECTION_OUTFILE))
 			i = 1;
-		else if (!y && (!cmd_line->error_code && (current->type
-				== REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC)))
+		else if (!y && (!cmd_line->error_code && (cur->type
+					== REDIRECTION_INFILE
+					|| cur->type == REDIRECTION_HEREDOC)))
 			y = 2;
 		else
-			y = error_infile(current->link);
-		current = next;
+			y = error_infile(cur->link);
+		cur = cur->next;
 	}
 	return (i + y);
 }

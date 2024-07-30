@@ -6,21 +6,11 @@
 /*   By: acaffard <acaffard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 15:11:17 by trebours          #+#    #+#             */
-/*   Updated: 2024/07/24 05:19:20 by trebours         ###   ########.fr       */
+/*   Updated: 2024/07/30 10:21:00 by acaffard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-//static void	check_error(int *error)
-//{
-//	if (*error == 127 || *error == 126)
-//		return ;
-//	else if (WIFEXITED(*error))
-//		*error = WEXITSTATUS(*error);
-//	else if (WIFSIGNALED(*error))
-//		*error = WTERMSIG(*error) + 128;
-//}
 
 static int	single_parent(char **envp, t_pipe *fds, pid_t pid)
 {
@@ -111,6 +101,5 @@ int	execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds)
 	envp = tabify_list(t_envp);
 	error = command_n(line, envp, pipe_fds);
 	ft_free_stringtab(path);
-//	check_error(&error);
 	return (error);
 }
