@@ -46,7 +46,7 @@ int		verif_stat(char **line, char **path);
 int		execute_command(char **line, t_list *t_envp, t_pipe *pipe_fds);
 int		ft_manage_heredoc(t_redlist *redir, t_list *env);
 void	close_pipe(t_pipe *fds);
-void	gestion_pipe(t_pipe *fds, t_redlist *redirs);
+void	gestion_pipe(t_pipe *fds, int redirs);
 int		main_execution(const t_cmdlist *cmd_l, t_list *envp,
 			t_pipe *pipe_fds, const int i);
 int		ft_verif_exit(t_cmdline *command_line, t_list **envp, t_pipe *fds);

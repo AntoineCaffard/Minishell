@@ -95,11 +95,11 @@ int	main_redirection(t_cmdline *cmd_line)
 	{
 		next = current->next;
 		loop_redirs(cmd_line, current);
-		if (current->type == REDIRECTION_APPEND
-			|| current->type == REDIRECTION_OUTFILE)
+		if (!i && (current->type == REDIRECTION_APPEND
+			|| current->type == REDIRECTION_OUTFILE))
 			i = 1;
-		else if (!cmd_line->error_code && (current->type == REDIRECTION_INFILE
-				|| current->type == REDIRECTION_HEREDOC))
+		else if (!y && (!cmd_line->error_code && (current->type
+				== REDIRECTION_INFILE || current->type == REDIRECTION_HEREDOC)))
 			y = 2;
 		else
 			y = error_infile(current->link);

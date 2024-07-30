@@ -36,8 +36,8 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 
 	error = 0;
 	free(pid);
-	main_redirection(cmd_line);
-	gestion_pipe(fds, cmd_line->cmds->redirs);
+	error = main_redirection(cmd_line);
+	gestion_pipe(fds, error);
 	close_pipe(fds);
 	if (!cmd_line->error_code)
 	{

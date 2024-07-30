@@ -12,10 +12,9 @@
 
 #include "../../includes/minishell.h"
 
-static void	first(t_pipe *fds, t_redlist *redirs)
+static void	first(t_pipe *fds, int redirs)
 {
-	if (!redirs || (redirs->type != REDIRECTION_APPEND
-			&& redirs->type != REDIRECTION_OUTFILE))
+	if (!redirs || redirs == 2)
 	{
 		dup2(fds->pipe[0][1], STDOUT_FILENO);
 		close(fds->pipe[0][1]);
@@ -30,10 +29,9 @@ static void	first(t_pipe *fds, t_redlist *redirs)
 	fds->pipe[0][0] = -1;
 }
 
-static void	middle_input(t_redlist *redirs, t_pipe *fds, int index)
+static void	middle_input(int redirs, t_pipe *fds, int index)
 {
-	if (!redirs || (redirs->type != REDIRECTION_APPEND
-			&& redirs->type != REDIRECTION_OUTFILE))
+	if (!redirs || redirs == 2)
 	{
 		dup2(fds->pipe[index][1], STDOUT_FILENO);
 		close(fds->pipe[index][1]);
@@ -46,7 +44,7 @@ static void	middle_input(t_redlist *redirs, t_pipe *fds, int index)
 	}
 }
 
-static void	middle(t_pipe *fds, t_redlist *redirs)
+static void	middle(t_pipe *fds, int redirs)
 {
 	int	index;
 
@@ -59,8 +57,7 @@ static void	middle(t_pipe *fds, t_redlist *redirs)
 		index++;
 	else
 		index--;
-	if (!redirs || (redirs->type != REDIRECTION_INFILE
-			&& redirs->type != REDIRECTION_HEREDOC))
+	if (!redirs || redirs == 1)
 	{
 		dup2(fds->pipe[index][0], STDIN_FILENO);
 		close(fds->pipe[index][0]);
@@ -73,7 +70,7 @@ static void	middle(t_pipe *fds, t_redlist *redirs)
 	}
 }
 
-void	end_cmd(t_pipe *fds, t_redlist *redirs)
+void	end_cmd(t_pipe *fds, int redirs)
 {
 	int	index;
 
@@ -81,8 +78,7 @@ void	end_cmd(t_pipe *fds, t_redlist *redirs)
 		index = 0;
 	else
 		index = 1;
-	if (!redirs || (redirs->type != REDIRECTION_INFILE
-			&& redirs->type != REDIRECTION_HEREDOC))
+	if (!redirs || redirs == 1)
 	{
 		dup2(fds->pipe[index][0], STDIN_FILENO);
 		close(fds->pipe[index][0]);
@@ -95,7 +91,7 @@ void	end_cmd(t_pipe *fds, t_redlist *redirs)
 	}
 }
 
-void	gestion_pipe(t_pipe *fds, t_redlist *redirs)
+void	gestion_pipe(t_pipe *fds, int redirs)
 {
 	if (!fds->index)
 		first(fds, redirs);
