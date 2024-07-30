@@ -12,6 +12,19 @@
 
 #include "../../includes/minishell.h"
 
+static int	verif_directory(char **line)
+{
+	struct stat	buf;
+
+	if (stat(line[0], &buf))
+		return (127);
+	if (S_ISDIR(buf.st_mode))
+		return (126);
+	if (access(line[0], X_OK))
+		return (126);
+	return (0);
+}
+
 char	*init_link(char *src, char **path, int *error)
 {
 	char	*verif_link;
@@ -25,7 +38,7 @@ char	*init_link(char *src, char **path, int *error)
 	while (path[i])
 	{
 		verif_link = ft_strjoin(path[i], save);
-		if (access(verif_link, X_OK) == 0)
+		if (access(verif_link, X_OK) == 0 && !verif_directory(&verif_link))
 		{
 			free(src);
 			free(save);
@@ -68,12 +81,14 @@ char	**init_path(t_list *envp)
 int	multi_command(char **cmd, char **envp, t_pipe *pipe_fds)
 {
 	(void)pipe_fds;
+	signal(SIGPIPE, SIG_DFL);
 	if (execve(cmd[0], cmd, envp))
 	{
 		ft_free_stringtab(envp);
 		perror("execve");
 		exit (1);
 	}
+	signal(SIGPIPE, SIG_IGN);
 	return (1);
 }
 
