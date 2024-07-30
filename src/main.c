@@ -108,6 +108,7 @@ int	main(int ac, char **av, char **envp)
 	i = 0;
 	signal(SIGINT, _sigint);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);
 	env = init_env(envp);
 	if (!env)
 		return (print_error(MALLOC_ERROR));
