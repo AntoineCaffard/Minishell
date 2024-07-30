@@ -44,7 +44,7 @@ void	child(t_cmdline *cmd_line, t_pipe *fds, t_list **envp, pid_t *pid)
 		if (ft_verif_exit(cmd_line, envp, fds))
 			error = main_execution(cmd_line->cmds, *envp, fds, 1);
 		else
-			error = cmd_line->error_code;
+			error = cmd_line->error_code - 1;
 		cmd_line->cmds = fds->save;
 		free_struct(&fds->first);
 		ft_lstclear(envp, free);
