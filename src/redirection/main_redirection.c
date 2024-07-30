@@ -42,6 +42,14 @@ static int	ft_change_infile(char *link)
 		fd = open(link, O_RDONLY);
 	else
 		return (1);
+    if (fd < 0)
+    {
+        write(2, "Minishell: ", 12);
+        if (link)
+            write(2, link, ft_strlen(link));
+        write(2, ": Permission denied\n", 20);
+        return (1);
+    }
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	return (0);
