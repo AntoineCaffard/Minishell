@@ -45,6 +45,8 @@ int	minishell_exit(t_cmdline *command, char ***cmd,
 	}
 	if (cmd)
 		ft_free_stringtab(cmd[0]);
+	if (command->error_code)
+		exit(command->error_code);
 	exit(command->return_code);
 }
 
@@ -53,7 +55,7 @@ int	ft_exit(char **params, t_cmdline *cmd)
 	if (params && is_digit(params[1]))
 	{
 		write(2, "not a digit\n", 12);
-		return (1);
+		return (2);
 	}
 	else if (params && ft_stringtab_len(params) > 2)
 		return (print_error(TOO_MUCH_ARG_ERROR) + 2);
